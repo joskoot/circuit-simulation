@@ -29,7 +29,7 @@
 
 @author{Jacob J. A. Koot}
 
-@(defmodule "circuits.rkt" #:packages ())
+@(defmodule circuit-simulation/circuits #:packages ())
 
 @(define ternary-table
 
