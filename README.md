@@ -12,5 +12,8 @@ Click Install\
 Require the package as follows:\
 (require circuit-simulation/circuits)
 
+The document can be found by pressing F1\
+and looking for Digital Circuits under miscelaneous libraries.
+
 Have fun.\
 Jos Koot
