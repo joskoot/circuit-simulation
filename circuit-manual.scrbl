@@ -29,8 +29,8 @@
 
 @author{Jacob J. A. Koot}
 
-@(defmodule circuit-simulation/circuits #:packages ())
-@;@(defmodule "circuits.rkt" #:packages ())
+@;@(defmodule circuit-simulation/circuits #:packages ())
+@(defmodule "circuits.rkt" #:packages ())
 
 @(define ternary-table
 
@@ -46,7 +46,8 @@
 
 @section{Preface}
 
-Module @hyperlink["circuits.rkt"]{circuits.rkt}
+Module @hyperlink[
+"https://github.com/joskoot/circuit-simulation/blob/master/circuits.rkt"]{circuits.rkt}
 provides tools for digital simulation of digital circuits.
 I have used some of the ideas in section
 @hyperlink[
@@ -67,7 +68,9 @@ Digital circuits consist of @seclink["gate"]{gates} and @seclink["wires"]{wires}
 Circuits are made by circuit constructors,
 which them­selves can be made with syntax @racket[make-circuit-constr].
 @seclink["gate"]{Gates} are elementary circuits.
-Their constructors are provided by module @hyperlink["circuits.rkt"]{circuits.rkt}.
+Their constructors are provided by module
+@hyperlink[
+"https://github.com/joskoot/circuit-simulation/blob/master/circuits.rkt"]{circuits.rkt}.
 For each wire and each occurrence of a gate a distinct object is made.
 Circuits can be nested as subcircuits in an enveloping circuit,
 but at the finest grain level, all circuits consist of distinct instances of @seclink["wires"]{wires}
@@ -179,7 +182,7 @@ A report shows all mutations on the wires and at which times, internal wires inc
 @item{In addition to any format or output procedure of @(Rckt),
 procedure @nbr[wire-print] or @nbr[wire-println] can be used
 to see the final signals on the output wires together with their names.
-Simply typing the identifier of a wire will do too.}
+Simply typing the identifiers of wires will do too.}
 
 @item{Halt here or repeat from step 4.}]
 
@@ -213,7 +216,7 @@ Hence, in order to set or reset the @nb{D-flip-flop},
 set @tt{in} to @nbr[T] cq @nbr[F] and apply a @nbr[T] pulse to the @tt{clock}.
 Leave the @tt{clock} low at @nbr[F] in order to preserve the state.
 There are several ways to construct a D-flip-flop.
-The following diagram shows a D-flip-flop consisting of four @nbr[Nand] gates.
+The following diagram shows one consisting of four @nbr[Nand] gates.
 
 @elemtag["D-flip-flop-diagram"]@inset{@image["D-flip-flop.gif" #:scale 1]}
 
@@ -278,7 +281,7 @@ For times @nbrl[natural?]{natural numbers} are used without specifying a unit.
 This unit always is implied and always the same.
 
 @Interaction*[
-(code:comment "                                           clock is F at time  0")
+(code:comment "------------------------------------------ clock is F at time  0")
 (code:line (agenda-schedule! clock-wire T 10) (code:comment "raise clock to T at time 10"))
 (code:line (agenda-schedule! clock-wire F 20) (code:comment " drop clock to F at time 20"))]
 
@@ -315,12 +318,13 @@ At this time wire @tt{reset} has signal @nbr[T] too,
 but because the @tt{state} and @tt{state-inverse} already are inverses of each other,
 they remain stable.
 
-At this moment the D-flip-flop is in reset state. Now setting it, the @tt{state}
-and @nb{@tt{state-inverse}} switch almost simultaneously, but not quite:
+At this moment the D-flip-flop is in reset state. Now setting it
+by applying a @nbr[T] pulse on the @tt{clock-wire} for 5 units of time with @tt{in-wire}=@nbr[T],
+the @tt{state} and @nb{@tt{state-inverse}} switch almost simultaneously,
+but not quite:
 
 @Interaction*[
-(code:comment "Apply a T pulse on the clock-wire for 5 units of time with in-wire=T.")
-(agenda-schedule! in-wire T)
+(agenda-schedule! in-wire    T)
 (agenda-schedule! clock-wire T)
 (agenda-schedule! clock-wire F 5)
 (D-flip-flop-simulator)]
@@ -497,6 +501,7 @@ depending on the value of the @nbr[trit-expr].
 
 The binary digits are @nbr[F] and @nbr[T].@(lb)
 They are @seclink["Ternary logic"]{trits} too.@(lb)
+Always @nbr[(implies (bit? x) (trit? x))] → @nbr[#t].
 
 @deftogether[
  (@defthing[#:kind "constant" bits (list/c bit? bit?) #:value (list F T)]
@@ -608,6 +613,7 @@ Procedure @nbr[agenda-execute!] can handle more than one circuit simultaneously:
 (define b (wire-make 'b T))
 (define c (wire-make 'c F))
 (And a b (wire-make 'and-ab))
+(And a c (wire-make 'and-ac))
 (Xor a c (wire-make 'xor-ac))
 (agenda-execute! #t)]}
 
