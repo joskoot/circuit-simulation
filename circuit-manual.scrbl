@@ -29,8 +29,8 @@
 
 @author{Jacob J. A. Koot}
 
-@(defmodule circuit-simulation/circuits #:packages ())
-@;@(defmodule "circuits.rkt" #:packages ())
+@;@(defmodule circuit-simulation/circuits #:packages ())
+@(defmodule "circuits.rkt" #:packages ())
 
 @(define ternary-table
 
@@ -310,7 +310,7 @@ are used for alignment in the report.
 Up to time 10 the clock is @nbr[F]
 and the signals on wires @tt{state} and @tt{state-inverse} oscillate.
 At time 10 the clock is raised to @nbr[T].
-This stabilizes @tt{state} and @tt{state-inverse} within 3 steps
+This stabilizes @tt{state} and @tt{state-inverse} within 3 time steps
 such as to become inverses of each other.
 After time 12 nothing happens until at time 20 the clock is dropped to @nbr[F],
 with the only effect that internal signal @tt{set} raises to @nbr[T].
@@ -338,6 +338,7 @@ Optionally the results of the tests are printed in a table.
 
 @Interaction*[
 (define (test-D-flip-flop flip-flop-constr #:tabulate? (tabulate? #f))
+ (printf " ~nTesting ~s.~n" (circuit-constr-name flip-flop-constr))
  (code:comment " ")
  (code:comment "Procedure test/tabulate does a test. If tabulate? is true,")
  (code:comment "it also prints a line of results for the table to be shown.")
@@ -390,6 +391,11 @@ Optionally the results of the tests are printed in a table.
     in-wire clock-wire state-wire state-inverse-wire)))
  (code:comment " ")
  (code:comment "───────────────────────────────────────────────────────────────")
+ (code:comment "Install the flip-flop.")
+ (code:comment " ")
+ (D-flip-flop-constr in-wire clock-wire state-wire state-inverse-wire)
+ (code:comment " ")
+ (code:comment "───────────────────────────────────────────────────────────────")
  (code:comment "Now we call test/tabulate for all feasible binary inputs.")
  (code:comment "First print a header for the table to be printed (if desired).")
  (code:comment " ")
@@ -413,9 +419,9 @@ Optionally the results of the tests are printed in a table.
  (code:comment " ")
  (code:comment "Arriving here means that all tests passed.")
  (code:comment " ")
- (printf "Hurray, all tests passed.~n"))
-(code:comment " ")
-(test-D-flip-flop D-flip-flop-constr #:tabulate? #t)]
+ (printf "Hurray, all tests passed.~n"))]
+Now we have procedure @tt{test-D-flip-flop} and can use it:
+@Interaction*[(test-D-flip-flop D-flip-flop-constr #:tabulate? #t)]
 
 The two @nbr[Nand] gates at the right of the @elemref["D-flip-flop-diagram"]{diagram}
 form an odd kind of SR-latch.@(lb)
@@ -454,12 +460,6 @@ We can use the latch as a subcircuit in a D-flip-flop:
   (R-inverse (Nand clock S-inverse))
   ((state state-inverse) (make-odd-SR-latch S-inverse R-inverse))))]
 @Interaction*[
-(make-D-flip-flop-with-odd-SR-latch
- in-wire
- clock-wire
- state-wire
- state-inverse-wire)]
-@Interaction*[
 (test-D-flip-flop make-D-flip-flop-with-odd-SR-latch)]
 @(reset-Interaction*)
 
@@ -486,8 +486,11 @@ Else @nbr[(trit? obj)] yields @nbr[#f].@(lb)
 @nbr[(T? obj)] is the same as @nbr[(eq? obj T)].@(lb)
 @nbr[(?? obj)] is the same as @nbr[(eq? obj ?)].
 
-Predicate @nbr[eq?] can be used because (within a given namespace) there always is
-only one instance of @nbr[F], only one instance of @nbr[T] and only one instance of @nbr[?].}
+Predicate @nbr[eq?] can be used because there always is@(lb)
+only one instance of @nbr[F],@(lb)
+only one instance of @nbr[T] and@(lb)
+only one instance of @nbr[?]@(lb)
+(within a given namespace and without @nbr[dynamic-require] in that namespace)}
 
 @defform[(trit-case trit-expr (F-body ...) (T-body ...) (?-body ...))
  #:contracts ((trit-expr trit?))]{
