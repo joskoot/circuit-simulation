@@ -29,8 +29,8 @@
 
 @author{Jacob J. A. Koot}
 
-@(defmodule circuit-simulation/circuits #:packages ())
-@;@(defmodule "circuits.rkt" #:packages ())
+@;@(defmodule circuit-simulation/circuits #:packages ())
+@(defmodule "circuits.rkt" #:packages ())
 
 @(define ternary-table
 
@@ -484,13 +484,7 @@ More examples in section @seclink["More examples"]{More examples}.
 Else @nbr[(trit? obj)] yields @nbr[#f].@(lb)
 @nbr[(F? obj)] is the same as @nbr[(eq? obj F)].@(lb)
 @nbr[(T? obj)] is the same as @nbr[(eq? obj T)].@(lb)
-@nbr[(?? obj)] is the same as @nbr[(eq? obj ?)].
-
-Predicate @nbr[eq?] can be used because there always is@(lb)
-only one instance of @nbr[F],@(lb)
-only one instance of @nbr[T] and@(lb)
-only one instance of @nbr[?]@(lb)
-(within a given namespace and without @nbr[dynamic-require] in that namespace)}
+@nbr[(?? obj)] is the same as @nbr[(eq? obj ?)].}
 
 @defform[(trit-case trit-expr (F-body ...) (T-body ...) (?-body ...))
  #:contracts ((trit-expr trit?))]{
