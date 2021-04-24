@@ -29,8 +29,8 @@
 
 @author{Jacob J. A. Koot}
 
-@(defmodule circuit-simulation/circuits #:packages ())
-@;@(defmodule "circuits.rkt" #:packages ())
+@;@(defmodule circuit-simulation/circuits #:packages ())
+@(defmodule "circuits.rkt" #:packages ())
 
 @(define ternary-table
 
@@ -1588,8 +1588,6 @@ into the second one.
 @tt{clock}=@nbr[T] may change the first SR-flip-flop but leaves the second one unaffected.
 @tt{clock}=@nbr[F] leaves the first SR-flip-flop unaffected and
 copies the state of the first one into the second one.
-During the @nbr[T] pulse on the @tt{clock} for start up, the second SR-flip-flop may vibrate,
-but it will stabilize after the clock drops down to @nbr[F].
 Now we can define a constructor for the twin-flip-flop:
 
 @Interaction*[
