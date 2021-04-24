@@ -29,8 +29,8 @@
 
 @author{Jacob J. A. Koot}
 
-@(defmodule circuit-simulation/circuits #:packages ())
-@;@(defmodule "circuits.rkt" #:packages ())
+@;@(defmodule circuit-simulation/circuits #:packages ())
+@(defmodule "circuits.rkt" #:packages ())
 
 @(define ternary-table
 
@@ -1227,7 +1227,7 @@ or for making a truth table:
 @section[#:tag "truth tables"]{Truth tables}
 
 Lines with determinate inputs only precede all lines @nb{with an} indeterminate input.@(lb)
-When all inputs are determinate, the output will be determinate too.
+When all inputs are determinate, the output is determinate too, of course.
 
 @(make-truth-tables (a) (Not Not-function) (Delay values))
 @(make-truth-tables (a b) (And And-function)
