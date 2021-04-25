@@ -29,8 +29,8 @@
 
 @author{Jacob J. A. Koot}
 
-@(defmodule circuit-simulation/circuits #:packages ())
-@;@(defmodule "circuits.rkt" #:packages ())
+@;@(defmodule circuit-simulation/circuits #:packages ())
+@(defmodule "circuits.rkt" #:packages ())
 
 @(define ternary-table
 
@@ -333,8 +333,7 @@ The @tt{state} switched at time 24, whereas @tt{state-inverse} changed at time 2
 During one unit of time @tt{state} and @tt{state-inverse} had the same signal @nbr[T].@(lb)
 The raising output always comes one unit of time earlier than the dropping one.
 
-Let's test the D-flip-flop for all binary combinations of @tt{in}, @tt{clock} and old @tt{state}.@(lb)
-Optionally the results of the tests are printed in a table.
+Let's test the D-flip-flop for all binary combinations of @tt{in}, @tt{clock} and old @tt{state}.
 
 @Interaction*[
 (define (test-D-flip-flop flip-flop-constr #:tabulate? (tabulate? #f))
@@ -396,7 +395,6 @@ Optionally the results of the tests are printed in a table.
  (D-flip-flop-constr in-wire clock-wire state-wire state-inverse-wire)
  (code:comment " ")
  (code:comment "───────────────────────────────────────────────────────────────")
- (code:comment "Now we call test/tabulate for all feasible binary inputs.")
  (code:comment "First print a header for the table to be printed (if desired).")
  (code:comment " ")
  (when tabulate?
@@ -404,7 +402,9 @@ Optionally the results of the tests are printed in a table.
   (displayln "old-state    inputs         new state")
   (displayln "───────────  ─────────────  ────────────────────────"))
  (code:comment " ")
+ (code:comment "───────────────────────────────────────────────────────────────")
  (code:comment "Now do the tests. Each test adds a line to the table (if desired).")
+ (code:comment "Call test/tabulate for all feasible binary inputs.")
  (code:comment " ")
  (for*
   ((old-state    in-bits)
@@ -412,11 +412,13 @@ Optionally the results of the tests are printed in a table.
    (in-signal    in-bits))
   (test/tabulate in-signal clock-signal old-state))
  (code:comment " ")
+ (code:comment "───────────────────────────────────────────────────────────────")
  (code:comment "Close the table.")
  (code:comment " ")
  (when tabulate?
   (displayln "────────────────────────────────────────────────────"))
  (code:comment " ")
+ (code:comment "───────────────────────────────────────────────────────────────")
  (code:comment "Arriving here means that all tests passed.")
  (code:comment " ")
  (printf "Hurray, all tests passed.~n"))]
