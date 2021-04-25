@@ -29,8 +29,8 @@
 
 @author{Jacob J. A. Koot}
 
-@(defmodule circuit-simulation/circuits #:packages ())
-@;@(defmodule "circuits.rkt" #:packages ())
+@;@(defmodule circuit-simulation/circuits #:packages ())
+@(defmodule "circuits.rkt" #:packages ())
 
 @(define ternary-table
 
@@ -1402,7 +1402,8 @@ Let's test the full-adder:
    ((0) (equal? result "F F"))
    ((1) (equal? result "T F"))
    ((2) (equal? result "F T"))
-   ((3) (equal? result "T T")))
+   ((3) (equal? result "T T"))
+   (else #f))
   (error 'full-adder "~s" (list a b c result))))]
 
 Full adders can be put in a row such as to make an adder for numbers
