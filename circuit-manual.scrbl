@@ -29,8 +29,8 @@
 
 @author{Jacob J. A. Koot}
 
-@(defmodule circuit-simulation/circuits #:packages ())
-@;@(defmodule "circuits.rkt" #:packages ())
+@;@(defmodule circuit-simulation/circuits #:packages ())
+@(defmodule "circuits.rkt" #:packages ())
 
 @(define ternary-table
 
@@ -170,7 +170,7 @@ Call procedure @nbr[agenda-execute!] to start or to resume the simulation.
 Special care must be taken for a circuit
 with mutual dependency between the signals on its wires.
 Such dependency may cause instability,
-is est, oscillating the signals on one or more wires ad infinitum, thus causing an infinite loop.
+is est, oscillating signals on one or more wires ad infinitum, thus causing an infinite loop.
 Parameter @nbr[agenda-time-limit] protects against such loops:@(lb)
 @(hspace 3)@tt{(@nbr[parameterize] ((@nbr[agenda-time-limit] @italic{time-limit}))
 (@nbr[agenda-execute!]))}@(lb)
