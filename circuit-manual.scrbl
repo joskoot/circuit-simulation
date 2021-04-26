@@ -29,8 +29,8 @@
 
 @author{Jacob J. A. Koot}
 
-@(defmodule circuit-simulation/circuits #:packages ())
-@;@(defmodule "circuits.rkt" #:packages ())
+@;@(defmodule circuit-simulation/circuits #:packages ())
+@(defmodule "circuits.rkt" #:packages ())
 
 @(define ternary-table
 
@@ -170,7 +170,7 @@ Call procedure @nbr[agenda-execute!] to start or to resume the simulation.
 Special care must be taken for a circuit
 with mutual dependency between the signals on its wires.
 Such dependency may cause instability,
-id est, oscillating signals on one or more wires ad infinitum, thus causing an infinite loop.
+id est, oscillating signals ad infinitum on one or more wires, thus causing an infinite loop.
 Parameter @nbr[agenda-time-limit] protects against such loops:@(lb)
 @(hspace 3)@tt{(@nbr[parameterize] ((@nbr[agenda-time-limit] @italic{time-limit}))
 (@nbr[agenda-execute!]))}@(lb)
@@ -214,7 +214,8 @@ the following transition table applies:
 
 Hence, in order to set or reset the @nb{D-flip-flop},
 set @tt{in} to @nbr[T] cq @nbr[F] and apply a @nbr[T] pulse to the @tt{clock}.
-Leave the @tt{clock} low at @nbr[F] in order to preserve the state.
+Leave the @tt{clock} low at @nbr[F] in order to preserve the state
+without being disturbed by changes on wire @tt{in}.
 There are several ways to construct a D-flip-flop.
 The following diagram shows one consisting of four @nbr[Nand] gates.
 
@@ -655,7 +656,7 @@ in general it cannot be known which signal the wire will have when the time of t
 (agenda-schedule! a T 10)
 (agenda-execute!)
 (agenda-time)
-(agenda-schedule! a T 10)
+(code:line (agenda-schedule! a T 10) (code:comment "Scheduled for time 11+10=21."))
 (code:line (agenda-execute! #t) (code:comment "Nothing happens, for the signal does not change,"))
 (code:line (agenda-time)        (code:comment "but time kept running."))]}
 
@@ -1518,7 +1519,7 @@ from @tt{-2@↑{n-1}} up to but not including @tt{2@↑{n-1}}.
 It can also be used for non-negative numbers
 in the range from @nbr[0] up to but not including @tt{2@↑{n}}.
 In that case the overflow bit is meaningless and
-the carry-out bit being @nbr[1] indicates overflow.
+the carry-out bit being @nbr[T] indicates overflow.
 
 @subsection[#:tag "twin-flip-flop-section"]{Twin-flip-flop}
 
@@ -1581,7 +1582,7 @@ another identifier than within the circuit the subcircuit is part of.
 
 @inset{@image["twin-flip-flop.gif" #:scale 0.75]}
 
-In contrast to an SR-flip-flop, the twin-flip-flop allows clocking with @nb{@tt{J}=@tt{K}=@nbr[1]}
+In contrast to an SR-flip-flop, the twin-flip-flop allows clocking with @nb{@tt{J}=@tt{K}=@nbr[T]}
 in which case it flips its outputs.
 This requires feed back of signals @tt{Q} and @tt{P} to the @tt{S} and @tt{R} inputs
 of the first SR-flip-flop.
@@ -1603,6 +1604,9 @@ Now we can define a constructor for the twin-flip-flop:
   (R1      (And K (Nand P J)))
   ((Q1 P1) (make-SR-flip-flop S1 R1 clock))
   ((Q  P ) (make-SR-flip-flop Q1 P1 (Not clock)))))]
+
+Notice that although the diagram of the twin-flip-flop seems complicated,@(lb)
+the code for its constructor is rather simple.
 
 @Interaction*[
 (define J     (wire-make 'J))
