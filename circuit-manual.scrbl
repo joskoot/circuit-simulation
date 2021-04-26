@@ -29,8 +29,8 @@
 
 @author{Jacob J. A. Koot}
 
-@(defmodule circuit-simulation/circuits #:packages ())
-@;@(defmodule "circuits.rkt" #:packages ())
+@;@(defmodule circuit-simulation/circuits #:packages ())
+@(defmodule "circuits.rkt" #:packages ())
 
 @(define ternary-table
 
@@ -86,7 +86,7 @@ as provided by @(Rckt).
 
 @seclink["Ternary logic"]{Ternary logic} is used,
 @nb{@nbr[F] and @nbr[T]} for a determinate signal
-and @nbr[?] for an indeterminate signal, is est, a signal not yet known.
+and @nbr[?] for an indeterminate signal, id est, a signal not yet known.
 @nb{@nbr[F] represents false cq low}.
 @nb{@nbr[T] represents true cq high.}
 When a signal changes from @nbr[F] to @nbr[T], it is said to raise.
@@ -170,7 +170,7 @@ Call procedure @nbr[agenda-execute!] to start or to resume the simulation.
 Special care must be taken for a circuit
 with mutual dependency between the signals on its wires.
 Such dependency may cause instability,
-is est, oscillating signals on one or more wires ad infinitum, thus causing an infinite loop.
+id est, oscillating signals on one or more wires ad infinitum, thus causing an infinite loop.
 Parameter @nbr[agenda-time-limit] protects against such loops:@(lb)
 @(hspace 3)@tt{(@nbr[parameterize] ((@nbr[agenda-time-limit] @italic{time-limit}))
 (@nbr[agenda-execute!]))}@(lb)
@@ -482,7 +482,7 @@ More examples in section @seclink["More examples"]{More examples}.
  @defproc[#:kind "predicate" (T? (obj any/c)) boolean?]
  @defproc[#:kind "predicate" (?? (obj any/c)) boolean?])]{
 
-@nbr[(trit? obj)] yields @nbr[#t] if @nbr[obj] is a trit, is est, @nbr[F], @nbr[T] or @nbr[?].@(lb)
+@nbr[(trit? obj)] yields @nbr[#t] if @nbr[obj] is a trit, id est, @nbr[F], @nbr[T] or @nbr[?].@(lb)
 Else @nbr[(trit? obj)] yields @nbr[#f].@(lb)
 @nbr[(F? obj)] is the same as @nbr[(eq? obj F)].@(lb)
 @nbr[(T? obj)] is the same as @nbr[(eq? obj T)].@(lb)
@@ -507,7 +507,7 @@ Always @nbr[(implies (bit? x) (trit? x))] → @nbr[#t].
   @defthing[#:kind "constant" in-bits sequence? #:value (in-list bits)]
   @defproc[#:kind "predicate" (bit? (obj any/c)) boolean?])]{
                                                              
-If the @nbr[obj] is a bit, is est, @nbr[F] or @nbr[T], @nbr[(bit? obj)] yields @nbr[#t],
+If the @nbr[obj] is a bit, id est, @nbr[F] or @nbr[T], @nbr[(bit? obj)] yields @nbr[#t],
 else it yields @nbr[#f].}
 
 @defform[(bit-case bit-expr (F-body ...) (T-body ...))
