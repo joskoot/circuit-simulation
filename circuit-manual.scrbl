@@ -29,8 +29,8 @@
 
 @author{Jacob J. A. Koot}
 
-@(defmodule circuit-simulation/circuits #:packages ())
-@;@(defmodule "circuits.rkt" #:packages ())
+@;@(defmodule circuit-simulation/circuits #:packages ())
+@(defmodule "circuits.rkt" #:packages ())
 
 @(define ternary-table
 
@@ -1685,6 +1685,6 @@ In real life circuits this is not the case.
 I gladly leave the details to experts with more knowledge about electronic circuits.
 I suspect that the simulators are of little use in practice.
 At best they can be used for preliminary tests of correctness.
-Anyway, I hope my module can be a nice toy for some of you.
+Anyway, @nb{I hope} my module can be a nice toy for some of you.
 
 @bold{@larger{The end}}
