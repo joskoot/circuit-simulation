@@ -29,8 +29,8 @@
 
 @author{Jacob J. A. Koot}
 
-@(defmodule circuit-simulation/circuits #:packages ())
-@;@(defmodule "circuits.rkt" #:packages ())
+@;@(defmodule circuit-simulation/circuits #:packages ())
+@(defmodule "circuits.rkt" #:packages ())
 
 @(define ternary-table
 
@@ -605,7 +605,8 @@ Events for the same time segment are reported in sorted order of the names of th
 If parameter @nbr[report-hidden] is @nbr[#f] wires whose names end with a dot ‘•’
 followed by one or more decimal digits are not included in the report.
 Such names are used for @nbrl[report-hidden]{hidden wires.}
-Procedure @nbr[agenda-execute!] can handle more than one circuit simultaneously:
+Procedure @nbr[agenda-execute!] can handle more than one circuit simultaneously,
+provided they do not share external output wires:
 
 @Interaction[
 (define a (wire-make 'a T))
