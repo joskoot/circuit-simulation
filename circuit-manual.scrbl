@@ -29,8 +29,8 @@
 
 @author{Jacob J. A. Koot}
 
-@(defmodule circuit-simulation/circuits #:packages ())
-@;@(defmodule "circuits.rkt" #:packages ())
+@;@(defmodule circuit-simulation/circuits #:packages ())
+@(defmodule "circuits.rkt" #:packages ())
 
 @(define ternary-table
 
@@ -89,7 +89,7 @@ as provided by @(Rckt).
 and @nbr[?] for an indeterminate signal, id est, a signal not yet known.
 @nb{@nbr[F] represents false cq low}.
 @nb{@nbr[T] represents true cq high.}
-When a signal changes from @nbr[F] to @nbr[T], it is said to raise.
+When @nb{a signal} changes from @nbr[F] to @nbr[T], it is said to raise.
 When it changes from @nbr[T] to @nbr[F], it is said to drop.
 If all inputs of a @seclink["gate"]{gate} are determinate, its output is determinate too.
 Its output is indeterminate if one or more of the inputs are indeterminate
