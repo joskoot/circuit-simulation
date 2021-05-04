@@ -29,8 +29,8 @@
 
 @author{Jacob J. A. Koot}
 
-@(defmodule circuit-simulation/circuits #:packages ())
-@;@(defmodule "circuits.rkt" #:packages ())
+@;@(defmodule circuit-simulation/circuits #:packages ())
+@(defmodule "circuits.rkt" #:packages ())
 
 @(define ternary-table
 
@@ -1372,13 +1372,13 @@ Now we can define the full-adder:
 (define make-full-adder
  (make-circuit-constr 'full-adder
  (code:comment "inputs")
- (a b c-in)
+ (a b carry-in)
  (code:comment "outputs")
  (sum c-out)
  (code:comment "subcircuits")
- ((s   c-1) (make-half-adder b c-in))
- ((sum c-2) (make-half-adder a s))
- (c-out     (Or c-1 c-2))))]
+ ((half-sum carry-1) (make-half-adder b carry-in))
+ ((sum      carry-2) (make-half-adder a half-sum))
+ (c-out              (Or carry-1 carry-2))))]
 
 Let's test the full-adder:
 
@@ -1387,9 +1387,9 @@ Let's test the full-adder:
 (define wb   (wire-make 'b))
 (define wc   (wire-make 'c)) 
 (define sum  (wire-make 'sum))
-(define cout (wire-make 'cout))
-(make-full-adder wa wb wc sum cout)
-(code:comment " ")
+(define carry-out (wire-make 'carry-out))
+(make-full-adder wa wb wc sum carry-out)]
+@Interaction*[
 (for* ((a in-bits) (b in-bits) (c in-bits))
  (agenda-schedule! wa a)
  (agenda-schedule! wb b)
@@ -1397,9 +1397,9 @@ Let's test the full-adder:
  (agenda-execute!)
  (printf "full-adder a=~s, b=~s, carry-in=~s" a b c)
  (printf " --> sum=~s, carry-out=~s, delay=~s~n"
-  (wire-signal sum) (wire-signal cout) (sub1 (agenda-time)))
+  (wire-signal sum) (wire-signal carry-out) (sub1 (agenda-time)))
  (agenda-reset!)
- (define result (format "~s ~s" (wire-signal sum) (wire-signal cout)))
+ (define result (format "~s ~s" (wire-signal sum) (wire-signal carry-out)))
  (unless
   (case (count T? (list a b c))
    ((0) (equal? result "F F"))
@@ -1421,15 +1421,15 @@ the carry-out bit and an overflow indicator.
 (define (make-6-wires name)
  (apply values
   (build-list 6
-   (λ (i) (wire-make (string->symbol (format "~s~s" name i)))))))
-(code:comment " ")
+   (λ (i) (wire-make (string->symbol (format "~s~s" name i)))))))]
+@Interaction*[
 (define-values (a0 a1 a2 a3 a4 a5) (make-6-wires 'a))
 (define-values (b0 b1 b2 b3 b4 b5) (make-6-wires 'b))
 (define-values (s0 s1 s2 s3 s4 s5) (make-6-wires 's))
 (define carry-in  (wire-make 'carry-in))
 (define carry-out (wire-make 'carry-out))
-(define overflow  (wire-make 'overflow))
-(code:comment " ")
+(define overflow  (wire-make 'overflow))]
+@Interaction*[
 (define make-6-bit-adder
  (make-circuit-constr '6-bit-adder
   (code:comment "inputs")
@@ -1444,8 +1444,8 @@ the carry-out bit and an overflow indicator.
   ((s3 c4)        (make-full-adder a3 b3 c3))
   ((s4 c5)        (make-full-adder a4 b4 c4))
   ((s5 carry-out) (make-full-adder a5 b5 c5))
-  (overflow       (Xor c5 carry-out))))
-(code:comment " ")
+  (overflow       (Xor c5 carry-out))))]
+@Interaction*[
 (make-6-bit-adder a5 a4 a3 a2 a1 a0
                   b5 b4 b3 b2 b1 b0
          carry-in s5 s4 s3 s2 s1 s0
@@ -1459,8 +1459,8 @@ For this purpose we need conversion between numbers and lists of bits:
  (for/fold ((mask 1) (b '()) #:result b) ((i (in-range 6)))
   (values
    (arithmetic-shift mask 1)
-   (cons (if (zero? (bitwise-and mask n)) F T) b))))
-(code:comment " ")
+   (cons (if (zero? (bitwise-and mask n)) F T) b))))]
+@Interaction*[
 (define (bit-list->number b)
  (for/fold
   ((n 0) (k 1) #:result (if (> n 31) (- n 64) n))
@@ -1473,8 +1473,8 @@ Let's check @tt{number->bit-list} and @tt{bit-list->number}:
 
 @Interaction*[
 (for/and ((n (in-range -32 32)))
- (= (bit-list->number (number->bit-list n)) n))
-(code:comment " ")
+ (= (bit-list->number (number->bit-list n)) n))]
+@Interaction*[
 (define (make-bit-list n)
  (define (consF bit-list) (cons F bit-list))
  (define (consT bit-list) (cons T bit-list))
@@ -1483,8 +1483,8 @@ Let's check @tt{number->bit-list} and @tt{bit-list->number}:
   (else
    (define bit-list (make-bit-list (sub1 n)))
    (append (map consF bit-list)
-           (map consT bit-list)))))
-(code:comment " ")
+           (map consT bit-list)))))]
+@Interaction*[
 (for/and ((b (in-list (make-bit-list 6))))
  (equal? (number->bit-list (bit-list->number b)) b))]
 
