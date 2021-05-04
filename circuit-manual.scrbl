@@ -29,8 +29,8 @@
 
 @author{Jacob J. A. Koot}
 
-@(defmodule circuit-simulation/circuits #:packages ())
-@;@(defmodule "circuits.rkt" #:packages ())
+@;@(defmodule circuit-simulation/circuits #:packages ())
+@(defmodule "circuits.rkt" #:packages ())
 
 @(define ternary-table
 
@@ -755,8 +755,9 @@ Circuit constructors add actions to wires.
 
 @Interaction[
 (wire-make 'my-wire T)
-(object-name (wire-make 'another-wire))
-(code:comment "Two distinct wires with the same name.")
+(object-name (wire-make 'another-wire))]
+Two distinct wires with the same name.
+@Interaction[
 (equal? (wire-make 'a) (wire-make 'a))]}
 
 @defparam[wire-init-signal signal trit? #:value ?]{
