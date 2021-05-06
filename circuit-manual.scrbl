@@ -1375,11 +1375,11 @@ Now we can define the full-adder:
  (code:comment "inputs")
  (a b carry-in)
  (code:comment "outputs")
- (sum c-out)
+ (sum carry-out)
  (code:comment "subcircuits")
  ((half-sum carry-1) (make-half-adder b carry-in))
  ((sum      carry-2) (make-half-adder a half-sum))
- (c-out              (Or carry-1 carry-2))))]
+ (carry-out (Or carry-1 carry-2))))]
 
 Let's test the full-adder:
 
