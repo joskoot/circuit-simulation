@@ -812,8 +812,9 @@ Displays the names of the @nbr[wire]s and their current signals
 on the @nbr[port] or returns a string.@(lb)
 If @nbr[port] is @nbr['current] the @nbr[current-output-port] is used and @(Void) is returned.@(lb)
 If @nbr[port] is an output-port, that port is used and @(Void) is returned.@(lb)
-If @nbr[port] is @nbr['string] the output is returned as a string without newline at the end.@(lb)
-Every wire is displayed on a separate line.
+If @nbr[port] is @nbr['string] the output is returned as a string.@(lb)
+Every wire is displayed on a separate line, but if @nbr[port] is @nbr['string],@(lb)
+the newline at the end is omitted.
 
 @Interaction[
 (define-wires (a F) (b T))
