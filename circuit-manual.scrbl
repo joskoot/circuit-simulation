@@ -750,13 +750,12 @@ If the input signals do not change, the gate is not triggered.
                                                                              
 Yields a wire with a @nbr[name], initialized with @nbr[signal]
 and with empty list of actions.@(lb)
-Distinct wires can have the same name.
 Circuit constructors add actions to wires.
 
 @Interaction[
 (wire-make 'my-wire T)
 (object-name (wire-make 'another-wire))]
-Two distinct wires with the same name.
+Distinct wires can have the same name.
 @Interaction[
 (equal? (wire-make 'a) (wire-make 'a))]}
 
@@ -813,7 +812,7 @@ Displays the names of the @nbr[wire]s and their current signals
 on the @nbr[port] or returns a string.@(lb)
 If @nbr[port] is @nbr['current] the @nbr[current-output-port] is used and @(Void) is returned.@(lb)
 If @nbr[port] is an output-port, that port is used and @(Void) is returned.@(lb)
-If @nbr[port] is @nbr['string] the output is returned as a string.@(lb)
+If @nbr[port] is @nbr['string] the output is returned as a string without newline at the end.@(lb)
 Every wire is displayed on a separate line.
 
 @Interaction[
