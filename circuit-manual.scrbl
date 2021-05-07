@@ -29,8 +29,8 @@
 
 @author{Jacob J. A. Koot}
 
-@(defmodule circuit-simulation/circuits #:packages ())
-@;@(defmodule "circuits.rkt" #:packages ())
+@;@(defmodule circuit-simulation/circuits #:packages ())
+@(defmodule "circuits.rkt" #:packages ())
 
 @(define ternary-table
 
@@ -194,8 +194,8 @@ For examples see the next section and section @seclink["More examples"]{More exa
 As introductory example a D-flip-flop.@(lb)
 It has two inputs, say @tt{in} and @tt{clock}.@(lb)
 It has two outputs, say @tt{state} and @nb{@tt{state-inverse}}.@(lb)
-Once stable, the outputs remain inverses of each other and@(lb)
-the following transition table applies:
+Once stable, the outputs remain inverses of each other@(lb)
+and the following transition table applies:
 
 @Tabular[
 (((tt "clock")
@@ -498,6 +498,34 @@ depending on the value of the @nbr[trit-expr].
 @nb{A @tt{@italic{body}}} can include definitions, but the last element must be an expression.
 @nb{A @tt{@italic{body}}} may be empty, @nb{in which} case its value is @(Void).}
 
+@defproc[(trit-combinations (n natural?)
+                            (sort? any/c #f)
+                            (#:vector vector? any/c #f))
+  (or/c (listof (listof trit?)) (vectorof (listof trit?)))]{
+Procedure @nbr[trit-combinations] returns a list or vector of all combinations of @nbr[n] trits.
+The result is a list or vector of 3@↑{n} lists of @nbr[n] trits. If @nbr[sort?] has a true value,
+combinations with determinate trits (bits) only preceed all other ones.
+
+@Interaction[
+(trit-combinations 2 #f)
+(trit-combinations 2 #t)]
+
+The combinations can be used to check a circuit for all feasible inputs@(lb)
+or for making a truth table:
+
+@Interaction[
+(define out (wire-make 'out))
+(for ((combination (in-list (trit-combinations 2 #t))))
+ (apply And
+  (append
+   (map (curry wire-make 'no-name) combination)
+   (list out)))
+ (agenda-execute!)
+ (printf "(And ~s ~s) = ~s~n"
+  (car combination)
+  (cadr combination)
+  (wire-signal out)))]}
+
 @section[#:tag "binary"]{Binary logic}
 
 The binary digits are @nbr[F] and @nbr[T].@(lb)
@@ -519,6 +547,14 @@ depending on the value of the @nbr[bit-expr].
 The selected @italic{@tt{body}} is evaluated in tail position. The other one is ignored.
 @nb{A @tt{@italic{body}}} can include definitions, but the last element must be an expression.
 @nb{A @tt{@italic{body}}} may be empty, @nb{in which} case its value is @(Void).}
+
+@defproc[(bit-combinations (n natural?) (#:vector vector? any/c #f))
+  (or/c (listof (listof trit?)) (vectorof (listof trit?)))]{
+Procedure @nbr[bit-combinations] returns a list or vector of all combinations of @nbr[n] bits.
+The result is a list or vector of 2@↑{n} lists of @nbr[n] bits.
+
+@Interaction[
+(bit-combinations 3 #:vector #t)]}
 
 @section[#:tag "agenda"]{Agenda}
 
@@ -1197,40 +1233,6 @@ The gate has one output with a delay of @nbr[delay] units of time.
 @note{Use of procedure @nbr[make-gate*-constr] is discouraged,
 for malicious use may result in gates that share and can mutate each others internal state.
 Therefore it is not mentioned in the @seclink["introduction"]{introduction}.}}
-
-@deftogether[
-(@defproc[(trit-combinations (n natural?)
-                             (sort? any/c #f)
-                             (#:vector vector? any/c #f))
-  (or/c (listof (listof trit?)) (vectorof (listof trit?)))]
- @defproc[(bit-combinations (n natural?) (#:vector vector? any/c #f))
-  (or/c (listof (listof trit?)) (vectorof (listof trit?)))])]{
-Procedure @nbr[trit-combinations] returns a list or vector of all combinations of @nbr[n] trits.
-The result is a list or vector of 3@↑{n} lists of @nbr[n] trits. If @nbr[sort?] has a true value,
-combinations with determinate trits (bits) only preceed all other ones.
-Procedure @nbr[bit-combinations] returns a list or vector of all combinations of @nbr[n] bits.
-The result is a list or vector of 2@↑{n} lists of @nbr[n] bits.
-
-@Interaction[
-(trit-combinations 2 #f)
-(trit-combinations 2 #t)
-(bit-combinations 3 #:vector #t)]
-
-The combinations can be used to check a circuit for all feasible inputs@(lb)
-or for making a truth table:
-
-@Interaction[
-(define out (wire-make 'out))
-(for ((combination (in-list (trit-combinations 2 #t))))
- (apply And
-  (append
-   (map (curry wire-make 'no-name) combination)
-   (list out)))
- (agenda-execute!)
- (printf "(And ~s ~s) = ~s~n"
-  (car combination)
-  (cadr combination)
-  (wire-signal out)))]}
 
 @section[#:tag "truth tables"]{Truth tables}
 
