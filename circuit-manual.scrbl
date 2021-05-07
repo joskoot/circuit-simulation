@@ -567,8 +567,7 @@ Every agenda has a clock called ‘@nbr[agenda-time]’.
 Events are @nbrl[agenda-execute!]{executed} in order of progressing time.
 During a simulation the circuit may schedule more events.
 These are handled too.
-Before executing the events scheduled for time t,
-they are removed from the agenda. After execution of the events
+After execution of the events for time t
 the @nbr[agenda-time] is increased to t+1.
 An agenda can contain more than one event for the same time and
 for several input wires of the same gate.
