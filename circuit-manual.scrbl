@@ -29,8 +29,8 @@
 
 @author{Jacob J. A. Koot}
 
-@;@(defmodule circuit-simulation/circuits #:packages ())
-@(defmodule "circuits.rkt" #:packages ())
+@(defmodule circuit-simulation/circuits #:packages ())
+@;@(defmodule "circuits.rkt" #:packages ())
 
 @(define ternary-table
 
@@ -502,7 +502,7 @@ depending on the value of the @nbr[trit-expr].
                             (sort? any/c #f)
                             (#:vector vector? any/c #f))
   (or/c (listof (listof trit?)) (vectorof (listof trit?)))]{
-Procedure @nbr[trit-combinations] returns a list or vector of all combinations of @nbr[n] trits.
+Procedure @nbr[trit-combinations] returns a list or vector of all combinations of @nbr[n] trits.@(lb)
 The result is a list or vector of 3@↑{n} lists of @nbr[n] trits. If @nbr[sort?] has a true value,
 combinations with determinate trits (bits) only preceed all other ones.
 
@@ -536,7 +536,6 @@ Always @nbr[(implies (bit? x) (trit? x))] → @nbr[#t].
  (@defthing[#:kind "constant" bits (list/c bit? bit?) #:value (list F T)]
   @defthing[#:kind "constant" in-bits sequence? #:value (in-list bits)]
   @defproc[#:kind "predicate" (bit? (obj any/c)) boolean?])]{
-                                                             
 If the @nbr[obj] is a bit, id est, @nbr[F] or @nbr[T], @nbr[(bit? obj)] yields @nbr[#t],
 else it yields @nbr[#f].}
 
@@ -550,7 +549,7 @@ The selected @italic{@tt{body}} is evaluated in tail position. The other one is 
 
 @defproc[(bit-combinations (n natural?) (#:vector vector? any/c #f))
   (or/c (listof (listof trit?)) (vectorof (listof trit?)))]{
-Procedure @nbr[bit-combinations] returns a list or vector of all combinations of @nbr[n] bits.
+Procedure @nbr[bit-combinations] returns a list or vector of all combinations of @nbr[n] bits.@(lb)
 The result is a list or vector of 2@↑{n} lists of @nbr[n] bits.
 
 @Interaction[
