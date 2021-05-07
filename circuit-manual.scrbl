@@ -957,10 +957,12 @@ Predicates for circuit constructors.
 
 @defproc[(circuit-constr-name (circuit-constr circuit-constr?)) symbol?]{
 
-Return the name of a circuit constructor.
+Return the name of a circuit constructor.@(lb)
+The name can also be retrieved with procedure @nbr[object-name].
 
 @Interaction*[
-(map circuit-constr-name (list Not Nand And Empty-circuit-constr))]}
+(map circuit-constr-name (list Not Nand And Empty-circuit-constr))
+(map         object-name (list Not Nand And Empty-circuit-constr))]}
 
 @(reset-Interaction*)
 
