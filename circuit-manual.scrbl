@@ -1354,7 +1354,7 @@ While @tt{on/off}=@nbr[T], the @tt{clock} switches after every 10 units of time.
 
 @subsection{Addition}
 
-First a 1 bit adder. A full-adder consists of two half-adders.@(lb)
+First a 1 bit adder. A full-adder can be made with two half-adders.@(lb)
 Therefore we first define a half-adder:
 
 @(reset-Interaction*)
