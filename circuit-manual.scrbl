@@ -615,7 +615,8 @@ Returns the current time of the @nbr[current-agenda].}
 @defproc[(agenda-execute! (report any/c (agenda-report))) void?]{
 
 Executes all events scheduled in the @nbr[current-agenda] in order of increasing time.
-While @racket[agenda-execute!] is running, new events may be scheduled.
+While @racket[agenda-execute!] is running,
+the simulated circuit may schedule more events.
 These will be executed too.
 Procedure @nbr[agenda-execute!] continues until the @nbr[current-agenda] is empty
 or the @racket[agenda-time-limit] is exceeded.
