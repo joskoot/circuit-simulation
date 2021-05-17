@@ -55,7 +55,7 @@ I have used some of the ideas in section
 Structure and Inter­pretation of Computer Programs}”
 by Harold Abelson and Gerald Jay Sussman with Julie Sussman,
 in particular the use of an @seclink["agenda"]{agenda}.
-My module differs in many aspects, though, the agenda included.
+My module differs in many aspects, though, the agenda too.
 
 This document intentionally contains some repetitions of the same or similar texts in order to
 avoid hyperlinks where text is relevant on the spot.
