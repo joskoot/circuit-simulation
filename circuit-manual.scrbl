@@ -139,7 +139,7 @@ A simulation can be done in various ways, @nb{for example} as follows:
 my-circuit-constr (@nbr[make-circuit-constr] @italic{description} ...))}@(lb)
 Defines a circuit constructor.
 The @italic{@tt{description}} can be a straightforward list of the elements of
-a @hyperlink[]"https://en.wikipedia.org/wiki/Circuit_diagram"{diagram} of the circuit.}
+a @hyperlink["https://en.wikipedia.org/wiki/Circuit_diagram"]{diagram} of the circuit.}
 
 @item{
 @tt{(@nbr[define]@(hspace 2)input-wire (@nbr[wire-make] @italic{name} [@italic{signal}])) ...}@(lb)
