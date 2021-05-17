@@ -29,8 +29,8 @@
 
 @author{Jacob J. A. Koot}
 
-@(defmodule circuit-simulation/circuits #:packages ())
-@;@(defmodule "circuits.rkt" #:packages ())
+@;@(defmodule circuit-simulation/circuits #:packages ())
+@(defmodule "circuits.rkt" #:packages ())
 
 @(define ternary-table
 
@@ -247,7 +247,7 @@ can be made by straightforwardly listing the elements of the diagram:
   (state         (Nand reset state-inverse))
   (state-inverse (Nand set   state))))]
 
-The order in which the gates are listed is irrelevant.
+The order in which the gates (or subcircuits) are listed is irrelevant.
 Syntax @nbr[make-circuit-constr] yields @nb{a circuit} constructor.
 Now define the external input and output wires.
 @nb{The internal} wires @tt{set} and @tt{reset} are taken care of
@@ -368,16 +368,15 @@ Let's test the D-flip-flop for all binary combinations of @tt{in}, @tt{clock} an
   (code:comment " ")
   (define new-state-signal         (wire-signal state-wire))
   (define new-state-inverse-signal (wire-signal state-inverse-wire))
-  (unless
-   (or
-    (and
-     (F? clock-signal)
-     (eq? new-state-signal old-state)
-     (eq? new-state-inverse-signal (Not-function old-state)))
-    (and
-     (T? clock-signal)
-     (eq? new-state-signal in-signal)
-     (eq? new-state-inverse-signal (Not-function in-signal))))
+  (or
+   (and
+    (F? clock-signal)
+    (eq? new-state-signal old-state)
+    (eq? new-state-inverse-signal (Not-function old-state)))
+   (and
+    (T? clock-signal)
+    (eq? new-state-signal in-signal)
+    (eq? new-state-inverse-signal (Not-function in-signal)))
    (error 'flip-flop "test fails"))
   (code:comment " ")
   (code:comment "If desired print results.")
@@ -544,7 +543,7 @@ The selected @italic{@tt{body}} is evaluated in tail position. The other one is 
 @nb{A @tt{@italic{body}}} may be empty, @nb{in which} case its value is @(Void).}
 
 @defproc[(bit-combinations (n natural?) (#:vector vector? any/c #f))
-  (or/c (listof (listof trit?)) (vectorof (listof trit?)))]{
+  (or/c (listof (listof bit?)) (vectorof (listof bit?)))]{
 Procedure @nbr[bit-combinations] returns a list or vector of all combinations of @nbr[n] bits.@(lb)
 The result is a list or vector of 2@↑{n} lists of @nbr[n] bits.
 
@@ -657,7 +656,7 @@ When procedure @nbr[agenda-execute!] goes beyond the @nbr[time-limit], an except
 No time-limit is imposed if @nbr[time-limit] is @nbr[#f]
 in which case the simulator of an oscillating circuit keeps running forever (in bound space).
 The limit does not apply to procedure @nbr[agenda-schedule!] nor to syntax @nbr[agenda-sequence!],
-such as to allow the @nbr[time-limit] @nb{to be} adjusted after scheduling events.
+such as to allow the @nbr[agenda-time-limit] @nb{to be} adjusted after scheduling events.
 
 @Interaction[
 (wire-init-signal F)
@@ -965,6 +964,7 @@ This is not checked.
 Sharing output wires in real life makes no sense,
 for this causes a short circuit
 when one circuit puts signal @nbr[F] on the wire and another one signal @nbr[T].
+
 @nb{A circuit constructor} must not call itself as a subcircuit, nor directly nor indirectly.
 @nb{An attempt} to do so is detected as an error at run time when the constructor is called.
 Otherwise calling the circuit constructor would lead to an infinite recursion.
