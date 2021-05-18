@@ -669,8 +669,8 @@ the agenda modulo @nbr[agenda-time].
 This number is finite.
 Therefore, it is possible to adapt the simulator such as to detect infinite oscillation.
 However, this would involve much overhead in terms of both memory usage and execution time.
-Therefore, this detection has not been implemented.
-May be this detection should be added as an option. (May be a yet-to-do)}}
+Therefore, this detection has not been implemented.@(lb)
+May be this detection should be added as an option. May be a yet-to-do.}}
 
 @defproc[(agenda-schedule!
           (wire wire?)
