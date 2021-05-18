@@ -783,6 +783,7 @@ A gate with two or more inputs never is triggered more than once at the same
 @nbsl["agenda"]{agenda-time}.
 It is triggered once after all inputs have been computed.@(lb)
 If the input signals do not change, the gate is not triggered.
+A gate does not schedule an event for its output if this output will not change.
 
 @defproc[(wire-make (name symbol?) (signal trit? (wire-init-signal))) wire?]{
                                                                              
