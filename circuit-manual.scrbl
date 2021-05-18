@@ -899,7 +899,14 @@ Returns the number of actions currently attributed to a @nbr[wire],
 id est, the number of gates that have the wire as an input.
 Giving the wire as an input wire to a circuit constructor usually,
 but not necessarily.
-increments this number.}
+increments this number.
+
+@Interaction[
+(define-wires a b)
+(And a a b)
+(wire-nr-of-actions a)
+(code:line ((make-circuit-constr 'no-name (a) (a)) a) (code:comment "Does not add an action."))
+(wire-nr-of-actions a)]}
 
 @section{Circuit constructors}
 
