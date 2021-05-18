@@ -895,7 +895,8 @@ The default @nbr[name-expr] is @tt{'}@nbr[id] and the default @nbr[signal-expr] 
 @(reset-Interaction*)
 
 @defproc[(wire-nr-of-actions (wire wire?)) natural?]{
-Returns the number of actions currently attributed to a @nbr[wire].
+Returns the number of actions currently attributed to a @nbr[wire],
+id est, the number of gates that have the wire as an input.
 Giving the wire as an input wire to a circuit constructor usually,
 but not necessarily.
 increments this number.}
