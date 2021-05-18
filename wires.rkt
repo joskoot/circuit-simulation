@@ -13,7 +13,8 @@
  define-wires
  report-wire-width
  wire-print
- wire-println)
+ wire-println
+ wire-nr-of-actions)
 
 (provide ; for private use only
  set-wire-signal!
@@ -112,6 +113,10 @@
    (cond
     ((not (eq? p 'string)) (newline port))
     ((eq? p 'string) (get-output-string port))))))
+
+(define (wire-nr-of-actions wire)
+ (unless (wire? wire) (raise-argument-error 'wire-nr-of-actions "wire?" wire))
+ (length (wire-actions wire)))
 
 ;=====================================================================================================
 ; The end
