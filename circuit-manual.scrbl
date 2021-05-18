@@ -662,7 +662,15 @@ such as to allow the @nbr[agenda-time-limit] @nb{to be} adjusted after schedulin
 (wire-init-signal F)
 ((make-circuit-constr 'oscillator () () (a (Not a))))
 (agenda-time-limit 9) 
-(agenda-execute! #t)]}
+(agenda-execute! #t)]
+
+@note{Considere the number of different internal states of a circuit in combination with
+the agenda modulo @nbr[agenda-time].
+This number is finite.
+Therefore, it is possible to adapt the simulator such as to detect infinite oscillation.
+However, this would involve much overhead in terms of both memory usage and execution time.
+Therefore, this detection has not been implemented.
+May be this detection should be added as an option. (May be a yet-to-do)}}
 
 @defproc[(agenda-schedule!
           (wire wire?)
