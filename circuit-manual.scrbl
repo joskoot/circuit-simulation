@@ -70,7 +70,7 @@ Their constructors are provided by module circuits.rkt.
 For each wire and each occurrence of a gate a distinct object is made.
 Circuits can be nested as subcircuits in an enveloping circuit,
 but at the finest grain level, all circuits consist of distinct instances of @seclink["wires"]{wires}
-and @nbr[Not], @nbr[Nand], @nbr[Nand3] and @nbr[Delay] gates only.
+and distinct instances of @nbr[Not], @nbr[Nand], @nbr[Nand3] and @nbr[Delay] gates only.
 More gates are available.
 These are: @nbr[And], @nbr[And3], @nbr[Or], @nbr[Or3], @nbr[Nor], @nbr[Nor3],
 @nbr[Xor], @nbr[If] and @nbr[Imply].
@@ -139,7 +139,7 @@ A simulation can be done in various ways, @nb{for example} as follows:
 my-circuit-constr (@nbr[make-circuit-constr] @italic{description} ...))}@(lb)
 Defines a circuit constructor.
 The @italic{@tt{description}} can be a straightforward list of the elements of
-a @hyperlink["https://en.wikipedia.org/wiki/Circuit_diagram"]{diagram} of the circuit.}
+a @hyperlink["https://en.wikipedia.org/wiki/Electronic_symbol"]{diagram} of the circuit.}
 
 @item{
 @tt{(@nbr[define]@(hspace 2)input-wire (@nbr[wire-make] @italic{name} [@italic{signal}])) ...}@(lb)
@@ -251,7 +251,7 @@ The order in which the gates (or subcircuits) are listed is irrelevant.
 Syntax @nbr[make-circuit-constr] yields @nb{a circuit} constructor.
 Now define the external input and output wires.
 @nb{The internal} wires @tt{set} and @tt{reset} are taken care of
-by circuit constructor @tt{D-flip-flop-constr}.
+by circuit constructor @nb{@tt{D-flip-flop-constr}}.
 In this example @tt{state-wire} and @tt{state-inverse-wire} are initialized with signal @nbr[F]
 in stead of the default indeterminate signal @nbr[?],
 because this better demonstrates the vibration during power up with @nb{@tt{clock}=@nbr[F].}
@@ -329,7 +329,9 @@ but not quite:
 
 The @tt{state} switched at time 24, whereas @tt{state-inverse} changed at time 25.@(lb)
 During one unit of time @tt{state} and @tt{state-inverse} had the same signal @nbr[T].@(lb)
-The raising output always comes one unit of time earlier than the dropping one.
+The raising output always comes one unit of time earlier than the dropping one.@(lb)
+Notice that the time does not avance while procedure @nbr[agenda-execute!] is not running.@(lb)
+The time is not reset while returning from procedure @nbr[agenda-execute!].
 
 Let's test the D-flip-flop for all binary combinations of @tt{in}, @tt{clock} and old @tt{state}.
 
@@ -796,7 +798,12 @@ Circuit constructors add actions to wires.
 (object-name (wire-make 'another-wire))]
 Distinct wires can have the same name.
 @Interaction[
-(equal? (wire-make 'a) (wire-make 'a))]}
+(define-values (wire-a wire-b) (values (wire-make 'a) (wire-make 'a)))
+(equal? wire-a wire-b)
+(wire-println wire-a wire-b)
+(agenda-schedule! wire-a T)
+(agenda-execute!)
+(wire-println wire-a wire-b)]}
 
 @defparam[wire-init-signal signal trit? #:value ?]{
                                                    
