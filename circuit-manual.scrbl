@@ -905,8 +905,7 @@ The default @nbr[name-expr] is @tt{'}@nbr[id] and the default @nbr[signal-expr] 
 Returns the number of actions currently attributed to a @nbr[wire],
 id est, the number of gates that have the wire as an input.
 Giving the wire as an input wire to a circuit constructor usually,
-but not necessarily.
-increments this number.
+but not necessarily increments this number.
 
 @Interaction[
 (define-wires a b)
@@ -1176,9 +1175,24 @@ Can also be used to simulate delays of gates with large fan-out and delays in lo
 @section{Logical functions}
 
 A logical function accepts @nbrl[trit?]{trits}
-for its arguments and returns one @nbrl[trit?]{trit}.@(lb)
-Some of the functions accept an arbitrary number of arguments,@(lb)
+for its arguments and returns one @nbrl[trit?]{trit}.
+Some of the functions accept an arbitrary number of arguments,
 whereas gates always have a fixed number of inputs.
+@elemtag{generalized-associativity}
+Where applicable a note is added about commutativity and associativity.
+In this document these two concepts are generalized to functions that can accept more than two
+arguments.
+Such a function will be said to be commutative if it is invariant
+under permutation of its arguments.
+It will be said to be associative if a nested application
+can be flattened to one single application.
+For example, @nbr[And-function] is associative in generalized sense:
+@inset{@nbr[(And-function (And-function a b) (And-function c d))]
+can be written as: @nbr[(And-function a b c d)]}
+This excludes the distinction between left and right associativity,
+but in the present document this distinction is not needed.
+A function that is associative when called with two arguments only,
+not necessarily is associative in generalized sense too.
 
 @defproc[(Not-function (signal trit?)) trit?]{
 @nbr[(Not-function F) = T]@(lb)
@@ -1194,7 +1208,9 @@ else yields @nbr[T] if all @nbr[signal]s are @nbr[T],@(lb)
 else yields @nbr[?].
 
 When called with 2 arguments, the function corresponds to an @nbr[And] gate.@(lb)
-When called with 3 arguments, the function corresponds to an @nbr[And3] gate.}
+When called with 3 arguments, the function corresponds to an @nbr[And3] gate.
+
+@nbr[And-function] is commutative and associative in generalized sense.}
 
 @defproc[(Nand-function (signal trit?) ...) trit?]{
 Yields @nbr[F] when called without arguments,@(lb)
@@ -1203,7 +1219,9 @@ else yields @nbr[F] if all @nbr[signal]s are @nbr[T],@(lb)
 else yields @nbr[?].
 
 When called with 2 arguments, the function corresponds to a @nbr[Nand] gate.@(lb)
-When called with 3 arguments, the function corresponds to a @nbr[Nand3] gate.}
+When called with 3 arguments, the function corresponds to a @nbr[Nand3] gate.
+
+@nbr[Nand-function] is commutative in generalized sense, but not associative.}
 
 @defproc[(Or-function (signal trit?) ...) trit?]{
 Yields @nbr[F] when called without arguments,@(lb)
@@ -1212,7 +1230,9 @@ else yields @nbr[F] if all @nbr[signal]s are @nbr[F],@(lb)
 else yields @nbr[?].
 
 When called with 2 arguments, the function corresponds to an @nbr[Or] gate.@(lb)
-When called with 3 arguments, the function corresponds to an @nbr[Or3] gate.}
+When called with 3 arguments, the function corresponds to an @nbr[Or3] gate.
+
+@nbr[Or-function] is commutative and associative in generalized sense.}
 
 @defproc[(Nor-function (signal trit?) ...) trit?]{
 Yields @nbr[T] when called without arguments,@(lb)
@@ -1221,7 +1241,9 @@ else yields @nbr[T] if all @nbr[signal]s are @nbr[F],@(lb)
 else yields @nbr[?].
 
 When called with 2 arguments, the function corresponds to a @nbr[Nor] gate.@(lb)
-When called with 3 arguments, the function corresponds to a @nbr[Nor3] gate.}
+When called with 3 arguments, the function corresponds to a @nbr[Nor3] gate.
+
+@nbr[Nor-function] is commutative in generalized sense, but not associative.}
 
 @defproc[(Xor-function (signal trit?) ...) trit?]{
 Yields @nbr[F] when called without arguments,@(lb)
@@ -1229,7 +1251,9 @@ else yields @nbr[?] if at least one @nbr[signal] is @nbr[?],@(lb)
 else yields @nbr[T] if an odd number of @nbr[signal]s is @nbr[T],@(lb)
 else yields @nbr[F].
 
-When called with 2 arguments, the function corresponds to a @nbr[Xor] gate.}
+When called with 2 arguments, the function corresponds to a @nbr[Xor] gate.
+
+@nbr[Xor-function] is commutative and associative in generalized sense.}
 
 @defproc[(If-function (test trit?) (then trit?) (else trit?)) trit?]{
 Same as@(lb)
