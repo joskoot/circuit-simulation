@@ -196,14 +196,14 @@ and the following transition table applies:
 @Tabular[
 (((tt "clock")
   (tt "in")
-  (list "old" (hspace 1) (tt "state"))
+  (list "old " (tt "state"))
   "│"
-  (list "new" (hspace 1) (tt "state"))
-  (list "new" (hspace 1) (tt "state-inverse"))
+  (list "new " (tt "state"))
+  (list "new " (tt "state-inverse"))
   "action")
  (@nbr[T] @nbr[F] "any"        "│" @nbr[F]       @nbr[T] "reset")
  (@nbr[T] @nbr[T] "any"        "│" @nbr[T]       @nbr[F] "set")
- (@nbr[F] "any"   (tt "state") "│" (tt "state") (list "inverse of" (hspace 1) (tt "state"))
+ (@nbr[F] "any"   (tt "state") "│" (tt "state") (list "inverse of " (tt "state"))
                                                          "state preserved"))
  #:row-properties '((top-border bottom-border) () () bottom-border)
  #:column-properties '(center center center center center center left)
