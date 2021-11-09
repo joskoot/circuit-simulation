@@ -1418,7 +1418,7 @@ Therefore we first define a half-adder:
   (sum carry-out)
   (code:comment "gates")
   (carry-out (And a b))
-  (sum       (And (Or a b) (Not carry-out)))))]
+  (sum       (Xor a b))))]
 
 Now we can define the full-adder:
 
