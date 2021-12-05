@@ -46,7 +46,7 @@
 
 @section{Preface}
 
-Modul circuits.rkt provides tools for digital simulation of digital circuits.
+Module circuits.rkt provides tools for digital simulation of digital circuits.
 I have used some of the ideas in section
 @hyperlink[
 "https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book-Z-H-22.html#%_sec_3.3.4"]{
