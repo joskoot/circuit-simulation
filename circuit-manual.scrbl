@@ -29,8 +29,8 @@
 
 @author{Jacob J. A. Koot}
 
-@;@(defmodule circuit-simulation/circuits #:packages ())
-@(defmodule "circuits.rkt" #:packages ())
+@(defmodule circuit-simulation/circuits #:packages ())
+@;@(defmodule "circuits.rkt" #:packages ())
 
 @(define ternary-table
 
