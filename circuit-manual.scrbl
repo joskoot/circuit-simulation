@@ -46,7 +46,7 @@
 
 @section{Preface}
 
-Modul @hyperlink["circuits.rkt"]{circuits.rkt}
+Modul @hyperlink["../../circuits.rkt"]{circuits.rkt}
 provides tools for digital simulation of digital circuits.
 I have used some of the ideas in section
 @hyperlink[
@@ -67,7 +67,7 @@ Digital circuits consist of @seclink["gate"]{gates} and @seclink["wires"]{wires}
 Circuits are made by circuit constructors,
 which them­selves can be made with syntax @racket[make-circuit-constr].
 @seclink["gate"]{Gates} are elementary circuits.
-Their constructors are provided by module @hyperlink["circuits.rkt"]{circuits.rkt}.
+Their constructors are provided by module @hyperlink["../../circuits.rkt"]{circuits.rkt}.
 For each wire and each occurrence of a gate a distinct object is made.
 Circuits can be nested as subcircuits in an enveloping circuit,
 but at the finest grain level, all circuits consist of distinct instances of @seclink["wires"]{wires}
