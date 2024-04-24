@@ -1093,7 +1093,9 @@ Every gate constructor is a procedure accepting input wires followed by one outp
                    (And test then)
                    (And (Not test) else))]
 
- but the former has less delay.}
+ but the former has less delay.
+ @nbr[(Nand then else)] is included such as to produce @nbr[T]
+ when the @nbr[test] is indeterminate and both @nbr[then] and @nbr[else] are @nbr[T].}
 
 @defproc[#:kind "gate constructor" (Imply (premise wire?) (implication wire?) (out wire?))
          void?]{
@@ -1275,7 +1277,10 @@ not necessarily is associative in generalized sense too.
  @(hspace 1)@nbr[(And-function test then)]@(lb)
  @(hspace 1)@nbr[(And-function (Not-function test) else)]@tt{)}
 
- Corresponds to an @nbr[If] gate.}
+ Corresponds to an @nbr[If] gate.
+ The line @nbr[(And-function then else)] assures that
+ a @nbr[T] is produced when the @nbr[test] is indeterminate
+ and both @nbr[then] and @nbr[else] are @nbr[T].}
 
 @defproc[(Imply-function (premise trit?) (implication trit?)) trit?]{
  Same as
