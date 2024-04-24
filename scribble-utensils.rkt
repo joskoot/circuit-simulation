@@ -202,5 +202,5 @@
     (format "~a" x))))
 
 @(define (X-inputs<? x y)
-  (and (not (member ? x)) (member ? y)))
+  (< (count ?? x) (count ?? y)))
 
