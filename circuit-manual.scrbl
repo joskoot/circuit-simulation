@@ -29,8 +29,8 @@
 
 @author{Jacob J. A. Koot}
 
-@(defmodule circuit-simulation/circuits #:packages ())
-@;@(defmodule "circuits.rkt" #:packages ())
+@;@(defmodule circuit-simulation/circuits #:packages ())
+@(defmodule "circuits.rkt" #:packages ())
 
 @(define ternary-table
 
@@ -613,7 +613,8 @@ no event is scheduled for this output.
  @Interaction[
  (Not (wire-make 'in F) (wire-make 'out F))
  (agenda-empty?)
- (agenda-execute! #t)]
+ (agenda-execute! #t)
+ (agenda-empty?)]
 
  @Interaction[
  (Not (wire-make 'in F) (wire-make 'out T))
