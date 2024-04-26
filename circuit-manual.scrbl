@@ -58,7 +58,7 @@ by Harold Abelson and Gerald Jay Sussman with Julie Sussman,
 in particular the use of an @seclink["agenda"]{agenda}.
 My module differs in many aspects, though, the agenda too.
 
-This document intentionally contains some repetitions of the same or similar texts in order to
+This document intentionally contains some repetitions of the same or similar phrases in order to
 avoid hyperlinks where text is relevant on the spot.
 
 @section[#:tag "introduction"]{Introduction}
@@ -660,6 +660,7 @@ no event is scheduled for this output.
  (define c (wire-make 'c F))
  (And a b (wire-make 'and-ab))
  (And a c (wire-make 'and-ac))
+ (Xor a b (wire-make 'xor-ab))
  (Xor a c (wire-make 'xor-ac))
  (agenda-execute! #t)]}
 
