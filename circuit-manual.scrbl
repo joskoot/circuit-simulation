@@ -48,10 +48,7 @@
 
 Modul @hyperlink["circuits.rkt"]{circuits.rkt}
 provides tools for digital simulation of digital circuits.
-I have used some of the ideas in section
-@hyperlink[
- "https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book-Z-H-22.html#%_sec_3.3.4"]{
- 3.3.4} of
+I have used some of the ideas in section 3.3.4 of
 “@hyperlink["https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book.html"]{
  Structure and Inter­pretation of Computer Programs}”
 by Harold Abelson and Gerald Jay Sussman with Julie Sussman,
