@@ -26,7 +26,7 @@
  #:property prop:procedure 1
  #:property prop:custom-write
  (λ (circuit port mode) (fprintf port "#<circuit-constr:~s>" (circuit-constr-name circuit)))
- #:property prop:object-name (λ (x) (circuit-constr-name x))
+ #:property prop:object-name 0
  #:guard
  (λ (name proc ignore)
   (unless (procedure? proc) (raise-argument-error 'circuit-constr "procedure?" proc))

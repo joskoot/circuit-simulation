@@ -248,8 +248,7 @@ can be made by straightforwardly listing the elements of the diagram:
 The order in which the gates (or subcircuits) are listed is irrelevant.
 Syntax @nbr[make-circuit-constr] yields @nb{a circuit} constructor.
 Now define the external input and output wires.
-@nb{The internal} wires @tt{set} and @tt{reset} are taken care of
-by circuit constructor @nb{@tt{D-flip-flop-constr}}.
+@nb{The internal} wires @tt{set} and @tt{reset} are taken care of by the circuit constructor.
 In this example @tt{state-wire} and @tt{state-inverse-wire} are initialized with signal @nbr[F]
 in stead of the default indeterminate signal @nbr[?],
 because this better demonstrates the vibration during power up with @nb{@tt{clock}=@nbr[F].}

@@ -100,7 +100,7 @@
 (define (cons-? list-of-trits) (cons ? list-of-trits))
 
 (define (trit-list<? trit-list-x trit-list-y)
- (and (not (member ? trit-list-x)) (member ? trit-list-y)))
+ (< (count ?? trit-list-x) (count ?? trit-list-y)))
         
 ;=====================================================================================================
 ; The end
