@@ -767,7 +767,7 @@ no event is scheduled for this output.
    (agenda-reset!)
    ((make-circuit-constr 'Circuit (a b) (out)
       (out (Nand (Nand b (Not a)) (Nand a (Not b)))))
-    (code:comment "     out   Nand•1  Not•2    Nand•3  Not•4")
+    (code:comment "      out   Nand•1  Not•2    Nand•3  Not•4")
     (wire-make 'a F)
     (wire-make 'b T)
     (wire-make 'out))
