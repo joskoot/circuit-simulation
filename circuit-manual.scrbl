@@ -920,7 +920,7 @@ A gate does not schedule an event for its output if this output will not change.
   The default @nbr[name-expr] is @tt{'}@nbr[id] and the default @nbr[signal-expr] is
   @nbr[(wire-init-signal)].
   @Interaction[
- (define-wires a (b) (c '?) (d F) (e 'T T))
+ (define-wires a (b) (c ?) (d F) (e 'T T))
  (wire-println a b c d e)]}]
 @(reset-Interaction*)
 
