@@ -1218,19 +1218,19 @@ This excludes the distinction between left and right associativity,
 but in the present document this distinction is not needed.
 A function that is associative when called with two arguments only,
 not necessarily is associative in generalized sense too.
-For example, the following function @tt{Not-Xor}
+For example, the following @tt{Not-Xor-function}
 is associative when restricted to two arguments only,
 but not in generalized sense:
 
 @Interaction[
- (define (Not-Xor . x) (Not-function (apply Xor-function x)))
+ (define (Not-Xor-function . x) (Not-function (apply Xor-function x)))
  (for/and ((x (in-list (trit-combinations 3))))
    (define-values (p q r) (apply values x))
    (eq?
-     (Not-Xor p (Not-Xor q r))
-     (Not-Xor (Not-Xor p q) r)))
+     (Not-Xor-function p (Not-Xor-function q r))
+     (Not-Xor-function (Not-Xor-function p q) r)))
  (code:comment #, @red{But:})
- (eq? (Not-Xor F F F) (Not-Xor F (Not-Xor F F)))]
+ (eq? (Not-Xor-function F F F) (Not-Xor-function F (Not-Xor-function F F)))]
 
 @defproc[(Not-function (signal trit?)) trit?]{
  @nbr[(Not-function F) = T]@(lb)
