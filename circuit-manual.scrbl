@@ -1230,7 +1230,9 @@ but not in generalized sense:
      (Not-Xor-function p (Not-Xor-function q r))
      (Not-Xor-function (Not-Xor-function p q) r)))
  (code:comment #, @red{But:})
- (eq? (Not-Xor-function F F F) (Not-Xor-function F (Not-Xor-function F F)))]
+ (eq?
+   (Not-Xor-function F F F)
+   (Not-Xor-function F (Not-Xor-function F F)))]
 
 @defproc[(Not-function (signal trit?)) trit?]{
  @nbr[(Not-function F) = T]@(lb)
