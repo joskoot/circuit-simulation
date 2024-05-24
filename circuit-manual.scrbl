@@ -1348,7 +1348,7 @@ As an example consider an alternative construction of a
 @nb{@seclink["D-flip-flop-section"]{D-flip-flop}}.
 The new state of a @nb{@seclink["D-flip-flop-section"]{D-flip-flop}} obeys the formula:
 
-@inset{@tt{new-state =} @nbr[(Or (And in clock) (And (Not clock) old-state))]}
+@inset{@tt{new-state} = @nbr[(Or (And in clock) (And (Not clock) old-state))]}
 
 which is the same as:
 
@@ -1525,8 +1525,7 @@ the carry-out bit and an overflow indicator.
  (define make-6-bit-adder
    (make-circuit-constr '6-bit-adder
      (code:comment "inputs")
-     (a5 a4 a3 a2 a1 a0
-       b5 b4 b3 b2 b1 b0 carry-in)
+     (a5 a4 a3 a2 a1 a0 b5 b4 b3 b2 b1 b0 carry-in)
      (code:comment "outputs")
      (s5 s4 s3 s2 s1 s0 carry-out overflow)
      (code:comment "subcircuits")
@@ -1538,9 +1537,11 @@ the carry-out bit and an overflow indicator.
      ((s5 carry-out) (make-full-adder a5 b5 c5))
      (overflow       (Xor c5 carry-out))))]
 @Interaction*[
- (make-6-bit-adder a5 a4 a3 a2 a1 a0
+ (make-6-bit-adder
+   a5 a4 a3 a2 a1 a0
    b5 b4 b3 b2 b1 b0
-   carry-in s5 s4 s3 s2 s1 s0
+   carry-in
+   s5 s4 s3 s2 s1 s0
    carry-out overflow)]
 
 Let's test this 6-bit adder.@(lb)
