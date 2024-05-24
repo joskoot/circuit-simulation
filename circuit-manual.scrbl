@@ -1218,6 +1218,19 @@ This excludes the distinction between left and right associativity,
 but in the present document this distinction is not needed.
 A function that is associative when called with two arguments only,
 not necessarily is associative in generalized sense too.
+For example, the following function @tt{Not-Xor}
+is associative when restricted to two arguments only,
+but not in generalized sense:
+
+@Interaction[
+ (define (Not-Xor . x) (Not-function (apply Xor-function x)))
+ (for/and ((x (in-list (trit-combinations 3))))
+   (define-values (p q r) (apply values x))
+   (eq?
+     (Not-Xor p (Not-Xor q r))
+     (Not-Xor (Not-Xor p q) r)))
+ (code:comment #, @red{But:})
+ (eq? (Not-Xor F F F) (Not-Xor F (Not-Xor F F)))]
 
 @defproc[(Not-function (signal trit?)) trit?]{
  @nbr[(Not-function F) = T]@(lb)
@@ -1233,8 +1246,7 @@ not necessarily is associative in generalized sense too.
  else yields @nbr[?].
 
  When called with 2 arguments, the function corresponds to an @nbr[And] gate.@(lb)
- When called with 3 arguments, the function corresponds to an @nbr[And3] gate.
-
+ When called with 3 arguments, the function corresponds to an @nbr[And3] gate.@(lb)
  @nbr[And-function] is commutative and associative in generalized sense.}
 
 @defproc[(Nand-function (signal trit?) ...) trit?]{
@@ -1244,8 +1256,7 @@ not necessarily is associative in generalized sense too.
  else yields @nbr[?].
 
  When called with 2 arguments, the function corresponds to a @nbr[Nand] gate.@(lb)
- When called with 3 arguments, the function corresponds to a @nbr[Nand3] gate.
-
+ When called with 3 arguments, the function corresponds to a @nbr[Nand3] gate.@(lb)
  @nbr[Nand-function] is commutative in generalized sense, but not associative.}
 
 @defproc[(Or-function (signal trit?) ...) trit?]{
@@ -1255,8 +1266,7 @@ not necessarily is associative in generalized sense too.
  else yields @nbr[?].
 
  When called with 2 arguments, the function corresponds to an @nbr[Or] gate.@(lb)
- When called with 3 arguments, the function corresponds to an @nbr[Or3] gate.
-
+ When called with 3 arguments, the function corresponds to an @nbr[Or3] gate.@(lb)
  @nbr[Or-function] is commutative and associative in generalized sense.}
 
 @defproc[(Nor-function (signal trit?) ...) trit?]{
@@ -1266,8 +1276,7 @@ not necessarily is associative in generalized sense too.
  else yields @nbr[?].
 
  When called with 2 arguments, the function corresponds to a @nbr[Nor] gate.@(lb)
- When called with 3 arguments, the function corresponds to a @nbr[Nor3] gate.
-
+ When called with 3 arguments, the function corresponds to a @nbr[Nor3] gate.@(lb)
  @nbr[Nor-function] is commutative in generalized sense, but not associative.}
 
 @defproc[(Xor-function (signal trit?) ...) trit?]{
@@ -1276,8 +1285,7 @@ not necessarily is associative in generalized sense too.
  else yields @nbr[T] if an odd number of @nbr[signal]s is @nbr[T],@(lb)
  else yields @nbr[F].
 
- When called with 2 arguments, the function corresponds to a @nbr[Xor] gate.
-
+ When called with 2 arguments, the function corresponds to a @nbr[Xor] gate.@(lb)
  @nbr[Xor-function] is commutative and associative in generalized sense.}
 
 @defproc[(If-function (test trit?) (then trit?) (else trit?)) trit?]{
