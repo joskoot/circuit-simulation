@@ -1220,7 +1220,7 @@ This excludes the distinction between left and right associativity,
 but in the present document this distinction is not needed.
 A function that is associative when called with two arguments only,
 not necessarily is associative in generalized sense too.
-For example, the following @nbr[Eqv-function]
+For example, the @nbr[Eqv-function]
 is associative when restricted to two arguments only,
 but not in generalized sense:
 
