@@ -11,6 +11,7 @@
     Or-function
    Nor-function
    Xor-function
+   Eqv-function
  Imply-function
     If-function)
 
@@ -49,6 +50,13 @@
      ((Xor-function (cdr trits) (Not-function out)))
      (?)))))
  (Xor-function trits F))
+
+(define (Eqv-function . trits)
+  (cond
+    ((andmap T? trits) T)
+    ((andmap F? trits) T)
+    ((and (member F trits) (member T trits)) F)
+    (else ?)))
 
 ;=====================================================================================================
 ; The end

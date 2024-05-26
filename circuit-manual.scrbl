@@ -1064,13 +1064,14 @@ according to the following formulas. See the @seclink["truth tables"]{truth tabl
   (@tt{(@nbr[Or]   @(hspace 3)a b)}   "=" @nbr[(Nand (Not a) (Not b))])
   (@tt{(@nbr[Nor]  @(hspace 2)a b)}   "=" @nbr[(Not (Nand (Not a) (Not b)))])
   (@tt{(@nbr[Xor]  @(hspace 2)a b)}   "=" @nbr[(Nand (Nand a (Not b)) (Nand (Not a) b))])
+  (@tt{(@nbr[Eqv]  @(hspace 2)a b)}   "=" @nbr[(Nand (Nand a b) (Nand (Not a) (Not b)))])
   (@tt{(@nbr[Imply]           a b)}   "=" @nbr[(Nand a (Not b))])
   (@tt{(@nbr[And3] @(hspace 1)a b c)} "=" @nbr[(Not (Nand3 a b c))])
   (@tt{(@nbr[Or3]  @(hspace 2)a b c)} "=" @nbr[(Nand3 (Not a) (Not b) (Not c))])
   (@tt{(@nbr[Nor3] @(hspace 1)a b c)} "=" @nbr[(Not (Nand3 (Not a) (Not b) (Not c)))])
   (@tt{(@nbr[If]   @(hspace 3)a b c)} "=" @nbr[(Nand3 (Nand b c) (Nand a b) (Nand (Not a) c))]))
  #:sep (hspace 2)
- #:row-properties '((top-border bottom-border) () () () () () () () () bottom-border)
+ #:row-properties '((top-border bottom-border) () () () () () () () () () bottom-border)
  #:column-properties '(left center left)]
 
 Every gate constructor is a procedure accepting input wires followed by one output wire.
@@ -1083,6 +1084,7 @@ Every gate constructor is a procedure accepting input wires followed by one outp
    @defproc[#:kind "gate constructor" (Or    (a wire?) (b wire?)           (out wire?)) void?]
    @defproc[#:kind "gate constructor" (Nor   (a wire?) (b wire?)           (out wire?)) void?]
    @defproc[#:kind "gate constructor" (Xor   (a wire?) (b wire?)           (out wire?)) void?]
+   @defproc[#:kind "gate constructor" (Eqv   (a wire?) (b wire?)           (out wire?)) void?]
    @defproc[#:kind "gate constructor" (And3  (a wire?) (b wire?) (c wire?) (out wire?)) void?]
    @defproc[#:kind "gate constructor" (Or3   (a wire?) (b wire?) (c wire?) (out wire?)) void?]
    @defproc[#:kind "gate constructor" (Nor3  (a wire?) (b wire?) (c wire?) (out wire?)) void?])]
@@ -1288,7 +1290,17 @@ but not in generalized sense:
  else yields @nbr[F].
 
  When called with 2 arguments, the function corresponds to a @nbr[Xor] gate.@(lb)
- @nbr[Xor-function] is commutative and associative in generalized sense.}
+ Associative and commutative in generalized sense.}
+
+@defproc[(Eqv-function (signal trit?) ...) trit?]{
+ Yields @nbr[T] when called without arguments,@(lb)
+ else yields @nbr[T] if every @nbr[signal] is @nbr[T] or every @nbr[signal] is @nbr[F],@(lb)
+ else yields @nbr[F] if one of the @nbr[signal]s is @nbr[F] and another one @nbr[T],@(lb)
+ else yields @nbr[?].
+
+ When called with 2 arguments, the function corresponds to an @nbr[Eqv] gate.@(lb)
+ The function is commutative in generalized sense.@(lb)
+ It is associative when restricted to two arguments only, but not in generalized sense.}
 
 @defproc[(If-function (test trit?) (then trit?) (else trit?)) trit?]{
  Same as@(lb)
@@ -1332,6 +1344,7 @@ When all inputs are determinate, the output is determinate too, of course.
    (Or Or-function)
    (Nor Nor-function)
    (Xor Xor-function)
+   (Eqv Eqv-function)
    (Imply Imply-function))
 @(make-truth-tables (a b c) (And3 And-function)
    (Nand3 And-function)

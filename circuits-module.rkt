@@ -15,6 +15,7 @@
  Or Or3      Or-function
  Nor Nor3    Nor-function
  Xor         Xor-function
+ Eqv         Eqv-function
  And* Nand* Or* Nor* Xor*   
  Imply       Imply-function
  If          If-function
@@ -218,6 +219,10 @@
  (make-circuit-constr 'Xor (a b) (out)
   ((out) (Nand (Nand a (Not b)) (Nand (Not a) b)))))
 
+(define Eqv
+ (make-circuit-constr 'Eqv (a b) (out)
+  ((out) (Nand (Nand a b) (Nand (Not a) (Not b))))))
+
 (define If
  (make-circuit-constr 'If (test then else) (out)
   ((out) (Nand3 (Nand then else) (Nand test then) (Nand (Not test) else)))))
@@ -239,6 +244,7 @@
 (define Or*   (make-gate*-constr 'Or*     Or-function))
 (define Nor*  (make-gate*-constr 'Nor*   Nor-function))
 (define Xor*  (make-gate*-constr 'Xor*   Xor-function))
+(define Eqv*  (make-gate*-constr 'Eqv*   Eqv-function))
 
 ;=====================================================================================================
 ; The end
