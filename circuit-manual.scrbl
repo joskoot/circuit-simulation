@@ -1431,6 +1431,7 @@ in the diagram shown as a triangle (without inversion circle at its output at th
 And now it works.
 Notice that the @nbr[Delay] gate is triggered. Its result doesn't matter
 because at the same time 6 signal @tt{b} drops to @nbr[F].
+Notice also that the signal on wire @tt{b} not necessarily is the inverse of that on wire @tt{state}.
 
 @subsection{Clock}
 
