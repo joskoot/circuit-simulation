@@ -84,7 +84,7 @@ but at the finest grain level, all circuits consist of distinct instances of @se
 and distinct instances of @nbr[Not], @nbr[Nand], @nbr[Nand3] and @nbr[Delay] gates only.
 More gates are available.
 These are: @nbr[And], @nbr[And3], @nbr[Or], @nbr[Or3], @nbr[Nor], @nbr[Nor3],
-@nbr[Xor], @nbr[If] and @nbr[Imply].
+@nbr[Xor], @nbr[Eqv], @nbr[If] and @nbr[Imply].
 They are built with @nbr[Not], @nbr[Nand] and @nbr[Nand3] gates.
 The names of gates, @nb{or rather} their constructors,
 start with a capital letter in order not to shadow procedure @nbr[not]
