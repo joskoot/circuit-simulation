@@ -212,11 +212,11 @@ and the following transition table applies:
    (list "new" (hspace 1) (tt "state"))
    (list "new" (hspace 1) (tt "state-inverse"))
    "action")
-  (@nbr[T] @nbr[F] "any"        "│" @nbr[F]       @nbr[T] "reset")
-  (@nbr[T] @nbr[T] "any"        "│" @nbr[T]       @nbr[F] "set")
-  (@nbr[F] "any"   (tt "state") "│" (tt "state") (list "inverse of" (hspace 1) (tt "state"))
-    "state preserved"))
- #:row-properties '((top-border bottom-border) () () bottom-border)
+  (@nbr[T] @nbr[F] "any"   "│" @nbr[F] @nbr[T] "reset")
+  (@nbr[T] @nbr[T] "any"   "│" @nbr[T] @nbr[F] "set")
+  (@nbr[F] "any"   @nbr[F] "│" @nbr[F] @nbr[T] "state preserved")
+  (@nbr[F] "any"   @nbr[T] "│" @nbr[T] @nbr[F] "state preserved"))
+ #:row-properties '((top-border bottom-border) () () () bottom-border)
  #:column-properties '(center center center center center center left)
  #:sep (hspace 2)]
 
