@@ -25,7 +25,7 @@
      racket/function
      racket/block))
 
-@(define-for-syntax local #f)
+@(define-for-syntax local #t)
 
 @(define-syntax (nbhll stx)
    (syntax-case stx ()
@@ -149,7 +149,7 @@ A simulation can be done in various ways, @nb{for example} as follows:
  @item{@tt{(@nbr[define]
    my-circuit-constr (@nbr[make-circuit-constr] @italic{description} ...))}@(lb)
   Defines a circuit constructor.
-  The @italic{@tt{description}} can be a straightforward list of the elements of
+  The @italic{@tt{description}} includes a straightforward list of the elements of
   a @hyperlink["https://en.wikipedia.org/wiki/Electronic_symbol"]{diagram} of the circuit.}
 
  @item{
@@ -511,7 +511,7 @@ More examples in section @seclink["More examples"]{More examples}.
          (or/c (listof (listof trit?)) (vectorof (listof trit?)))]{
  Procedure @nbr[trit-combinations] returns a list or vector of all combinations of @nbr[n] trits.@(lb)
  The result is a list or vector of 3@↑{n} lists of @nbr[n] trits. If @nbr[sort?] has a true value,
- combinations with determinate trits (bits) only preceed all other ones.
+ combinations with determinate trits (bits) only precede all other ones.
 
  @Interaction[
  (trit-combinations 2 #f)
