@@ -521,8 +521,8 @@ More examples in section @seclink["More examples"]{More examples}.
  or for making a truth table:
 
  @Interaction[
- (define out (wire-make 'out))
  (for ((combination (in-list (trit-combinations 2 #t))))
+   (define out (wire-make 'out))
    (apply And
      (append
        (map (curry wire-make 'no-name) combination)
