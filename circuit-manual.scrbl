@@ -250,8 +250,8 @@ can be made by straightforwardly listing the elements of the diagram:
  (define D-flip-flop-constr
    (make-circuit-constr
      'D-flip-flop          (code:comment "name")
-     (in clock)            (code:comment "external input wires")
-     (state state-inverse) (code:comment "external output wires")
+     (in clock)            (code:comment "external input contacts")
+     (state state-inverse) (code:comment "external output contacts")
      (code:comment "gates: four distinct instances")
      (code:comment "output       (Gate input ...)")
      (reset         (Nand clock in))
