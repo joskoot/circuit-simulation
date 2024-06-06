@@ -5,15 +5,15 @@
 (require "ternary-logic.rkt")
 
 (provide
-   Not-function
-   And-function
+  Not-function
+  And-function
   Nand-function
-    Or-function
-   Nor-function
-   Xor-function
-   Eqv-function
- Imply-function
-    If-function)
+  Or-function
+  Nor-function
+  Xor-function
+  Eqv-function
+  Imply-function
+  If-function)
 
 ;=====================================================================================================
 
@@ -24,32 +24,32 @@
 (define (Imply-function premise consequence) (Nand-function premise (Not-function consequence)))
 
 (define (If-function test then else)
- (Nand-function
-  (Nand-function then else)
-  (Nand-function test then)
-  (Nand-function (Not-function test) else)))
+  (Nand-function
+    (Nand-function then else)
+    (Nand-function test then)
+    (Nand-function (Not-function test) else)))
 
 (define (Nand-function . trits)
- (define (Nand-function trits out)
-  (cond
-   ((null? trits) out)
-   (else
-    (trit-case (car trits)
-     (T)
-     ((Nand-function (cdr trits) out))
-     ((Nand-function (cdr trits) ?))))))
- (Nand-function trits F))
+  (define (Nand-function trits out)
+    (cond
+      ((null? trits) out)
+      (else
+        (trit-case (car trits)
+          (T)
+          ((Nand-function (cdr trits) out))
+          ((Nand-function (cdr trits) ?))))))
+  (Nand-function trits F))
 
 (define (Xor-function . trits)
- (define (Xor-function trits out)
-  (cond
-   ((null? trits) out)
-   (else
-    (trit-case (car trits)
-     ((Xor-function (cdr trits) out))
-     ((Xor-function (cdr trits) (Not-function out)))
-     (?)))))
- (Xor-function trits F))
+  (define (Xor-function trits out)
+    (cond
+      ((null? trits) out)
+      (else
+        (trit-case (car trits)
+          ((Xor-function (cdr trits) out))
+          ((Xor-function (cdr trits) (Not-function out)))
+          (?)))))
+  (Xor-function trits F))
 
 (define (Eqv-function . trits)
   (cond
