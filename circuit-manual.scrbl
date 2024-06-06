@@ -322,7 +322,7 @@ At time 10 the clock is raised to @nbr[T].
 This stabilizes @tt{state} and @tt{state-inverse} within 3 time steps
 such as to become inverses of each other.
 After time 12 nothing happens until at time 20 the clock is dropped to @nbr[F],
-with the only effect that internal signal @tt{set} raises to @nbr[T].
+with the only effect that the signal on internal wire @tt{set} raises to @nbr[T].
 At this time wire @tt{reset} has signal @nbr[T] too,
 but because the @tt{state} and @tt{state-inverse} already are inverses of each other,
 they remain stable.
