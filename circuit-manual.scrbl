@@ -119,7 +119,7 @@ external output wire, is an internal wire.
 A wire cannot be both a gate output and an external input wire.
 Every wire can be an external output wire.
 An external wire of an embedded circuit can be but not necessarily is
-an internal wire of the enveloping circuit.
+an external wire of the enveloping circuit.
 The signals on two or more wires can mutually depend on each other,
 @nb{as for example} in a latch or a flip-flop.
 
