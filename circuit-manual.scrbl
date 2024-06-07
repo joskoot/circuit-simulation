@@ -328,14 +328,14 @@ but because the @tt{state} and @tt{state-inverse} already are inverses of each o
 they remain stable.
 
 At this moment the D-flip-flop is in reset state. Now setting it
-by applying a @nbr[T] pulse on the @tt{clock-wire} for 5 units of time with @tt{in-wire}=@nbr[T],
+by applying a @nbr[T] pulse on the @tt{clock-wire} for 2 units of time with @tt{in-wire}=@nbr[T],
 the @tt{state} and @nb{@tt{state-inverse}} switch almost simultaneously,
 but not quite:
 
 @Interaction*[
  (agenda-schedule! in-wire    T)
  (agenda-schedule! clock-wire T)
- (agenda-schedule! clock-wire F 5)
+ (agenda-schedule! clock-wire F 2)
  (D-flip-flop-simulator)]
 
 The @tt{state} switched at time 24, whereas @tt{state-inverse} changed at time 25.@(lb)
@@ -343,6 +343,21 @@ During one unit of time @tt{state} and @tt{state-inverse} had the same signal @n
 The dropping output always comes one unit of time later than the raising one.@(lb)
 Notice that the time does not avance while procedure @nbr[agenda-execute!] is not running.@(lb)
 The time is not reset while returning from procedure @nbr[agenda-execute!].
+
+To set or reset the D-flip-flop a @nbr[T]-puls of two time units is sufficient,
+but a pulse of only one time unit is not.
+The clock must remain @nbr[T] at least one time step longer than needed
+for wire @tt{set} to receive its new signal.
+Otherwise the D-flop-flop goes oscillating.
+
+@Interaction*[
+ (agenda-schedule! in-wire F)
+ (agenda-schedule! clock-wire T)
+ (agenda-schedule! clock-wire F 1)
+ (parameterize
+   ((agenda-time-limit (+ (agenda-time) 5))
+    (agenda-report #t))
+   (D-flip-flop-simulator))]
 
 Let's test the D-flip-flop for all binary combinations of @tt{in}, @tt{clock} and old @tt{state}.
 
