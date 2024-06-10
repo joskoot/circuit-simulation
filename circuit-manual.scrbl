@@ -347,7 +347,7 @@ The time is not reset while returning from procedure @nbr[agenda-execute!].
 To set or reset the D-flip-flop a @nbr[T]-puls of two time units is sufficient,
 but a pulse of only one time unit is not.
 The clock must remain @nbr[T] at least one time step longer than needed
-for wire @tt{set} to receive its new signal.
+for wire @tt{reset} to receive its new signal.
 Otherwise the D-flop-flop goes oscillating.
 
 @Interaction*[
