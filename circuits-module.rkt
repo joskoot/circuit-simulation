@@ -176,13 +176,14 @@
                  (agenda-schedule! output-wire signal delay)))
              (wire-add-action! input-wire action) ...
              ; The action must be called during installation of the gate
-             ; in order to schedule an event for its output.
+             ; in order to schedule an event for its output when the latter will change signal.
              ; Otherwise the agenda would remain empty.
              (action)))))))
 
 (define (make-gate*-constr name function)
-  (procedure-rename
     (λ (delay)
+      (unless (exact-positive-integer? delay)
+        (raise-argument-error 'make-gate*-constr "positive-exact-integer?" delay))
       (circuit-constr name
         (λ wires
           (define ws (reverse wires))
@@ -194,10 +195,9 @@
               (agenda-schedule! output-wire output-signal delay)))
           (for ((input-wire (in-list input-wires))) (wire-add-action! input-wire action))
           ; The action must be called during installation of the gate
-          ; in order to schedule an event for its output.
+          ; in order to schedule an event for its output when the latter will change signal.
           ; Otherwise the agenda would remain empty.
-          (action))))
-    (symbol-append name '-constr)))
+          (action)))))
 
 ;=====================================================================================================
 
