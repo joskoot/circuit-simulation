@@ -834,7 +834,8 @@ A gate does not schedule an event for its output if this output will not change.
  @Interaction[
  (wire-make 'my-wire T)
  (object-name (wire-make 'another-wire))]
- Distinct wires can have the same name.
+ Distinct wires can have the same name.@(lb)
+ Obviously, this may lead to confusion.
  @Interaction[
  (define-values (wire-a wire-b) (values (wire-make 'a) (wire-make 'a)))
  (equal? wire-a wire-b)
