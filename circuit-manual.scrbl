@@ -1091,7 +1091,8 @@ according to the following formulas. See the @seclink["truth tables"]{truth tabl
  #:row-properties '((top-border bottom-border) () () () () () () () () () bottom-border)
  #:column-properties '(left center left)]
 
-Every gate constructor is a procedure accepting input wires followed by one output wire.
+Every gate constructor is a procedure accepting a fixed number of one, two or three input wires
+followed by one output wire.
 
 @deftogether[
  (@defproc[#:kind "gate constructor" (Not   (in wire?) (out wire?)) void?]
