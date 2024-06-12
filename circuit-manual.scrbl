@@ -189,9 +189,9 @@ A simulation can be done in various ways, @nb{for example} as follows:
   @(hspace 3)@nbr[(parameterize ((agenda-report #t)) (agenda-execute!))]@(lb)
   A report shows all mutations on the wires and at which times, internal wires included.}
 
- @item{In addition to any format or output procedure of @(Rckt),
+ @item{In addition to procedure @nbr[wire-signal] and any format or output procedure of @(Rckt),
   procedure @nbr[wire-print] or @nbr[wire-println] can be used
-  to see the final signals on the output wires together with their names.
+  to see the final signals on the output wires.
   Simply typing the identifiers of wires will do too.}
 
  @item{Halt here or repeat from step 4.}]
