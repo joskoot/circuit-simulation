@@ -291,9 +291,9 @@ For times @nbrl[natural?]{natural numbers} are used without specifying a unit.
 This unit always is implied and always the same.
 
 @Interaction*[
- (code:comment "------------------------------------------ clock is F at time  0")
- (code:line (agenda-schedule! clock-wire T 10) (code:comment "raise clock to T at time 10"))
- (code:line (agenda-schedule! clock-wire F 20) (code:comment " drop clock to F at time 20"))]
+ (code:comment "------------------------------------- clock is F at time  0")
+ (code:line (agenda-schedule! clock-wire T 10) (code:comment "raise clock at time 10"))
+ (code:line (agenda-schedule! clock-wire F 20) (code:comment " drop clock at time 20"))]
 
 Now the agenda contains all information needed for the simulation.
 Procedure @nbr[agenda-execute!] does the simulation.
