@@ -220,7 +220,8 @@
   ; Schedule a T pulse one the clock for time 30 to time 60.
   (agenda-schedule! clock T 30)
   (agenda-schedule! clock F 60)
-  (parameterize ((agenda-report #t) (report-wire-width 13) (report-time-width 2)) (agenda-execute! #t))
+  (parameterize ((agenda-report #t) (report-wire-width 13) (report-time-width 2))
+    (agenda-execute! #t))
   (printf "~nD-flip-flop stabilized: ~a time=~s~n"
     (wire-println #:port 'string in clock state state-inverse) (max 0 (sub1 (agenda-time))))
   (printf "Notice the vibration of state and state-inverse from time=2 ~n~

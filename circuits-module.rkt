@@ -21,7 +21,7 @@
   Nor Nor3    Nor-function
   Xor         Xor-function
   Eqv         Eqv-function
-  And* Nand* Or* Nor* Xor*   
+  ; And* Nand* Or* Nor* Xor* Eqv*   
   Imply       Imply-function
   If          If-function
   Delay)
@@ -83,6 +83,8 @@
                (λ (arg ...)
                  (when (being-constructed)
                    (error neem "cannot be a subcircuit of itself,\n  nor directly, nor indirectly"))
+                 (define dup-out (check-duplicates (list out ...)))
+                 (when dup-out (error neem "duplicate external output: ~s" dup-out))
                  (parameterize ((being-constructed #t))
                    (let ((being-constructed (make-parameter #f)))
                      (unless (circuit-constr? sub-circuit-constr)
@@ -181,23 +183,23 @@
              (action)))))))
 
 (define (make-gate*-constr name function)
-    (λ (delay)
-      (unless (exact-positive-integer? delay)
-        (raise-argument-error 'make-gate*-constr "positive-exact-integer?" delay))
-      (circuit-constr name
-        (λ wires
-          (define ws (reverse wires))
-          (define input-wires (cdr ws))
-          (define output-wire (car ws))
-          (define (action)
-            (define output-signal (apply function (map wire-signal input-wires)))
-            (unless (eq? (wire-signal output-wire) output-signal)
-              (agenda-schedule! output-wire output-signal delay)))
-          (for ((input-wire (in-list input-wires))) (wire-add-action! input-wire action))
-          ; The action must be called during installation of the gate
-          ; in order to schedule an event for its output when the latter will change signal.
-          ; Otherwise the agenda would remain empty.
-          (action)))))
+  (λ (delay)
+    (unless (exact-positive-integer? delay)
+      (raise-argument-error 'make-gate*-constr "positive-exact-integer?" delay))
+    (circuit-constr name
+      (λ wires
+        (define ws (reverse wires))
+        (define input-wires (cdr ws))
+        (define output-wire (car ws))
+        (define (action)
+          (define output-signal (apply function (map wire-signal input-wires)))
+          (unless (eq? (wire-signal output-wire) output-signal)
+            (agenda-schedule! output-wire output-signal delay)))
+        (for ((input-wire (in-list input-wires))) (wire-add-action! input-wire action))
+        ; The action must be called during installation of the gate
+        ; in order to schedule an event for its output when the latter will change signal.
+        ; Otherwise the agenda would remain empty.
+        (action)))))
 
 ;=====================================================================================================
 

@@ -47,8 +47,9 @@
     'wire-init-signal))
 
 (define (wire-add-action! wire action)
-  (unless (member action (wire-actions wire))
-    (set-wire-actions! wire (cons action (wire-actions wire)))))
+  (define actions (wire-actions wire))
+  (unless (member action actions)
+    (set-wire-actions! wire (cons action actions))))
 
 (define-syntax (define-wires stx)
   (syntax-case stx ()

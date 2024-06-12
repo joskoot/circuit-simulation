@@ -114,10 +114,11 @@ to the inputs of one or more other gates or even to an input of the same gate it
 @nb{A wire} with bifurcations to several gate inputs is regarded as one single wire.
 A circuit usually has one or more external input and output contacts.
 They connect to external input and output wires.
+A wire cannot be connected to more than one gate output
+and cannot be both a gate output and an external input wire.
+Every wire can be an external output wire.
 @nb{A wire} that connects a gate output with one or more gate inputs and is not an
 external output wire, is an internal wire.
-A wire cannot be both a gate output and an external input wire.
-Every wire can be an external output wire.
 An external wire of an embedded circuit can be but not necessarily is
 an external wire of the enveloping circuit.
 The signals on two or more wires can mutually depend on each other,
@@ -1027,6 +1028,7 @@ but these instances always are distinct objects, without sharing any parts.
     schedules events in the agenda. No simulation yet.
     Simulation is initiated with procedure @nbr[agenda-execute!].}}
 
+  All external output wires must be distinct. This is checked.
   Distinct circuits can share input wires,
   but must not share output wires.
   This is not checked.

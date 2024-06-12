@@ -42,7 +42,7 @@
   Nor Nor3    Nor-function
   Xor         Xor-function
   Eqv         Eqv-function
-  ; And* Nand* Or* Nor* Xor*   
+  ; And* Nand* Or* Nor* Xor* Eqv*  
   Imply       Imply-function
   If          If-function
   Delay)
