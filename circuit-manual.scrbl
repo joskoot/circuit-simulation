@@ -114,12 +114,12 @@ to the inputs of one or more other gates or even to an input of the same gate it
 @nb{A wire} with bifurcations to several gate inputs is regarded as one single wire.
 A circuit usually has one or more external input and output contacts.
 They connect to external input and output wires.
-A wire cannot be connected to more than one gate output
-and cannot be both a gate output and an external input wire.
+A wire cannot be connected to more than one gate output and
+the latter cannot be connected to an external input contact.
 Every wire can be an external output wire.
 @nb{A wire} that connects a gate output with one or more gate inputs and is not an
 external output wire, is an internal wire.
-An external wire of an embedded circuit can be but not necessarily is
+@nb{An external} wire of an embedded circuit can be but not necessarily is
 an external wire of the enveloping circuit.
 The signals on two or more wires can mutually depend on each other,
 @nb{as for example} in a latch or a flip-flop.
@@ -1016,17 +1016,17 @@ but these instances always are distinct objects, without sharing any parts.
   @elemtag{circuit}
 
   @inset{
-   @defproc[#:link-target? #f (circuit-constr (wire wire?) ...) void?]{
+   @defproc[#:link-target? #f (circuit-constr (wire wire?) ...) void?]}
 
-    A circuit constructor installs a distinct circuit every time it is called.
-    It wants n+m @tt{@italic{wire}}s for its arguments,
-    the first n corresponding to the @nbr[input-wire]s
-    and the last m corresponding to the @nbr[output-wire]s as given to syntax
-    @racket[make-circuit-constr]
-    and not an @nbr[input-wire] too.
-    @nb{It registers} the connections to the input and output wires and
-    schedules events in the agenda. No simulation yet.
-    Simulation is initiated with procedure @nbr[agenda-execute!].}}
+  A circuit constructor installs a distinct circuit every time it is called.
+  It wants n+m @tt{@italic{wire}}s for its arguments,
+  the first n corresponding to the @nbr[input-wire]s
+  and the last m corresponding to the @nbr[output-wire]s as given to syntax
+  @racket[make-circuit-constr]
+  and not an @nbr[input-wire] too.
+  @nb{It registers} the connections to the input and output wires and
+  schedules events in the agenda. No simulation yet.
+  Simulation is initiated with procedure @nbr[agenda-execute!].
 
   All external output wires must be distinct. This is checked.
   Distinct circuits can share input wires,
