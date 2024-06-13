@@ -539,16 +539,14 @@ More examples in section @seclink["More examples"]{More examples}.
 
  @Interaction[
  (for ((combination (in-list (trit-combinations 2 #t))))
+   (define a (car combination))
+   (define b (cadr combination))
+   (define wa  (wire-make 'a a))
+   (define wb  (wire-make 'b b))
    (define out (wire-make 'out))
-   (apply And
-     (append
-       (map (curry wire-make 'no-name) combination)
-       (list out)))
+   (And wa wb out)
    (agenda-execute!)
-   (printf "(And ~s ~s) = ~s~n"
-     (car combination)
-     (cadr combination)
-     (wire-signal out)))]}
+   (printf "(And ~s ~s) = ~s~n" a b (wire-signal out)))]}
 
 @section[#:tag "binary"]{Binary logic}
 

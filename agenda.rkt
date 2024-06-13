@@ -139,4 +139,12 @@
 (define (wire-name* wire) (~s #:min-width (report-wire-width) #:align 'left (wire-name wire)))
 
 ;=====================================================================================================
+
+#;(define (agenda->list)
+    (for/list ((entry (in-list (sort (hash->list (agenda-hash (current-agenda))) < #:key car))))
+      (cons (car entry)
+        (for/list ((event (in-list (cdr entry))))
+          (list (wire-name (car event)) (cadr event) (wire-signal (car event)))))))
+
+;=====================================================================================================
 ; The end
