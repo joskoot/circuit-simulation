@@ -346,15 +346,13 @@ Notice that the time does not avance while procedure @nbr[agenda-execute!] is no
 The time is not reset while returning from procedure @nbr[agenda-execute!].
 
 To set or reset the D-flip-flop a @nbr[T]-puls of two time units is sufficient,
-but a pulse of only one time unit is not.
-The clock must remain @nbr[T] at least one time step longer than needed
-for wire @tt{reset} to receive its new signal.
-Otherwise the D-flop-flop goes oscillating.
+but a pulse of only one time unit may be too short,
+causing the D-flop-flop to oscillate:
 
 @Interaction*[
  (agenda-schedule! in-wire F)
  (agenda-schedule! clock-wire T)
- (agenda-schedule! clock-wire F 1)
+ (code:line (agenda-schedule! clock-wire F 1) (code:comment "Too short clock pulse."))
  (parameterize
    ((agenda-time-limit (+ (agenda-time) 5))
     (agenda-report #t))
