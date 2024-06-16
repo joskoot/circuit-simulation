@@ -1238,7 +1238,7 @@ followed by one output wire.
 A logical function accepts @nbrl[trit?]{trits}
 for its arguments and returns one @nbrl[trit?]{trit}.
 Some of the functions accept an arbitrary number of arguments,
-whereas gates always have a fixed number of inputs.
+whereas a gate always has a fixed number of inputs.
 @elemtag{generalized-associativity}
 Where applicable a note is added about commutativity and associativity.
 In this document these two concepts are generalized to functions that can accept more than two
