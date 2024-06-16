@@ -157,18 +157,20 @@ A simulation can be done in various ways, @nb{for example} as follows:
   a @hyperlink["https://en.wikipedia.org/wiki/Electronic_symbol"]{diagram} of the circuit.}
 
  @item{
-  @tt{(@nbr[define]@(hspace 2)input-wire (@nbr[wire-make] @italic{name} [@italic{signal}])) ...}@(lb)
-  @tt{(@nbr[define] output-wire (@nbr[wire-make] @italic{name} [@italic{signal}])) ...}@(lb)
+  @tt{(@nbr[define]@(hspace 2)@italic{input-wire} (@nbr[wire-make] @italic{name} [@italic{signal}]))
+   ...}@(lb)
+  @tt{(@nbr[define] @italic{output-wire} (@nbr[wire-make] @italic{name} [@italic{signal}])) ...}@(lb)
   Defines external input and output wires and initializes their signals.@(lb)
-  Usually, but not necessarily, @tt{output-wires} are initialized with indeterminate signal @nbr[?].}
+  Usually, but not necessarily, @tt{@italic{output-wire}s} are initialized with indeterminate signal
+  @nbr[?].}
 
- @item{@tt{(my-circuit-constr input-wire ... output-wire ...)}@(lb)
+ @item{@tt{(my-circuit-constr @italic{input-wire} ... @italic{output-wire} ...)}@(lb)
   Installs an instance of the circuit and connects it to its external input and output wires.@(lb)
   The constructor returns @(Void), but does make a circuit behind the screen
   and schedules events in the @seclink["agenda"]{agenda}.
   @nb{No simulation yet.}}
 
- @item{@tt{(@nbr[agenda-schedule!] input-wire @italic{signal} [@italic{delay}]) ...}@(lb)
+ @item{@tt{(@nbr[agenda-schedule!] @italic{input-wire} @italic{signal} [@italic{delay}]) ...}@(lb)
   Optionally use procedure @nbr[agenda-schedule!] or syntax @nbr[agenda-sequence!]
   to put signals on input wires,
   either without delay or scheduled for a future time.
