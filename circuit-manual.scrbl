@@ -27,6 +27,8 @@
 
 @(define-for-syntax local #f)
 
+@(define-syntax-rule (cmt x ...) (black (smaller x ...)))
+
 @(define-syntax (nbhll stx)
    (syntax-case stx ()
      ((_ x y ...)
@@ -357,6 +359,20 @@ causing the D-flop-flop to oscillate:
    ((agenda-time-limit (+ (agenda-time) 5))
     (agenda-report #t))
    (D-flip-flop-simulator))]
+
+Even with a longer clock pulse signal @tt{state-inverse-wire} may flip two times
+when setting the flip-flop while it already is set:
+
+@Interaction*[
+ (code:comment #, @cmt{set:})
+ (agenda-schedule! in-wire T)
+ (agenda-schedule! clock-wire T)
+ (agenda-schedule! clock-wire F 5)
+ (agenda-execute!)
+ (code:comment #, @cmt{set while already set: @tt{state-inverse} flips two times:})
+ (agenda-schedule! clock-wire T)
+ (agenda-schedule! clock-wire F 5)
+ (agenda-execute! #t)]
 
 Let's test the D-flip-flop for all binary combinations of @tt{in}, @tt{clock} and old @tt{state}.
 
