@@ -376,6 +376,13 @@ when setting the flip-flop while it already is set:
  (agenda-schedule! clock-wire F 5)
  (agenda-execute! #t)]
 
+This can be avoided by replacing
+@inset{
+ @nbr[(set (Nand clock reset))] by @(lb)
+ @nbr[(set (Nand ((Delay 1) clock) reset))]}
+in order to trigger the @nbr[Nand]-gate with output wire @tt{set}@(lb)
+after wire @tt{reset} has obtained its new value.
+
 Let's test the D-flip-flop for all binary combinations of @tt{in}, @tt{clock} and old @tt{state}.
 
 @Interaction*[
