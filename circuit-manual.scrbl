@@ -381,7 +381,21 @@ This can be avoided by replacing
  @nbr[(set (Nand clock reset))] by @(lb)
  @nbr[(set (Nand ((Delay 1) clock) reset))]}
 in order to trigger the @nbr[Nand]-gate with output wire @tt{set}@(lb)
-after wire @tt{reset} has obtained its new value.
+after wire @tt{reset} has obtained its new value:
+
+@Interaction*[
+ (define D-flip-flop-constr-with-delay
+   (make-circuit-constr
+     'D-flip-flop-with-delay (code:comment "name")
+     (in clock)             (code:comment "external input contacts")
+     (state state-inverse)  (code:comment "external output contacts")
+     (code:comment "gates: four distinct instances")
+     (code:comment "output       (Gate input ...)")
+     (reset         (Nand clock in))
+     (delayed-clock ((Delay 1) clock))
+     (set           (Nand delayed-clock reset))
+     (state         (Nand reset state-inverse))
+     (state-inverse (Nand set   state))))]
 
 Let's test the D-flip-flop for all binary combinations of @tt{in}, @tt{clock} and old @tt{state}.
 
@@ -471,8 +485,14 @@ Let's test the D-flip-flop for all binary combinations of @tt{in}, @tt{clock} an
    (code:comment "Arriving here means that all tests passed.")
    (code:comment " ")
    (printf "Hurray, all tests passed.~n"))]
+
 Now we have procedure @tt{test-D-flip-flop} and can use it:
+
 @Interaction*[(test-D-flip-flop D-flip-flop-constr #:tabulate? #t)]
+
+Let's test the D-flip-flop with delayed clock too:
+
+@Interaction*[(test-D-flip-flop D-flip-flop-constr-with-delay #:tabulate? #f)]
 
 The two @nbr[Nand] gates at the right of the @elemref["D-flip-flop-diagram"]{diagram}
 form an odd kind of SR-latch.@(lb)
