@@ -492,7 +492,7 @@ Now we have procedure @tt{test-D-flip-flop} and can use it:
 
 Let's test the D-flip-flop with delayed clock too:
 
-@Interaction*[(test-D-flip-flop D-flip-flop-constr-with-delay #:tabulate? #f)]
+@Interaction*[(test-D-flip-flop D-flip-flop-constr-with-delay)]
 
 The two @nbr[Nand] gates at the right of the @elemref["D-flip-flop-diagram"]{diagram}
 form an odd kind of SR-latch.@(lb)
