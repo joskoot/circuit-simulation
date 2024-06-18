@@ -374,14 +374,15 @@ when setting the flip-flop while it already is set:
  (code:comment #, @cmt{set while already set: @tt{state-inverse} flips two times:})
  (agenda-schedule! clock-wire T)
  (agenda-schedule! clock-wire F 5)
- (agenda-execute! #t)]
+ (parameterize ((report-wire-width 13)) (agenda-execute! #t))]
 
 This can be avoided by replacing
 @inset{
  @nbr[(set (Nand clock reset))] by @(lb)
  @nbr[(set (Nand ((Delay 1) clock) reset))]}
-in order to trigger the @nbr[Nand]-gate with output wire @tt{set}@(lb)
-after wire @tt{reset} has obtained its new value:
+in order to trigger the @nbr[Nand]-gate with output wire @tt{set}
+after wire @tt{reset} has obtained its new value.
+In fact this gate is not triggered when setting the flip-flop while already set:
 
 @Interaction*[
  (define D-flip-flop-constr-with-delay
@@ -406,15 +407,16 @@ after wire @tt{reset} has obtained its new value:
      clock-wire
      state-wire
      state-inverse-wire)
-   (code:comment #, @cmt{set:})
+   (displayln "Set:")
    (agenda-execute!)
    (agenda-schedule! clock-wire F)
    (agenda-execute!)
    (wire-println state-wire state-inverse-wire)
-   (code:comment #, @cmt{set while already set: @tt{state-inverse} does not flip:})
+   (displayln "Set while already set:")
+   (displayln "Nothing happens on wires state and state-inverse:")
    (agenda-schedule! clock-wire T)
    (agenda-schedule! clock-wire F 2)
-   (agenda-execute! #t)
+   (parameterize ((report-wire-width 13)) (agenda-execute! #t))
    (wire-println state-wire state-inverse-wire))]
 
 Let's test the D-flip-flop for all binary combinations of @tt{in}, @tt{clock} and old @tt{state}.
