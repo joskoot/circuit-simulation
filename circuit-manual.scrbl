@@ -395,7 +395,27 @@ after wire @tt{reset} has obtained its new value:
      (delayed-clock ((Delay 1) clock))
      (set           (Nand delayed-clock reset))
      (state         (Nand reset state-inverse))
-     (state-inverse (Nand set   state))))]
+     (state-inverse (Nand set   state))))
+ (let ()
+   (define in-wire (wire-make 'in T))
+   (define clock-wire (wire-make 'clock T))
+   (define state-wire (wire-make 'state))
+   (define state-inverse-wire (wire-make 'state-inverse))
+   (D-flip-flop-constr-with-delay
+     in-wire
+     clock-wire
+     state-wire
+     state-inverse-wire)
+   (code:comment #, @cmt{set:})
+   (agenda-execute!)
+   (agenda-schedule! clock-wire F)
+   (agenda-execute!)
+   (wire-println state-wire state-inverse-wire)
+   (code:comment #, @cmt{set while already set: @tt{state-inverse} does not flip:})
+   (agenda-schedule! clock-wire T)
+   (agenda-schedule! clock-wire F 2)
+   (agenda-execute! #t)
+   (wire-println state-wire state-inverse-wire))]
 
 Let's test the D-flip-flop for all binary combinations of @tt{in}, @tt{clock} and old @tt{state}.
 
