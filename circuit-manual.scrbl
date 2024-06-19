@@ -80,7 +80,7 @@ Circuits are made by circuit constructors,
 which them­selves can be made with syntax @racket[make-circuit-constr].
 @seclink["gate"]{Gates} are elementary circuits.
 Their constructors are provided by module @nbhll["circuits.rkt"]{circuits.rkt}.
-For each wire and each occurrence of a gate a distinct object is made.
+For each wire and each occurrence of a gate a distinct instance is made.
 Circuits can be nested as subcircuits in an enveloping circuit,
 but at the finest grain level, all circuits consist of distinct instances of @seclink["wires"]{wires}
 and distinct instances of @nbr[Not], @nbr[Nand], @nbr[Nand3] and @nbr[Delay] gates only.
