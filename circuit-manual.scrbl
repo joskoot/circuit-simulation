@@ -1001,8 +1001,10 @@ A gate does not schedule an event for its output if this output will not change.
   The default @nbr[name-expr] is @tt{'}@nbr[id] and the default @nbr[signal-expr] is
   @nbr[(wire-init-signal)].
   @Interaction[
- (define-wires a (b) (c ?) (d F) (e 'T T))
- (wire-println a b c d e)]}]
+ (define-wires a (b) (c ?) (d F) (e 'T F))
+ (wire-println a b c d e)]
+  @red{Advice}: do not use @nbr['T] or @nbr['F] or @nbr['?] as a wire name.
+  The output @tt{T=F} is confusing.}]
 @(reset-Interaction*)
 
 @defproc[(wire-nr-of-actions (wire wire?)) natural?]{
