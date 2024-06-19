@@ -362,8 +362,8 @@ causing the D-flop-flop to oscillate:
     (agenda-report #t))
    (D-flip-flop-simulator))]
 
-Even with a longer clock pulse signal @tt{state-inverse-wire} may flip two times
-when setting the flip-flop while it already is set:
+Even with a longer clock pulse the signal on @tt{state-inverse-wire} may flip to @nbr[T]
+@nb{for a moment} when setting the flip-flop while it already is set:
 
 @Interaction*[
  (code:comment #, @cmt{set:})
@@ -371,7 +371,7 @@ when setting the flip-flop while it already is set:
  (agenda-schedule! clock-wire T)
  (agenda-schedule! clock-wire F 5)
  (agenda-execute!)
- (code:comment #, @cmt{set while already set: @tt{state-inverse} flips two times:})
+ (code:comment #, @cmt{set while already set: @tt{state-inverse} flips to @nbr[T] for a moment:})
  (agenda-schedule! clock-wire T)
  (agenda-schedule! clock-wire F 5)
  (parameterize ((report-wire-width 13)) (agenda-execute! #t))]
