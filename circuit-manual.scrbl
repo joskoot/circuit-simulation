@@ -424,13 +424,11 @@ In fact this gate is not triggered when setting the flip-flop while already set:
 Let's test the D-flip-flop for all binary combinations of @tt{in}, @tt{clock} and old @tt{state}.
 
 @Interaction*[
- (define (test-D-flip-flop
-           flip-flop-constr
-           in-wire
-           clock-wire
-           state-wire
-           state-inverse-wire
-           #:tabulate? (tabulate? #f))
+ (define (test-D-flip-flop flip-flop-constr #:tabulate? (tabulate? #f))
+   (define in-wire (wire-make 'in-wire))
+   (define clock-wire (wire-make 'clock-wire))
+   (define state-wire (wire-make 'state-wire))
+   (define state-inverse-wire (wire-make 'state-inverse-wire))
    (printf " ~nTesting ~s.~n" (circuit-constr-name flip-flop-constr))
    (code:comment " ")
    (code:comment "Procedure test/tabulate does a test. If tabulate? is true,")
@@ -518,22 +516,11 @@ Let's test the D-flip-flop for all binary combinations of @tt{in}, @tt{clock} an
 
 Now we have procedure @tt{test-D-flip-flop} and can use it:
 
-@Interaction*[(test-D-flip-flop
-                D-flip-flop-constr
-                in-wire
-                clock-wire
-                state-wire
-                state-inverse-wire
-                #:tabulate? #t)]
+@Interaction*[(test-D-flip-flop D-flip-flop-constr #:tabulate? #t)]
 
 Let's test the D-flip-flop with delayed clock too:
 
-@Interaction*[(test-D-flip-flop
-                D-flip-flop-constr-with-delay
-                d-in-wire
-                d-clock-wire
-                d-state-wire
-                d-state-inverse-wire)]
+@Interaction*[(test-D-flip-flop D-flip-flop-constr-with-delay)]
 
 The two @nbr[Nand] gates at the right of the @elemref["D-flip-flop-diagram"]{diagram}
 form an odd kind of SR-latch.@(lb)
@@ -563,7 +550,7 @@ We can use the latch as a subcircuit in a D-flip-flop:
      (state         (Nand S-inverse state-inverse))
      (state-inverse (Nand R-inverse state))))]
 @Interaction*[
- (define make-D-flip-flop-with-odd-SR-latch
+ (define D-flip-flop-constr-with-odd-SR-latch
    (make-circuit-constr 'D-flip-flop-with-odd-SR-latch
      (in clock)            (code:comment "inputs")
      (state state-inverse) (code:comment "outputs")
@@ -577,11 +564,7 @@ We can use the latch as a subcircuit in a D-flip-flop:
  (define sr-clock-wire (wire-make 'clock))
  (define sr-state-wire (wire-make 'state))
  (define sr-state-inverse-wire (wire-make 'state-inverse))
- (test-D-flip-flop make-D-flip-flop-with-odd-SR-latch
-   sr-in-wire
-   sr-clock-wire
-   sr-state-wire
-   sr-state-inverse-wire)]
+ (test-D-flip-flop D-flip-flop-constr-with-odd-SR-latch)]
 @(reset-Interaction*)
 
 More examples in section @seclink["More examples"]{More examples}.
