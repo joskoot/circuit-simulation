@@ -397,32 +397,40 @@ In fact this gate is not triggered when setting the flip-flop while already set:
      (set           (Nand delayed-clock reset))
      (state         (Nand reset state-inverse))
      (state-inverse (Nand set   state))))
- (let ()
-   (define in-wire (wire-make 'in T))
-   (define clock-wire (wire-make 'clock T))
-   (define state-wire (wire-make 'state))
-   (define state-inverse-wire (wire-make 'state-inverse))
-   (D-flip-flop-constr-with-delay
-     in-wire
-     clock-wire
-     state-wire
-     state-inverse-wire)
+ (define d-in-wire (wire-make 'in T))
+ (define d-clock-wire (wire-make 'clock T))
+ (define d-state-wire (wire-make 'state))
+ (define d-state-inverse-wire (wire-make 'state-inverse))
+ (D-flip-flop-constr-with-delay
+   d-in-wire
+   d-clock-wire
+   d-state-wire
+   d-state-inverse-wire)
+ (begin
    (displayln "Set:")
+   (agenda-schedule! d-clock-wire T)
+   (agenda-schedule! d-in-wire T)
    (agenda-execute!)
-   (agenda-schedule! clock-wire F)
+   (agenda-schedule! d-clock-wire F)
    (agenda-execute!)
-   (wire-println state-wire state-inverse-wire)
+   (wire-println d-state-wire d-state-inverse-wire)
    (displayln "Set while already set:")
    (displayln "Nothing happens on wires state and state-inverse:")
-   (agenda-schedule! clock-wire T)
-   (agenda-schedule! clock-wire F 2)
+   (agenda-schedule! d-clock-wire T)
+   (agenda-schedule! d-clock-wire F 2)
    (parameterize ((report-wire-width 13)) (agenda-execute! #t))
-   (wire-println state-wire state-inverse-wire))]
+   (wire-println d-state-wire d-state-inverse-wire))]
 
 Let's test the D-flip-flop for all binary combinations of @tt{in}, @tt{clock} and old @tt{state}.
 
 @Interaction*[
- (define (test-D-flip-flop flip-flop-constr #:tabulate? (tabulate? #f))
+ (define (test-D-flip-flop
+           flip-flop-constr
+           in-wire
+           clock-wire
+           state-wire
+           state-inverse-wire
+           #:tabulate? (tabulate? #f))
    (printf " ~nTesting ~s.~n" (circuit-constr-name flip-flop-constr))
    (code:comment " ")
    (code:comment "Procedure test/tabulate does a test. If tabulate? is true,")
@@ -510,11 +518,22 @@ Let's test the D-flip-flop for all binary combinations of @tt{in}, @tt{clock} an
 
 Now we have procedure @tt{test-D-flip-flop} and can use it:
 
-@Interaction*[(test-D-flip-flop D-flip-flop-constr #:tabulate? #t)]
+@Interaction*[(test-D-flip-flop
+                D-flip-flop-constr
+                in-wire
+                clock-wire
+                state-wire
+                state-inverse-wire
+                #:tabulate? #t)]
 
 Let's test the D-flip-flop with delayed clock too:
 
-@Interaction*[(test-D-flip-flop D-flip-flop-constr-with-delay)]
+@Interaction*[(test-D-flip-flop
+                D-flip-flop-constr-with-delay
+                d-in-wire
+                d-clock-wire
+                d-state-wire
+                d-state-inverse-wire)]
 
 The two @nbr[Nand] gates at the right of the @elemref["D-flip-flop-diagram"]{diagram}
 form an odd kind of SR-latch.@(lb)
@@ -552,8 +571,17 @@ We can use the latch as a subcircuit in a D-flip-flop:
      (S-inverse (Nand clock in))
      (R-inverse (Nand clock S-inverse))
      ((state state-inverse) (make-odd-SR-latch S-inverse R-inverse))))]
+
 @Interaction*[
- (test-D-flip-flop make-D-flip-flop-with-odd-SR-latch)]
+ (define sr-in-wire (wire-make 'in))
+ (define sr-clock-wire (wire-make 'clock))
+ (define sr-state-wire (wire-make 'state))
+ (define sr-state-inverse-wire (wire-make 'state-inverse))
+ (test-D-flip-flop make-D-flip-flop-with-odd-SR-latch
+   sr-in-wire
+   sr-clock-wire
+   sr-state-wire
+   sr-state-inverse-wire)]
 @(reset-Interaction*)
 
 More examples in section @seclink["More examples"]{More examples}.
