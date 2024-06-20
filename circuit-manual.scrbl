@@ -695,9 +695,8 @@ no event is scheduled for this output.
 @defproc[(agenda-reset!) void?]{
 
  Removes all events from the @nbr[current-agenda] and resets its @nbr[agenda-time] to @nbr[0].
- Usually @nbr[agenda-reset!] is called when the @nbr[current-agenda] already is empty,
- just in order to reset its time. Can also be used to disable power up of all circuits
- that use the @nbr[current-agenda].}
+ Usually  called when the agenda already is empty,
+ just in order to reset its time.}
 
 @defproc[(agenda-empty?) boolean?]{
 
