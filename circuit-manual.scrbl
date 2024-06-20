@@ -397,29 +397,29 @@ In fact this gate is not triggered when setting the flip-flop while already set:
      (set           (Nand delayed-clock reset))
      (state         (Nand reset state-inverse))
      (state-inverse (Nand set   state))))
- (define d-in-wire (wire-make 'in T))
- (define d-clock-wire (wire-make 'clock T))
- (define d-state-wire (wire-make 'state))
- (define d-state-inverse-wire (wire-make 'state-inverse))
- (D-flip-flop-constr-with-delay
-   d-in-wire
-   d-clock-wire
-   d-state-wire
-   d-state-inverse-wire)
- (begin
+ (let ()
+   (define in-wire (wire-make 'in T))
+   (define clock-wire (wire-make 'clock T))
+   (define state-wire (wire-make 'state))
+   (define state-inverse-wire (wire-make 'state-inverse))
+   (D-flip-flop-constr-with-delay
+     in-wire
+     clock-wire
+     state-wire
+     state-inverse-wire)
    (displayln "Set:")
-   (agenda-schedule! d-clock-wire T)
-   (agenda-schedule! d-in-wire T)
+   (agenda-schedule! clock-wire T)
+   (agenda-schedule! in-wire T)
    (agenda-execute!)
-   (agenda-schedule! d-clock-wire F)
+   (agenda-schedule! clock-wire F)
    (agenda-execute!)
-   (wire-println d-state-wire d-state-inverse-wire)
+   (wire-println state-wire state-inverse-wire)
    (displayln "Set while already set:")
    (displayln "Nothing happens on wires state and state-inverse:")
-   (agenda-schedule! d-clock-wire T)
-   (agenda-schedule! d-clock-wire F 2)
+   (agenda-schedule! clock-wire T)
+   (agenda-schedule! clock-wire F 2)
    (parameterize ((report-wire-width 13)) (agenda-execute! #t))
-   (wire-println d-state-wire d-state-inverse-wire))]
+   (wire-println state-wire state-inverse-wire))]
 
 Let's test the D-flip-flop for all binary combinations of @tt{in}, @tt{clock} and old @tt{state}.
 
@@ -560,10 +560,6 @@ We can use the latch as a subcircuit in a D-flip-flop:
      ((state state-inverse) (make-odd-SR-latch S-inverse R-inverse))))]
 
 @Interaction*[
- (define sr-in-wire (wire-make 'in))
- (define sr-clock-wire (wire-make 'clock))
- (define sr-state-wire (wire-make 'state))
- (define sr-state-inverse-wire (wire-make 'state-inverse))
  (test-D-flip-flop D-flip-flop-constr-with-odd-SR-latch)]
 @(reset-Interaction*)
 
