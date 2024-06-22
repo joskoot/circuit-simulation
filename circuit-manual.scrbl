@@ -333,7 +333,8 @@ but because the @tt{state} and @tt{state-inverse} already are inverses of each o
 they remain stable.
 
 At this moment the D-flip-flop is in reset state. Now setting it
-by applying a @nbr[T] pulse on the @tt{clock-wire} for 2 units of time with @tt{in-wire}=@nbr[T],
+by applying a @nbr[T] pulse on the @tt{clock-wire}
+of at least 2 units of time while @tt{in-wire}=@nbr[T],
 the @tt{state} and @nb{@tt{state-inverse}} switch almost simultaneously,
 but not quite:
 
