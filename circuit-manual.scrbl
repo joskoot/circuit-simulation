@@ -62,7 +62,7 @@
 @section{Preface}
 
 Module @nbhll["circuits.rkt"]{circuits.rkt}
-provides tools for digital simulation of digital circuits.
+provides tools for discrete simulation of digital circuits.
 I have used some of the ideas in section 3.3.4 of
 “@hyperlink["https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book.html"]{
  Structure and Inter­pretation of Computer Programs}”
