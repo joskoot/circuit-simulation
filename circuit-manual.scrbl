@@ -1145,9 +1145,10 @@ but these instances always are distinct objects, without sharing any parts.
 @section[#:tag "gate"]{Gates}
 
 A gate is an elementary circuit.
-@nbr[Not], @nbr[Nand] and @nbr[Nand3] gates are the most elementary ones,
-or rather their constructors. @nbr[Delay] is a special one.
-@nb{All other} predefined gate constructors are built
+@nbr[Not], @nbr[Nand] and @nbr[Nand3] gates are the most elementary ones
+and have time delay @nbr[1].
+@nbr[Delay] is a special gate whose time delay is specified when it is constructed.
+@nb{All other} predefined gate are built
 with @nbr[make-circuit-constr] using @nbr[Not], @nbr[Nand] and @nbr[Nand3] gates
 according to the following formulas. See the @seclink["truth tables"]{truth tables} too.
 
