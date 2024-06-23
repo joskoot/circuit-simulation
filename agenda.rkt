@@ -72,6 +72,9 @@
         (error 'agenda-execute! "time-limit ~s exceeded" time-limit))
       (define events (sort (hash-ref hash time '()) event<?))
       (hash-remove! hash time)
+      ; An action is located in a gate. When two or more input wires of the same change signal,
+      ; they activate the same gate related action. Therefore remove-duplicates can be used in order
+      ; to prevent an action from being executed more than once at the same time.
       (define actions
         (remove-duplicates
           (for/fold ((actions '())) ((event (in-list events)))
@@ -79,12 +82,23 @@
             (define signal (cadr event))
             (cond
               ((eq? (wire-signal wire) signal) actions)
-              (else (append (wire-signal-set! wire signal report) actions))))))
+              (else (append (wire-signal-set! wire signal report) actions))))
+          eq?))
       (hash-remove! hash time)
       (for-each call actions)
       (define new-time (add1 time))
       (set-agenda-timer! agenda new-time)
       (loop new-time))))
+
+(define (wire-signal-set! wire signal report)
+  (define old-signal (wire-signal wire))
+  (unless (eq? signal old-signal)
+    (when (and report (or (report-hidden) (not (hidden-wire? wire))))
+      (printf "time ~a : ~a : ~s -> ~s~n"
+        (agenda-time*)
+        (wire-name* wire) old-signal signal))
+    (set-wire-signal! wire signal)
+    (wire-actions wire)))
 
 (define agenda-time-limit
   (make-parameter 1000
@@ -124,16 +138,6 @@
 
 (define (event=? a b) (eq? (car a) (car b)))
 (define (event<? a b) (symbol<? (wire-name (car a)) (wire-name (car b))))
-
-(define (wire-signal-set! wire signal report)
-  (define old-signal (wire-signal wire))
-  (unless (eq? signal old-signal)
-    (when (and report (or (report-hidden) (not (hidden-wire? wire))))
-      (printf "time ~a : ~a : ~s -> ~s~n"
-        (agenda-time*)
-        (wire-name* wire) old-signal signal))
-    (set-wire-signal! wire signal)
-    (wire-actions wire)))
 
 (define (agenda-time*) (~s #:min-width (report-time-width) #:align 'right (agenda-time)))
 (define (wire-name* wire) (~s #:min-width (report-wire-width) #:align 'left (wire-name wire)))

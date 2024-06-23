@@ -48,6 +48,7 @@
 
 (define (wire-add-action! wire action)
   (define actions (wire-actions wire))
+  ; Avoid duplicate actions.
   (unless (member action actions)
     (set-wire-actions! wire (cons action actions))))
 

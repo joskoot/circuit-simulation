@@ -29,10 +29,10 @@
 ;=====================================================================================================
 
 (struct circuit-constr (name proc)
+  #:property prop:object-name 0
   #:property prop:procedure 1
   #:property prop:custom-write
   (λ (circuit port mode) (fprintf port "#<circuit-constr:~s>" (circuit-constr-name circuit)))
-  #:property prop:object-name 0
   #:guard
   (λ (name proc ignore)
     (unless (procedure? proc) (raise-argument-error 'circuit-constr "procedure?" proc))
@@ -180,6 +180,7 @@
              ; The action must be called during installation of the gate
              ; in order to schedule an event for its output when the latter will change signal.
              ; Otherwise the agenda would remain empty.
+             ; Notice that actions are located in gates, not in wires.
              (action)))))))
 
 (define (make-gate*-constr name function)
@@ -199,6 +200,7 @@
         ; The action must be called during installation of the gate
         ; in order to schedule an event for its output when the latter will change signal.
         ; Otherwise the agenda would remain empty.
+        ; Notice that actions are located in gates, not in wires.
         (action)))))
 
 ;=====================================================================================================
