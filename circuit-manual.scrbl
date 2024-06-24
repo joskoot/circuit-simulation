@@ -379,8 +379,12 @@ Even with a longer clock pulse the signal on @tt{state-inverse-wire} may flip to
 
 This can be avoided by replacing
 @inset{
- @nbr[(set (Nand clock reset))] by @(lb)
- @nbr[(set (Nand ((Delay 1) clock) reset))]}
+ @nbr[(set (Nand clock reset))] by
+  
+ @nbr[(set (Nand ((Delay 1) clock) reset))] or
+ 
+ @nbr[(delayed-clock ((Delay 1) clock))]@(lb)
+ @nbr[(set           (Nand delayed-clock reset))]}
 in order to trigger the @nbr[Nand]-gate with output wire @tt{set}
 after wire @tt{reset} has obtained its new value.
 In fact this gate is not triggered when setting the flip-flop while already set:
