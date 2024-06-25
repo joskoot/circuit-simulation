@@ -117,7 +117,7 @@ to the inputs of one or more other gates or even to an input of the same gate it
 A circuit usually has one or more external input and output contacts.
 They connect to external input and output wires.
 A wire cannot be connected to more than one gate output and
-the latter cannot be connected to an external input contact.
+the latter cannot be connected to an external input wire.
 Every wire can be an external output wire.
 @nb{A wire} that connects a gate output with one or more gate inputs and is not an
 external output wire, is an internal wire.
