@@ -679,6 +679,8 @@ no event is scheduled for this output.
 
  All procedures that need an agenda use the @nbr[current-agenda].
  You probably never need to mutate this parameter.
+ Distinct agendas can be used for selective simulation of circuits without
+ triggering other circuits.
  It is necessary, though, to use separate agendas
  when running simulations simultaneously in threads, places or futures.
  This is possible provided the circuits are distinct and do not share output wires.}
