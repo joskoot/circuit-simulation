@@ -64,7 +64,10 @@
 Module @nbhll["circuits.rkt"]{circuits.rkt}
 provides tools for discrete simulation of digital circuits.
 I have used some of the ideas in section 3.3.4 of
-“@hyperlink["https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book.html"]{
+“@hyperlink[
+ (string-append
+   "https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/"
+   "sicp.zip/full-text/book/book.html")]{
  Structure and Inter­pretation of Computer Programs}”
 by Harold Abelson and Gerald Jay Sussman with Julie Sussman,
 in particular the use of an @seclink["agenda"]{agenda}.
