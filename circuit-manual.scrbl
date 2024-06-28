@@ -204,6 +204,7 @@ For examples see the next section and section @seclink["More examples"]{More exa
 
 @section[#:tag "D-flip-flop-section"]{Example: a D-flip-flop}
 
+@note{In the present document, no distinction is made between flip-flops and latches.}
 As introductory example a D-flip-flop.@(lb)
 It has two inputs, say @tt{in} and @tt{clock}.@(lb)
 It has two outputs, say @tt{state} and @nb{@tt{state-inverse}}.@(lb)
@@ -1138,7 +1139,7 @@ but these instances always are distinct objects, without sharing any parts.
 
 @defproc[(circuit-constr-name (circuit-constr circuit-constr?)) symbol?]{
 
- Return the name of a circuit constructor.@(lb)
+ Returns the name of a circuit constructor.@(lb)
  The name can also be retrieved with procedure @nbr[object-name].
 
  @Interaction*[
