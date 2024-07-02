@@ -173,7 +173,8 @@ A simulation can be done in various ways, @nb{for example} as follows:
   and schedules events in the @seclink["agenda"]{agenda}.
   @nb{No simulation yet.}}
 
- @item{@tt{(@nbr[agenda-schedule!] @italic{input-wire} @italic{signal} [@italic{delay}]) ...}@(lb)
+ @item{@tt{(@nbr[agenda-schedule!] @italic{input-wire} @italic{signal} [@italic{delay}]) ...} or@(lb)
+  @tt{(@nbr[agenda-sequence!] (@italic{input-wire} (@italic{signal} @italic{delay}) ...) ...)}@(lb)
   Optionally use procedure @nbr[agenda-schedule!] or syntax @nbr[agenda-sequence!]
   to put signals on input wires,
   either without delay or scheduled for a future time.
