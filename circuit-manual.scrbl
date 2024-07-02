@@ -1053,12 +1053,13 @@ but these instances always are distinct objects, without sharing any parts.
  (make-circuit-constr name
    (input-wire ...)
    (output-wire ...)
-   (sub-output-wires subcircuit) ...)
+   subcircuit-clause ...)
  #:grammar
  ((input-wire id)
   (output-wire id)
   (sub-input-wire id)
   (sub-output-wire id)
+  (subcircuit-clause (sub-output-wires subcircuit))
   (subcircuit (subcircuit-constr subcircuit-arg ...))
   (sub-output-wires sub-output-wire (sub-output-wire ...))
   (subcircuit-arg sub-input-wire subcircuit))
@@ -1066,7 +1067,7 @@ but these instances always are distinct objects, without sharing any parts.
  ((name symbol?)
   (subcircuit-constr circuit-constr?))]{
 
-  At run time each @nbr[subcircuit-constr] is evaluated once only.
+  At run time each @nbr[subcircuit-constr] is evaluated such as to yield distinct subcircuits.
   Notice that all operators in a @nbr[subcircuit] are constructors.
   This garantees that distinct instances are made for all @nbr[subcircuit]s.
   For this reason objects like @nbr[Nand] and @nbr[Not] are gate constructors rather than
