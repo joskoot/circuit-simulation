@@ -75,6 +75,9 @@ My tools differ in many aspects, though, the agenda too.
 
 This document intentionally contains some repetitions of the same or similar phrases in order to
 avoid hyperlinks where text is relevant on the spot.
+No distinction is made between flip-flops and latches.
+True/high/on and false/low/off are called ‘inverses’ of each other,
+elsewhere also called ‘complements’ of each other.
 
 @section[#:tag "introduction"]{Introduction}
 
@@ -208,9 +211,6 @@ For examples see the next section and section @seclink["More examples"]{More exa
 
 @section[#:tag "D-flip-flop-section"]{Example: a D-flip-flop}
 
-@note{In the present document, no distinction is made between flip-flops and latches.@(lb)
- @nbr[F] and @nbr[T] are called ‘inverses’ of each other, elsewhere also called ‘complements’
- of each other.}
 As introductory example a D-flip-flop.@(lb)
 It has two inputs, say @tt{in} and @tt{clock}.@(lb)
 It has two outputs, say @tt{state} and @nb{@tt{state-inverse}}.@(lb)
