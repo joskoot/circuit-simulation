@@ -1110,7 +1110,7 @@ but these instances always are distinct objects, without sharing any parts.
   and the last m corresponding to the @nbr[output-wire]s as given to syntax
   @racket[make-circuit-constr]
   and not an @nbr[input-wire] too.
-  @nb{It registers} the connections to the input and output wires and
+  @nb{It registers} the connections to the external input and output wires and
   schedules events in the agenda. No simulation yet.
   Simulation is initiated with procedure @nbr[agenda-execute!].
 
