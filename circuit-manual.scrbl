@@ -1611,13 +1611,13 @@ Let's test the full-adder:
    (printf " --> sum=~s, carry-out=~s, delay=~s~n"
      (wire-signal sum) (wire-signal carry-out) (sub1 (agenda-time)))
    (agenda-reset!)
-   (define result (format "~s ~s" (wire-signal sum) (wire-signal carry-out)))
+   (define result (list (wire-signal sum) (wire-signal carry-out)))
    (unless
      (case (count T? (list a b c))
-       ((0) (equal? result "F F"))
-       ((1) (equal? result "T F"))
-       ((2) (equal? result "F T"))
-       ((3) (equal? result "T T"))
+       ((0) (equal? result (list F F)))
+       ((1) (equal? result (list T F)))
+       ((2) (equal? result (list F T)))
+       ((3) (equal? result (list T T)))
        (else #f))
      (error 'full-adder "~s" (list a b c result))))]
 
