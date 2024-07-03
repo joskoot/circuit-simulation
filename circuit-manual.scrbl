@@ -75,7 +75,7 @@ My tools differ in many aspects, though, the agenda too.
 
 This document intentionally contains some repetitions of the same or similar phrases in order to
 avoid hyperlinks where text is relevant on the spot.
-No distinction is made between flip-flops and latches.
+The word ‘flip-flop’ will be used for both level and edge triggered bistable multivibrators.
 True/high/on and false/low/off are called ‘inverses’ of each other,
 elsewhere also called ‘complements’ of each other.
 
