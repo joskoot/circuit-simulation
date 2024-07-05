@@ -96,7 +96,7 @@ These are: @nbr[And], @nbr[And3], @nbr[Or], @nbr[Or3], @nbr[Nor], @nbr[Nor3],
 They are built with @nbr[Not], @nbr[Nand] and @nbr[Nand3] gates.
 The names of gates, @nb{or rather} their constructors,
 start with a capital letter in order not to shadow procedure @nbr[not]
-and syntaxes like @nbr[and], @nbr[nand], @nbr[or] and @nbr[delay]
+and syntaxes like @nbr[and], @nbr[nand], @nbr[or], @nbr[if] and @nbr[delay]
 as provided by @(Rckt).
 
 @seclink["Ternary logic"]{Ternary logic} is used,
