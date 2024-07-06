@@ -25,7 +25,7 @@
      racket/function
      racket/block))
 
-@(define-for-syntax local #f)
+@(define-for-syntax local #t)
 
 @(define-syntax-rule (cmt x ...) (black (smaller x ...)))
 
@@ -75,7 +75,7 @@ My tools differ in many aspects, though, the agenda too.
 
 This document intentionally contains some repetitions of the same or similar phrases in order to
 avoid hyperlinks where text is relevant on the spot.
-The word ‘flip-flop’ will be used for both level and edge triggered bistable multivibrators.
+Both level and edge triggered bistable multivibrators will be called ‘flop-flop’s.
 True/high/on and false/low/off are called ‘inverses’ of each other,
 elsewhere also called ‘complements’ of each other.
 
@@ -130,7 +130,7 @@ external output wire, is an internal wire.
 @nb{An external} wire of an embedded circuit can be but not necessarily is
 an external wire of the enveloping circuit.
 The signals on two or more wires can mutually depend on each other,
-@nb{as for example} in a latch or a flip-flop.
+@nb{as for example} in a flip-flop.
 
 A @seclink["wires"]{wire} preserves its signal as long as not mutated.
 After mutation, the new signal is preserved up to the next mutation, and so on.
@@ -363,7 +363,7 @@ causing the D-flop-flop to oscillate:
 @Interaction*[
  (agenda-schedule! in-wire F)
  (agenda-schedule! clock-wire T)
- (code:line (agenda-schedule! clock-wire F 1) (code:comment "Too short clock pulse."))
+ (code:line (agenda-schedule! clock-wire F 1) (code:comment "Clock pulse too short."))
  (parameterize
    ((agenda-time-limit (+ (agenda-time) 5))
     (agenda-report #t))
@@ -534,8 +534,8 @@ Let's test the D-flip-flop with delayed clock too:
 @Interaction*[(test-D-flip-flop D-flip-flop-constr-with-delay)]
 
 The two @nbr[Nand] gates at the right of the @elemref["D-flip-flop-diagram"]{diagram}
-form an odd kind of SR-latch.@(lb)
-Compared to a regular SR-latch it interprets its S and R input as their inverses.@(lb)
+form an odd kind of SR-flip-flop.@(lb)
+Compared to a regular SR-flip-flop it interprets its S and R input as their inverses.@(lb)
 @tt{S-inverse} corresponds to wire @tt{reset} in the @elemref["D-flip-flop-diagram"]{diagram}.@(lb)
 @tt{R-inverse} corresponds to wire @tt{set} in the @elemref["D-flip-flop-diagram"]{diagram}.
 
@@ -548,30 +548,30 @@ Compared to a regular SR-latch it interprets its S and R input as their inverses
  #:row-properties '((top-border bottom-border) () () () bottom-border)
  #:column-properties '(center center center center center left)
  #:sep (hspace 2)]
-The last line of this transition table applies after the latch has been stabilized@(lb)
+The last line of this transition table applies after the flip-flop has been stabilized@(lb)
 by setting or resetting it.
-We can use the latch as a subcircuit in a D-flip-flop:
+We can use the flip-flop as a subcircuit in a D-flip-flop:
 
 @Interaction*[
- (define make-odd-SR-latch
-   (make-circuit-constr 'SR-latch
+ (define make-odd-SR-flip-flop
+   (make-circuit-constr 'SR-flip-flop
      (S-inverse R-inverse) (code:comment "inputs")
      (state state-inverse) (code:comment "outputs")
      (code:comment "gates:")
      (state         (Nand S-inverse state-inverse))
      (state-inverse (Nand R-inverse state))))]
 @Interaction*[
- (define D-flip-flop-constr-with-odd-SR-latch
-   (make-circuit-constr 'D-flip-flop-with-odd-SR-latch
+ (define D-flip-flop-constr-with-odd-SR-flip-flop
+   (make-circuit-constr 'D-flip-flop-with-odd-SR-flip-flop
      (in clock)            (code:comment "inputs")
      (state state-inverse) (code:comment "outputs")
      (code:comment "gates and subcircuit:")
      (S-inverse (Nand clock in))
      (R-inverse (Nand clock S-inverse))
-     ((state state-inverse) (make-odd-SR-latch S-inverse R-inverse))))]
+     ((state state-inverse) (make-odd-SR-flip-flop S-inverse R-inverse))))]
 
 @Interaction*[
- (test-D-flip-flop D-flip-flop-constr-with-odd-SR-latch)]
+ (test-D-flip-flop D-flip-flop-constr-with-odd-SR-flip-flop)]
 @(reset-Interaction*)
 
 More examples in section @seclink["More examples"]{More examples}.
@@ -1141,7 +1141,9 @@ but these instances always are distinct objects, without sharing any parts.
 
  @Interaction*[
  (define Empty-circuit-constr (make-circuit-constr 'empty-circuit () ()))
- (andmap circuit-constr? (list Not Nand And Empty-circuit-constr))]}
+ (define gate-constr-list (list Not Nand And Empty-circuit-constr))
+ gate-constr-list
+ (andmap circuit-constr? gate-constr-list)]}
 
 @defproc[(circuit-constr-name (circuit-constr circuit-constr?)) symbol?]{
 
@@ -1149,8 +1151,8 @@ but these instances always are distinct objects, without sharing any parts.
  The name can also be retrieved with procedure @nbr[object-name].
 
  @Interaction*[
- (map circuit-constr-name (list Not Nand And Empty-circuit-constr))
- (map         object-name (list Not Nand And Empty-circuit-constr))]}
+ (map circuit-constr-name gate-constr-list)
+ (map         object-name gate-constr-list)]}
 
 @(reset-Interaction*)
 
