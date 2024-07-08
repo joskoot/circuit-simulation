@@ -54,7 +54,8 @@
   (define hash (agenda-hash agenda))
   (define events (hash-ref hash time '()))
   (define event (list wire signal))
-  (hash-set! hash time (cons event (remove event events event=?))))
+  ; Do not schedule an event more than once for the same wire and time.
+  (unless (member event events event-wire=?) (hash-set! hash time (cons event events))))
 
 (define-syntax (agenda-sequence! stx)
   (syntax-case stx ()
@@ -70,11 +71,16 @@
     (unless (agenda-empty?)
       (when (and time-limit (> time time-limit))
         (error 'agenda-execute! "time-limit ~s exceeded" time-limit))
-      (define events (sort (hash-ref hash time '()) event<?))
+      (define events (sort (hash-ref hash time '()) event-wire-name<?))
       (hash-remove! hash time)
-      ; An action is located in a gate. When two or more input wires of the same change signal,
-      ; they activate the same gate related action. Therefore remove-duplicates can be used in order
-      ; to prevent an action from being executed more than once at the same time.
+      ; An action is part of the gate to be triggered
+      ; and therefore is the same (eq?) for inputs to the same gate.
+      ; When two or more input wires of the same gate change signal,
+      ; they activate the same gate related action.
+      ; Therefore remove-duplicates can be used in order to prevent
+      ; a gate from being triggered more than once at the same time.
+      ; The order in which actions of distinct gates are executed is irrelevant.
+      ; They are sorted by wire name.
       (define actions
         (remove-duplicates
           (for/fold ((actions '())) ((event (in-list events)))
@@ -95,7 +101,7 @@
   (unless (eq? signal old-signal)
     (when (and report (or (report-hidden) (not (hidden-wire? wire))))
       (printf "time ~a : ~a : ~s -> ~s~n"
-        (agenda-time*)
+        (~agenda-time)
         (wire-name* wire) old-signal signal))
     (set-wire-signal! wire signal)
     (wire-actions wire)))
@@ -133,22 +139,14 @@
       (define wire (caar lst))
       (define signals/delays (cadar lst))
       (for ((signal/delay (in-list signals/delays)))
-        (apply agenda-schedule! (caar lst) signal/delay))
+        (apply agenda-schedule! wire signal/delay))
       (agenda-sequencer (cdr lst)))))
 
-(define (event=? a b) (eq? (car a) (car b)))
-(define (event<? a b) (symbol<? (wire-name (car a)) (wire-name (car b))))
+(define (event-wire=? a b) (eq? (car a) (car b)))
+(define (event-wire-name<? a b) (symbol<? (wire-name (car a)) (wire-name (car b))))
 
-(define (agenda-time*) (~s #:min-width (report-time-width) #:align 'right (agenda-time)))
+(define (~agenda-time) (~s #:min-width (report-time-width) #:align 'right (agenda-time)))
 (define (wire-name* wire) (~s #:min-width (report-wire-width) #:align 'left (wire-name wire)))
-
-;=====================================================================================================
-
-#;(define (agenda->list)
-    (for/list ((entry (in-list (sort (hash->list (agenda-hash (current-agenda))) < #:key car))))
-      (cons (car entry)
-        (for/list ((event (in-list (cdr entry))))
-          (list (wire-name (car event)) (cadr event) (wire-signal (car event)))))))
 
 ;=====================================================================================================
 ; The end

@@ -106,6 +106,7 @@
        ((andmap identifier? (syntax->list #'(sub-in ...))) (list stx))
        (else
          (define non-ids (filter (compose not identifier?) (syntax->list #'(sub-in ...))))
+         ; generate temporaries generates ‘temp’ followed by digits.
          (define temps (generate-temporaries (map extract non-ids)))
          (cons
            #`((sub-out ...)
@@ -177,10 +178,13 @@
                (unless (eq? signal (wire-signal output-wire))
                  (agenda-schedule! output-wire signal delay)))
              (wire-add-action! input-wire action) ...
-             ; The action must be called during installation of the gate
-             ; in order to schedule an event for its output when the latter will change signal.
+             ; Always use the same (eq?) action for the same instance of a gate.
+             ; This allows procedure agenda-execute! to avoid
+             ; triggering a gate more than once at the same time
+             ; in case more than one input wire changes signal at the same time.
+             ; The action must be called during installation of the gate in order to schedule
+             ; an event for its output when the latter will change signal during power up.
              ; Otherwise the agenda would remain empty.
-             ; Notice that actions are located in gates, not in wires.
              (action)))))))
 
 (define (make-gate*-constr name function)
@@ -197,10 +201,13 @@
           (unless (eq? (wire-signal output-wire) output-signal)
             (agenda-schedule! output-wire output-signal delay)))
         (for ((input-wire (in-list input-wires))) (wire-add-action! input-wire action))
-        ; The action must be called during installation of the gate
-        ; in order to schedule an event for its output when the latter will change signal.
+        ; Always use the same (eq?) action for the same instance of a gate.
+        ; This allows procedure agenda-execute! to avoid
+        ; triggering a gate more than once at the same time
+        ; in case more than one input wire changes signal at the same time.
+        ; The action must be called during installation of the gate in order to schedule
+        ; an event for its output when the latter will change signal during power up.
         ; Otherwise the agenda would remain empty.
-        ; Notice that actions are located in gates, not in wires.
         (action)))))
 
 ;=====================================================================================================
@@ -266,3 +273,4 @@
 
 ;=====================================================================================================
 ; The end
+
