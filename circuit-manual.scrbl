@@ -25,7 +25,7 @@
      racket/function
      racket/block))
 
-@(define-for-syntax local #f)
+@(define-for-syntax local #t)
 
 @(define-syntax-rule (cmt x ...) (black (smaller x ...)))
 
@@ -386,8 +386,10 @@ Even with a longer clock pulse the signal on @tt{state-inverse-wire} may flip to
 This can be avoided by replacing
 
 @inset{
- @nbr[(set (Nand clock reset))] by@(lb)
- @nbr[(set (Nand ((Delay 1) clock) reset))] or by@(lb)
+ @nbr[(set (Nand clock reset))] by
+  
+ @nbr[(set (Nand ((Delay 1) clock) reset))] or by
+ 
  @nbr[(delayed-clock ((Delay 1) clock))] and@(lb)
  @nbr[(set (Nand delayed-clock reset))]}
 
