@@ -1126,7 +1126,7 @@ but these instances always are distinct objects, without sharing any parts.
 
   @nb{A circuit constructor} must not call itself as a subcircuit, nor directly nor indirectly.
   @nb{An attempt} to do so is detected as an error at run time when the constructor is called.
-  Otherwise calling the circuit constructor would lead to an infinite recursion.
+  Otherwise calling the circuit constructor would lead to an infinite recursion.@(lb)
   Neither can a real life circuit contain itself as a non trivial subcircuit. 
 
   @Interaction[
