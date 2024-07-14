@@ -55,6 +55,7 @@
   (hash-clear! (agenda-hash agenda)))
 
 (define (agenda-schedule! wire signal (delay 0))
+  (define (same-wire? a b) (eq? (car a) (car b)))
   (unless (wire? wire) (raise-argument-error 'agenda-schedule! "wire?" wire))
   (unless (natural? delay) (raise-argument-error 'agenda-schedule! "natural?" delay))
   (unless (trit? signal) (raise-argument-error 'agenda-schedule! "trit?" signal))
@@ -64,7 +65,8 @@
   (define events (hash-ref hash time '()))
   (define event (list wire signal))
   ; Do not schedule an event more than once for the same wire and time.
-  (unless (member event events event-wire=?) (hash-set! hash time (cons event events))))
+  ; Retain the last one scheduled.
+  (hash-set! hash time (cons event (remove event events same-wire?))))
 
 (define-syntax (agenda-sequence! stx)
   (syntax-case stx ()
