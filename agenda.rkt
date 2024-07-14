@@ -11,6 +11,7 @@
   current-agenda
   agenda-reset!
   agenda-empty?
+  agenda-events
   agenda-schedule!
   agenda-sequence!
   agenda-execute!
@@ -32,6 +33,14 @@
 
 (define (agenda-time) (agenda-timer (current-agenda)))
 (define (agenda-empty?) (hash-empty? (agenda-hash (current-agenda))))
+
+(define (agenda-events)
+  (define (put-time elem)
+    (define time (car elem))
+    (for/list ((wire/signal (in-list (cdr elem))))
+      (list (wire-name (car wire/signal)) (cadr wire/signal) time)))
+  (define lst (sort (hash->list (agenda-hash (current-agenda))) < #:key car))
+  (apply append (map put-time lst)))
 
 (define current-agenda
   (make-parameter (agenda-make 'the-agenda)

@@ -25,6 +25,7 @@
   current-agenda
   agenda-reset!
   agenda-empty?
+  agenda-events
   agenda-schedule!
   agenda-sequence!
   agenda-execute!

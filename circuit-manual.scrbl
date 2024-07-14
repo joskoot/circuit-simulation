@@ -732,6 +732,11 @@ no event is scheduled for this output.
  (agenda-empty?)
  (code:line (agenda-execute! #t) (code:comment "Nothing happens"))]}
 
+@defproc[(agenda-events) (listof (list/c symbol? trit? natural?))]{
+ Returns a list of all events @tt{(@italic{wire-name} @italic{signal} @italic{time})}
+ in the @nbr[current-agenda].@(lb)
+ The list is sorted for increasing time.}
+
 @defproc[(agenda-time) natural?]{
 
  Returns the current time of the @nbr[current-agenda].}
