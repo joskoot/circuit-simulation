@@ -39,8 +39,8 @@
     (define time (car elem))
     (for/list ((wire/signal (in-list (cdr elem))))
       (list (wire-name (car wire/signal)) (cadr wire/signal) time)))
-  (define lst (sort (hash->list (agenda-hash (current-agenda))) < #:key car))
-  (apply append (map put-time lst)))
+  (define lst (hash->list (agenda-hash (current-agenda))))
+  (sort (apply append (map put-time lst)) event<?))
 
 (define current-agenda
   (make-parameter (agenda-make 'the-agenda)
@@ -55,7 +55,6 @@
   (hash-clear! (agenda-hash agenda)))
 
 (define (agenda-schedule! wire signal (delay 0))
-  (define (same-wire? a b) (eq? (car a) (car b)))
   (unless (wire? wire) (raise-argument-error 'agenda-schedule! "wire?" wire))
   (unless (natural? delay) (raise-argument-error 'agenda-schedule! "natural?" delay))
   (unless (trit? signal) (raise-argument-error 'agenda-schedule! "trit?" signal))
@@ -66,7 +65,7 @@
   (define event (list wire signal))
   ; Do not schedule an event more than once for the same wire and time.
   ; Retain the last one scheduled.
-  (hash-set! hash time (cons event (remove event events same-wire?))))
+  (hash-set! hash time (cons event (remove event events event-wire=?))))
 
 (define-syntax (agenda-sequence! stx)
   (syntax-case stx ()
@@ -155,6 +154,12 @@
 
 (define (event-wire=? a b) (eq? (car a) (car b)))
 (define (event-wire-name<? a b) (symbol<? (wire-name (car a)) (wire-name (car b))))
+
+(define (event<? e1 e2)
+  (define t1 (caddr e1))
+  (define t2 (caddr e2))
+  (or (< t1 t2)
+    (and (= t1 t2) (symbol<? (car e1) (car e2)))))
 
 (define (~agenda-time) (~s #:min-width (report-time-width) #:align 'right (agenda-time)))
 (define (wire-name* wire) (~s #:min-width (report-wire-width) #:align 'left (wire-name wire)))

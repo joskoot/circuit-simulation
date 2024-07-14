@@ -735,7 +735,7 @@ no event is scheduled for this output.
 @defproc[(agenda-events) (listof (list/c symbol? trit? natural?))]{
  Returns a list of all events @tt{(@italic{wire-name} @italic{signal} @italic{time})}
  in the @nbr[current-agenda].@(lb)
- The list is sorted for increasing time.}
+ The list is sorted by increasing time and for each time by wire name.}
 
 @defproc[(agenda-time) natural?]{
 
