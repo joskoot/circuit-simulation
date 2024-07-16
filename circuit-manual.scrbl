@@ -25,7 +25,7 @@
      racket/function
      racket/block))
 
-@(define-for-syntax local #f)
+@(define-for-syntax local #t)
 
 @(define-syntax-rule (cmt x ...) (black (smaller x ...)))
 
@@ -200,7 +200,7 @@ A simulation can be done in various ways, @nb{for example} as follows:
   A report shows all mutations on the wires and at which times, internal wires included.}
 
  @item{In addition to procedure @nbr[wire-signal] and any format or output procedure of @(Rckt),
-  procedure @nbr[wire-print] or @nbr[wire-println] can be used
+  procedures @nbr[wire-print] and @nbr[wire-println] can be used
   to see the final signals on the output wires.
   Simply typing the identifiers of wires will do too.}
 
@@ -335,7 +335,7 @@ such as to become inverses of each other.
 After time 12 nothing happens until at time 20 the clock is dropped to @nbr[F],
 with the only effect that the signal on internal wire @tt{set} raises to @nbr[T].
 At this time wire @tt{reset} has signal @nbr[T] too,
-but because the @tt{state} and @tt{state-inverse} already are inverses of each other,
+but because the signals on wires @tt{state} and @tt{state-inverse} already are inverses of each other,
 they remain stable.
 
 At this moment the D-flip-flop is in reset state. Now setting it
@@ -405,8 +405,7 @@ after wire @tt{reset} is guaranteed to have dropped to @nbr[F]:
      (code:comment "gates: four distinct instances")
      (code:comment "output       (Gate input ...)")
      (reset         (Nand clock in))
-     (delayed-clock ((Delay 1) clock))
-     (set           (Nand delayed-clock reset))
+     (set           (Nand ((Delay 1) clock) reset))
      (state         (Nand reset state-inverse))
      (state-inverse (Nand set   state))))
  (let ()
@@ -1031,7 +1030,7 @@ A gate does not schedule an event for its output if this output will not change.
  (define-wires a (b) (c ?) (d F) (e 'T F))
  (wire-println a b c d e)]
   @red{Advice}: do not use @nbr['T] or @nbr['F] or @nbr['?] as a wire name.
-  The output @tt{T=F} is confusing.}]
+  @red{The output @tt{T=F} is confusing.}}]
 @(reset-Interaction*)
 
 @defproc[(wire-nr-of-actions (wire wire?)) natural?]{
@@ -1169,7 +1168,7 @@ A gate is an elementary circuit.
 @nbr[Not], @nbr[Nand] and @nbr[Nand3] gates are the most elementary ones
 and have time delay @nbr[1].
 @nbr[Delay] is a special gate whose time delay is specified when it is constructed.
-@nb{All other} predefined gate are built
+@nb{All other} predefined gates are built
 with @nbr[make-circuit-constr] using @nbr[Not], @nbr[Nand] and @nbr[Nand3] gates
 according to the following formulas. See the @seclink["truth tables"]{truth tables} too.
 

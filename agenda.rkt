@@ -64,8 +64,8 @@
   (define events (hash-ref hash time '()))
   (define event (list wire signal))
   ; Do not schedule an event more than once for the same wire and time.
-  ; Retain the last one scheduled.
-  (hash-set! hash time (cons event (remove event events event-wire=?))))
+  ; The last one cancels all previous ones.
+  (hash-set! hash time (cons event (remove event events event-wire-eq?))))
 
 (define-syntax (agenda-sequence! stx)
   (syntax-case stx ()
@@ -86,7 +86,7 @@
       ; An action is part of the gate to be triggered
       ; and therefore is the same (eq?) for inputs to the same gate.
       ; When two or more input wires of the same gate change signal,
-      ; they activate the same gate related action.
+      ; they activate the same (eq?) gate related action.
       ; Therefore remove-duplicates can be used in order to prevent
       ; a gate from being triggered more than once at the same time.
       ; The order in which actions of distinct gates are executed is irrelevant.
@@ -152,7 +152,7 @@
         (apply agenda-schedule! wire signal/delay))
       (agenda-sequencer (cdr lst)))))
 
-(define (event-wire=? a b) (eq? (car a) (car b)))
+(define (event-wire-eq? a b) (eq? (car a) (car b)))
 (define (event-wire-name<? a b) (symbol<? (wire-name (car a)) (wire-name (car b))))
 
 (define (event<? e1 e2)

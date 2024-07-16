@@ -261,9 +261,6 @@
     (raise-argument-error 'Delay "exact-positive-integer?" delta))
   (function->gate-constr 'Delay (a) ((b delta)) values))
 
-(define (symbol-append . symbols)
-  (string->symbol (apply string-append (map symbol->string symbols))))
-
 (define And*  (make-gate*-constr 'And*   And-function))
 (define Nand* (make-gate*-constr 'Nand* Nand-function))
 (define Or*   (make-gate*-constr 'Or*     Or-function))
