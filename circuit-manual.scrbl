@@ -25,7 +25,7 @@
      racket/function
      racket/block))
 
-@(define-for-syntax local #f)
+@(define-for-syntax local #t)
 
 @(define-syntax-rule (cmt x ...) (black (smaller x ...)))
 
@@ -435,7 +435,7 @@ after wire @tt{reset} is guaranteed to have dropped to @nbr[F]:
 Let's test the D-flip-flop for all binary combinations of @tt{in}, @tt{clock} and old @tt{state}.
 
 @Interaction*[
- (define (test-D-flip-flop flip-flop-constr #:tabulate? (tabulate? #f))
+ (define (test-D-flip-flop constr #:tabulate? (tabulate? #f))
    (code:comment " ")
    (code:comment "Use a new agenda to make sure no other circuits will be triggered.")
    (code:comment " ")
@@ -445,7 +445,7 @@ Let's test the D-flip-flop for all binary combinations of @tt{in}, @tt{clock} an
      (define clock-wire (wire-make 'clock))
      (define state-wire (wire-make 'state))
      (define state-inverse-wire (wire-make 'state-inverse))
-     (printf " ~nTesting ~s.~n" (circuit-constr-name flip-flop-constr))
+     (printf " ~nTesting ~s.~n" (circuit-constr-name constr))
      (code:comment " ")
      (code:comment "Procedure test/tabulate does a test. If tabulate? is true,")
      (code:comment "it also prints a line of results for the table to be shown.")
@@ -499,7 +499,7 @@ Let's test the D-flip-flop for all binary combinations of @tt{in}, @tt{clock} an
      (code:comment " ")
      (code:comment "Install the flip-flop.")
      (code:comment " ")
-     (D-flip-flop-constr in-wire clock-wire state-wire state-inverse-wire)
+     (constr in-wire clock-wire state-wire state-inverse-wire)
      (code:comment " ")
      (code:comment "First print a header for the table to be printed (if desired).")
      (code:comment " ")
