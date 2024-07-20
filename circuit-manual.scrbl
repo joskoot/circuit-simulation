@@ -75,7 +75,7 @@ My tools differ in many aspects, though, the agenda too.
 
 This document intentionally contains some repetitions of the same or similar phrases in order to
 avoid hyperlinks where text is relevant on the spot.
-Both level and edge triggered bistable multivibrators will be called ‘flop-flop’s.
+Both level and edge triggered bistable multivibrators will be called ‘flip-flop’s.
 True/high/on and false/low/off are called ‘inverses’ of each other,
 elsewhere also called ‘complements’ of each other.
 
@@ -358,7 +358,7 @@ The time is not reset while returning from procedure @nbr[agenda-execute!].
 
 To set or reset the D-flip-flop a @nbr[T]-puls of two time units is sufficient,
 but a pulse of only one time unit may be too short,
-causing the D-flop-flop to oscillate:
+causing the D-flip-flop to oscillate:
 
 @Interaction*[
  (agenda-schedule! in-wire F)
