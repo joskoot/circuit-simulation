@@ -285,12 +285,14 @@ At power up time the signal on the four wires is @nbr[F].
  (define state-wire         (wire-make 'state         F))
  (define state-inverse-wire (wire-make 'state-inverse F))]
 
-Now install the D-flip-flop. Procedure @tt{D-flip-flop-constr} returns @(Void).
+Now install the D-flip-flop.
 It wants four wires for its arguments:
 @tt{in} and @tt{clock} for its inputs and @tt{state} and @tt{state-inverse} for its outputs.
 It makes an instance of a D-flip-flop
 and connects the input and output wires to the circuit.
-@nb{It also} schedules events in the agenda for power up. @nb{No simulation yet.}
+Procedure @tt{D-flip-flop-constr} returns @(Void),
+but uses the constructed circuit to schedule events in the agenda for power up.
+@nb{No simulation yet.}
 
 @Interaction*[(D-flip-flop-constr in-wire clock-wire state-wire state-inverse-wire)]
 
@@ -1095,7 +1097,8 @@ but these instances always are distinct objects, without sharing any parts.
   A @nbr[subcircuit-constr] can be an arbirary expression yielding a circuit constructor.
   Each @nbr[subcircuit] must have as many inputs as @nbr[subcircuit-arg]s
   and as many outputs as @nbr[sub-output-wire]s.
-  Wrong arity is detected when the subcircuit is called for connection to its input and output wires.
+  Wrong arity is detected when the constructor of the subcircuit is called
+  for connection to its input and output wires.
   @nb{A @nbr[subcircuit-arg]} that itself is a @nbr[subcircuit]
   can have one output only, for which a @nbrl[report-hidden]{hidden} internal wire is incorporated.
   The name of the hidden wire is that of the @nbr[subcircuit] followed by
