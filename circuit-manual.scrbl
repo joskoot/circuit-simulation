@@ -1493,7 +1493,7 @@ Let's try a diagram according to this formula:
 
 @inset{@image["another-D-flip-flop.gif" #:scale 1]}
 
-Let's call it @tt{another-D-flip-flop}.
+Let's call it @tt{Another-D-flip-flop}.
 For the moment ignore the triangle in wire @tt{a}.
 
 @Interaction*[
