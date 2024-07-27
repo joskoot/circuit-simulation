@@ -28,6 +28,7 @@
 @(define-for-syntax local #f)
 
 @(define-syntax-rule (cmt x ...) (black (smaller x ...)))
+@(define-syntax-rule (itt x ...) (tt (italic x ...)))
 
 @(define-syntax (nbhll stx)
    (syntax-case stx ()
@@ -1192,7 +1193,10 @@ according to the following formulas. See the @seclink["truth tables"]{truth tabl
  #:column-properties '(left center left center)]
 
 Every gate constructor is a procedure accepting a fixed number of one, two or three input wires
-followed by one output wire. In the above formulas the output wires are omitted.
+followed by one output wire. 
+The formulas can be used as @itt{subcircuit-arg}s in a @itt{subcircuit-clause},
+but elsewhere the formulas do not work because output wires have been omitted
+and a @nbrl[circuit-constr?]{circuit-constr} wants wires for its arguments but returns @(Void).
 
 @deftogether[
  (@defproc[#:kind "gate constructor" (Not   (in wire?) (out wire?)) void?]
