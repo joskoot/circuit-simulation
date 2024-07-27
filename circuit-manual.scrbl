@@ -1176,23 +1176,23 @@ with @nbr[make-circuit-constr] using @nbr[Not], @nbr[Nand] and @nbr[Nand3] gates
 according to the following formulas. See the @seclink["truth tables"]{truth tables} too.
 
 @Tabular[
- (("Gate" "" "Formula") 
-  (@tt{(@nbr[And]  @(hspace 2)a b)}   "=" @nbr[(Not (Nand a b))])
-  (@tt{(@nbr[Or]   @(hspace 3)a b)}   "=" @nbr[(Nand (Not a) (Not b))])
-  (@tt{(@nbr[Nor]  @(hspace 2)a b)}   "=" @nbr[(Not (Nand (Not a) (Not b)))])
-  (@tt{(@nbr[Xor]  @(hspace 2)a b)}   "=" @nbr[(Nand (Nand a (Not b)) (Nand (Not a) b))])
-  (@tt{(@nbr[Eqv]  @(hspace 2)a b)}   "=" @nbr[(Nand (Nand a b) (Nand (Not a) (Not b)))])
-  (@tt{(@nbr[Imply]           a b)}   "=" @nbr[(Nand a (Not b))])
-  (@tt{(@nbr[And3] @(hspace 1)a b c)} "=" @nbr[(Not (Nand3 a b c))])
-  (@tt{(@nbr[Or3]  @(hspace 2)a b c)} "=" @nbr[(Nand3 (Not a) (Not b) (Not c))])
-  (@tt{(@nbr[Nor3] @(hspace 1)a b c)} "=" @nbr[(Not (Nand3 (Not a) (Not b) (Not c)))])
-  (@tt{(@nbr[If]   @(hspace 3)a b c)} "=" @nbr[(Nand3 (Nand b c) (Nand a b) (Nand (Not a) c))]))
+ (("Gate" "" "Formula" "Max delay") 
+  (@tt{(@nbr[And]  @(hspace 2)a b)}   "=" @nbr[(Not (Nand a b))] "2")
+  (@tt{(@nbr[Or]   @(hspace 3)a b)}   "=" @nbr[(Nand (Not a) (Not b))] "2")
+  (@tt{(@nbr[Nor]  @(hspace 2)a b)}   "=" @nbr[(Not (Nand (Not a) (Not b)))] "3")
+  (@tt{(@nbr[Xor]  @(hspace 2)a b)}   "=" @nbr[(Nand (Nand a (Not b)) (Nand (Not a) b))] "3")
+  (@tt{(@nbr[Eqv]  @(hspace 2)a b)}   "=" @nbr[(Nand (Nand a b) (Nand (Not a) (Not b)))] "3")
+  (@tt{(@nbr[Imply]           a b)}   "=" @nbr[(Nand a (Not b))] "2")
+  (@tt{(@nbr[And3] @(hspace 1)a b c)} "=" @nbr[(Not (Nand3 a b c))] "2")
+  (@tt{(@nbr[Or3]  @(hspace 2)a b c)} "=" @nbr[(Nand3 (Not a) (Not b) (Not c))] "2")
+  (@tt{(@nbr[Nor3] @(hspace 1)a b c)} "=" @nbr[(Not (Nand3 (Not a) (Not b) (Not c)))] "3")
+  (@tt{(@nbr[If]   @(hspace 3)a b c)} "=" @nbr[(Nand3 (Nand b c) (Nand a b) (Nand (Not a) c))] "3"))
  #:sep (hspace 2)
  #:row-properties '((top-border bottom-border) () () () () () () () () () bottom-border)
- #:column-properties '(left center left)]
+ #:column-properties '(left center left center)]
 
 Every gate constructor is a procedure accepting a fixed number of one, two or three input wires
-followed by one output wire.
+followed by one output wire. In the above formulas the output wires are omitted.
 
 @deftogether[
  (@defproc[#:kind "gate constructor" (Not   (in wire?) (out wire?)) void?]
