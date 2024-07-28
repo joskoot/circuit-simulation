@@ -396,8 +396,8 @@ This can be avoided by replacing
  @nbr[(delayed-clock ((Delay 1) clock))] and@(lb)
  @nbr[(set (Nand delayed-clock reset))]}
 
-in order to trigger the @nbr[Nand]-gate with output wire @tt{set}
-after wire @tt{reset} is guaranteed to have dropped to @nbr[F]:
+in order not to trigger the @nbr[Nand]-gate with output wire @tt{set}
+before wire @tt{reset} has been dropped to @nbr[F]:
 
 @Interaction*[
  (define D-flip-flop-constr-with-delay
