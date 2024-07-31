@@ -25,7 +25,7 @@
      racket/function
      racket/block))
 
-@(define-for-syntax local #t)
+@(define-for-syntax local #f)
 
 @(define-syntax-rule (cmt x ...) (black (smaller x ...)))
 @(define-syntax-rule (itt x ...) (tt (italic x ...)))
