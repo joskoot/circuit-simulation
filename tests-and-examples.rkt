@@ -37,10 +37,10 @@
   (syntax-case stx ()
     ((_ name (in ...) (out ...))
      #'(begin
-         (printf "~s :" 'name)
-         (printf " ~s=~s" 'in (get-signal in)) ...
-         (printf " -->")
-         (printf " ~s=~s" 'out (get-signal out)) ...
+         (printf "(~s" 'name)
+         (printf " ~s" (get-signal in)) ...
+         (printf ") = ")
+         (printf "~s" (get-signal out)) ...
          (printf " time=~s~n" (max 0 (sub1 (agenda-time))))))))
 
 (define (get-signal signal-or-wire)

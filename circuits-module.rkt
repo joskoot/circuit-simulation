@@ -173,19 +173,19 @@
      #'(let ((proc logical-function) (neem name))
          (circuit-constr neem
            (λ (input-wire ... output-wire)
-             (define (action)
+             (define (event)
                (define signal (proc (wire-signal input-wire) ...))
                (unless (eq? signal (wire-signal output-wire))
                  (agenda-schedule! output-wire signal delay)))
-             (wire-add-action! input-wire action) ...
-             ; Always use the same (eq?) action for the same instance of a gate.
+             (wire-add-event! input-wire event) ...
+             ; Always use the same (eq?) event for the same instance of a gate.
              ; This allows procedure agenda-execute! to avoid
              ; triggering a gate more than once at the same time
              ; in case more than one input wire changes signal at the same time.
-             ; The action must be called during installation of the gate in order to schedule
+             ; The event must be called during installation of the gate in order to schedule
              ; an event for its output when the latter will change signal during power up.
              ; Otherwise the agenda would remain empty.
-             (action)))))))
+             (event)))))))
 
 (define (make-gate*-constr name function)
   (λ (delay)
@@ -196,19 +196,19 @@
         (define ws (reverse wires))
         (define input-wires (cdr ws))
         (define output-wire (car ws))
-        (define (action)
+        (define (event)
           (define output-signal (apply function (map wire-signal input-wires)))
           (unless (eq? (wire-signal output-wire) output-signal)
             (agenda-schedule! output-wire output-signal delay)))
-        (for ((input-wire (in-list input-wires))) (wire-add-action! input-wire action))
-        ; Always use the same (eq?) action for the same instance of a gate.
+        (for ((input-wire (in-list input-wires))) (wire-add-event! input-wire event))
+        ; Always use the same (eq?) event for the same instance of a gate.
         ; This allows procedure agenda-execute! to avoid
         ; triggering a gate more than once at the same time
         ; in case more than one input wire changes signal at the same time.
-        ; The action must be called during installation of the gate in order to schedule
+        ; The event must be called during installation of the gate in order to schedule
         ; an event for its output when the latter will change signal during power up.
         ; Otherwise the agenda would remain empty.
-        (action)))))
+        (event)))))
 
 ;=====================================================================================================
 
@@ -270,4 +270,3 @@
 
 ;=====================================================================================================
 ; The end
-

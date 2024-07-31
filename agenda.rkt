@@ -73,7 +73,7 @@
      #'(agenda-sequencer (list (list wire (list (list signal delay) ...)) ...)))))
 
 (define (agenda-execute! (report (agenda-report)))
-  (define (call action) (action))
+  (define (call event) (event))
   (define time-limit (agenda-time-limit))
   (define agenda (current-agenda))
   (define hash (agenda-hash agenda))
@@ -81,27 +81,27 @@
     (unless (agenda-empty?)
       (when (and time-limit (> time time-limit))
         (error 'agenda-execute! "time-limit ~s exceeded" time-limit))
-      (define events (sort (hash-ref hash time '()) event-wire-name<?))
+      (define wevents (sort (hash-ref hash time '()) event-wire-name<?))
       (hash-remove! hash time)
-      ; An action is part of the gate to be triggered
+      ; An event is part of the gate to be triggered
       ; and therefore is the same (eq?) for inputs to the same gate.
       ; When two or more input wires of the same gate change signal,
-      ; they activate the same (eq?) gate related action.
+      ; they activate the same (eq?) gate related event.
       ; Therefore remove-duplicates can be used in order to prevent
       ; a gate from being triggered more than once at the same time.
-      ; The order in which actions of distinct gates are executed is irrelevant.
-      ; They are sorted by wire name.
-      (define actions
+      ; The order in which events of distinct gates are executed is irrelevant.
+      ; They are sorted by wire name for sorted display in a report.
+      (define events
         (remove-duplicates
-          (for/fold ((actions '())) ((event (in-list events)))
+          (for/fold ((events '())) ((event (in-list wevents)))
             (define wire (car event))
             (define signal (cadr event))
             (cond
-              ((eq? (wire-signal wire) signal) actions)
-              (else (append (wire-signal-set! wire signal report) actions))))
+              ((eq? (wire-signal wire) signal) events)
+              (else (append (wire-signal-set! wire signal report) events))))
           eq?))
       (hash-remove! hash time)
-      (for-each call actions)
+      (for-each call events)
       (define new-time (add1 time))
       (set-agenda-timer! agenda new-time)
       (loop new-time))))
@@ -114,7 +114,7 @@
         (~agenda-time)
         (wire-name* wire) old-signal signal))
     (set-wire-signal! wire signal)
-    (wire-actions wire)))
+    (wire-events wire)))
 
 (define agenda-time-limit
   (make-parameter 1000

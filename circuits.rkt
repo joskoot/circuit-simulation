@@ -18,7 +18,7 @@
   report-wire-width
   wire-print
   wire-println
-  wire-nr-of-actions
+  wire-nr-of-events
   agenda-make
   agenda?
   agenda-time

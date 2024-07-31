@@ -25,7 +25,7 @@
      racket/function
      racket/block))
 
-@(define-for-syntax local #f)
+@(define-for-syntax local #t)
 
 @(define-syntax-rule (cmt x ...) (black (smaller x ...)))
 @(define-syntax-rule (itt x ...) (tt (italic x ...)))
@@ -908,10 +908,10 @@ no event is scheduled for this output.
 
 @section[#:tag "wires"]{Wires}
 
-A wire has a name, a signal and a list of actions.
+A wire has a name, a signal and a list of events.
 The signal always is a @nbrl[trit?]{trit}.
-Each action is related to a gate that has the wire as an input.
-An action triggers the gate when the signal on the wire is changed.
+Each event is related to a gate that has the wire as an input.
+An event triggers the gate when the signal on the wire is changed.
 A gate with two or more inputs never is triggered more than once at the same
 @nbsl["agenda"]{agenda-time}.
 It is triggered once after all inputs have been computed.@(lb)
@@ -921,8 +921,8 @@ A gate does not schedule an event for its output if this output will not change.
 @defproc[(wire-make (name symbol?) (signal trit? (wire-init-signal))) wire?]{
                                                                              
  Yields a wire with a @nbr[name], initialized with @nbr[signal]
- and with empty list of actions.@(lb)
- Circuit constructors add actions to wires.
+ and with empty list of events.@(lb)
+ Circuit constructors add events to wires.
 
  @Interaction[
  (wire-make 'my-wire T)
@@ -1036,8 +1036,8 @@ A gate does not schedule an event for its output if this output will not change.
   @red{The output @tt{T=F} is confusing.}}]
 @(reset-Interaction*)
 
-@defproc[(wire-nr-of-actions (wire wire?)) natural?]{
- Returns the number of actions currently attributed to a @nbr[wire],
+@defproc[(wire-nr-of-events (wire wire?)) natural?]{
+ Returns the number of events currently attributed to a @nbr[wire],
  id est, the number of gates that have the wire as an input.
  Giving the wire as an input wire to a circuit constructor usually,
  but not necessarily increments this number.
@@ -1045,9 +1045,9 @@ A gate does not schedule an event for its output if this output will not change.
  @Interaction[
  (define-wires a b)
  (And a a b)
- (wire-nr-of-actions a)
- (code:line ((make-circuit-constr 'no-name (a) (a)) a) (code:comment "Does not add an action."))
- (wire-nr-of-actions a)]}
+ (wire-nr-of-events a)
+ (code:line ((make-circuit-constr 'no-name (a) (a)) a) (code:comment "Does not add an event."))
+ (wire-nr-of-events a)]}
 
 @section{Circuit constructors}
 
