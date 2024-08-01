@@ -25,7 +25,7 @@
      racket/function
      racket/block))
 
-@(define-for-syntax local #f)
+@(define-for-syntax local #t)
 
 @(define-syntax-rule (cmt x ...) (black (smaller x ...)))
 @(define-syntax-rule (itt x ...) (tt (italic x ...)))
@@ -235,7 +235,7 @@ and the following transition table applies:
 
 Hence, in order to set or reset the @nb{D-flip-flop},
 set @tt{in} to @nbr[T] cq @nbr[F] and apply a @nbr[T] pulse to the @tt{clock}.
-Leave the @tt{clock} low at @nbr[F] in order to preserve the state
+Keep the @tt{clock} low at @nbr[F] in order to preserve the state
 without being disturbed by changes on wire @tt{in}.
 There are several ways to construct a D-flip-flop.
 The following diagram shows one consisting of four @nbr[Nand] gates.
@@ -1213,7 +1213,7 @@ and a @nbrl[circuit-constr?]{circuit-constr} wants wires for its arguments but r
 
 @defproc[#:kind "gate constructor" (If (test wire?) (then wire?) (else wire?) (out wire?))
          void?]{
- Same as:
+ Formula:
 
  @(hspace 3)@nbr[(Nand3
                    (Nand then else)
@@ -1233,7 +1233,7 @@ and a @nbrl[circuit-constr?]{circuit-constr} wants wires for its arguments but r
 
 @defproc[#:kind "gate constructor" (Imply (premise wire?) (implication wire?) (out wire?))
          void?]{
- @nbr[Imply] is the same as:
+ Formula:
 
  @(hspace 3)@nbr[(Nand premise (Not implication))]
 
