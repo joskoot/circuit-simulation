@@ -25,7 +25,7 @@
      racket/function
      racket/block))
 
-@(define-for-syntax local #f)
+@(define-for-syntax local #t)
 
 @(define-syntax-rule (cmt x ...) (black (smaller x ...)))
 @(define-syntax-rule (itt x ...) (tt (italic x ...)))
@@ -1125,8 +1125,8 @@ but these instances always are distinct objects, without sharing any parts.
   Simulation is initiated with procedure @nbr[agenda-execute!].
 
   All external output wires must be distinct. This is checked.
-  Distinct circuits can share input wires,
-  but must not share output wires.
+  Distinct circuits can share external input wires,
+  but must not share external output wires.
   This is not checked.
   Sharing output wires in real life makes no sense,
   for this causes a short circuit

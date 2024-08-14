@@ -24,7 +24,7 @@
 
 (struct agenda (name (timer #:mutable) hash)
   #:omit-define-syntaxes
-  #:property prop:custom-write (λ (agnd port mode) (fprintf port "#<agenda:~s>" (agenda-name agnd)))
+  #:property prop:custom-write (λ (o p m) (fprintf p "#<agenda:~s>" (agenda-name o)))
   #:property prop:object-name 0)
 
 (define (agenda-make (name 'no-name))

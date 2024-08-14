@@ -32,7 +32,7 @@
   #:property prop:object-name 0
   #:property prop:procedure 1
   #:property prop:custom-write
-  (λ (circuit port mode) (fprintf port "#<circuit-constr:~s>" (circuit-constr-name circuit)))
+  (λ (o p m) (fprintf p "#<circuit-constr:~s>" (circuit-constr-name o)))
   #:guard
   (λ (name proc ignore)
     (unless (procedure? proc) (raise-argument-error 'circuit-constr "procedure?" proc))
@@ -58,7 +58,7 @@
 (define-syntax (basic-make-circuit-constr stx)
   (syntax-case stx (define)
     ((_ name (in ...) (out ...) ((sub-out ...) (sub-circuit-constr sub-in ...)) ...)
-     (check-args stx
+     (check-circuit-constr-args stx
        (syntax->list #'(in ...))
        (syntax->list #'(out ...))
        (map syntax->list (syntax->list #'((sub-in ...) ...)))
@@ -136,7 +136,7 @@
     ((null? temps) '())
     (else (cons #`((#,(car temps)) #,(car non-ids)) (generate-gates (cdr temps) (cdr non-ids))))))
 
-(define-for-syntax (check-args stx in out sub-ins sub-outs)
+(define-for-syntax (check-circuit-constr-args stx in out sub-ins sub-outs)
   (define (check-ids ids)
     (cond
       ((null? ids))
@@ -160,8 +160,10 @@
   (check-dup out)
   ;(for-each check-dup sub-ins)
   (check-dup all-sub-outs)
-  (check-subset in (append all-sub-ins out) "every input must be subcircuit input or an output")
-  (check-subset out (append all-sub-outs in) "every output must be a subcircuit output or an input")
+  (check-subset in (append all-sub-ins out)
+    "every input must be subcircuit input or an output")
+  (check-subset out (append all-sub-outs in)
+    "every output must be a subcircuit output or an input")
   (check-subset all-sub-ins (append in all-sub-outs)
     "Every subcircuit input must be an input or a subcircuit output")
   (check-subset all-sub-outs (append out all-sub-ins)
@@ -201,13 +203,7 @@
           (unless (eq? (wire-signal output-wire) output-signal)
             (agenda-schedule! output-wire output-signal delay)))
         (for ((input-wire (in-list input-wires))) (wire-add-event! input-wire event))
-        ; Always use the same (eq?) event for the same instance of a gate.
-        ; This allows procedure agenda-execute! to avoid
-        ; triggering a gate more than once at the same time
-        ; in case more than one input wire changes signal at the same time.
-        ; The event must be called during installation of the gate in order to schedule
-        ; an event for its output when the latter will change signal during power up.
-        ; Otherwise the agenda would remain empty.
+        ; See comment in syntax function->gate-constr.
         (event)))))
 
 ;=====================================================================================================

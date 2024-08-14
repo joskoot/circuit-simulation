@@ -25,12 +25,13 @@
 ;=====================================================================================================
 
 (struct wire (name (signal #:mutable) (events #:mutable))
+  
   #:auto-value 0
   #:property prop:custom-write
   (λ (wire port mode) (fprintf port "#<wire:~s=~s>" (wire-name wire) (wire-signal wire)))
   #:property prop:object-name 0)
 
-(struct hidden-wire wire ())
+(struct hidden-wire wire () #:omit-define-syntaxes)
 
 (define (wire-make name (signal (wire-init-signal)))
   (unless (symbol? name) (raise-argument-error 'wire-make "symbol?" name))
