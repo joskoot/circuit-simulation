@@ -759,7 +759,8 @@ no event is scheduled for this output.
  @nb{In that} case time keeps running while walking the agenda.
  Events that in future will not change the signal on
  @nb{a wire} cannot be ignored, because without actually continuing the simulation,
- in general it cannot be known which signal the wire will have when the time of the event will come.
+ in general it cannot be known whether or not the signal on the wire will change
+ at the time the event will come.
  @nb{The time} is not running while procedure @nbr[agenda-execute!] is not running.
  The agenda never contains more than one event for the same wire and the same time.
  If @nbr[report] has a true value, a report is printed showing
@@ -820,7 +821,8 @@ no event is scheduled for this output.
  These events are skipped when their time has come.
  Events that in future will not change the signal on
  @nb{a wire} cannot be ignored, because without actually continuing the simulation,
- in general it cannot be known which signal the wire will have when the time of the event will come.
+ in general it cannot be known whether or not the signal on the wire will change
+ at the time the event will come.
 
  @Interaction[
  (define a (wire-make 'a F))

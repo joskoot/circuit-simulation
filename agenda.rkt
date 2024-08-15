@@ -27,6 +27,10 @@
   #:property prop:custom-write (λ (o p m) (fprintf p "#<agenda:~s>" (agenda-name o)))
   #:property prop:object-name 0)
 
+; The hash maps times to lists of events (wire . signal).
+; A list ((time (wire . signal) ...) ...) sorted for time may be more obvious.
+; However, a hash simplifies the code for inserting new events.
+
 (define (agenda-make (name 'no-name))
   (unless (symbol? name) (raise-argument-error 'agenda-make "symbol?" name))
   (agenda name 0 (make-hash)))
