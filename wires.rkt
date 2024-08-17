@@ -14,24 +14,23 @@
   report-wire-width
   wire-print
   wire-println
-  wire-nr-of-events)
+  wire-nr-of-actions)
 
 (provide ; for private use only
   set-wire-signal!
-  wire-events
-  wire-add-event!
+  wire-actions
+  wire-add-action!
   hidden-wire?)
 
 ;=====================================================================================================
 
-(struct wire (name (signal #:mutable) (events #:mutable))
-  
+(struct wire (name (signal #:mutable) (actions #:mutable))
   #:auto-value 0
   #:property prop:custom-write
   (λ (wire port mode) (fprintf port "#<wire:~s=~s>" (wire-name wire) (wire-signal wire)))
   #:property prop:object-name 0)
 
-(struct hidden-wire wire () #:omit-define-syntaxes)
+(struct hidden-wire wire ())
 
 (define (wire-make name (signal (wire-init-signal)))
   (unless (symbol? name) (raise-argument-error 'wire-make "symbol?" name))
@@ -47,11 +46,11 @@
       signal)
     'wire-init-signal))
 
-(define (wire-add-event! wire event)
-  (define events (wire-events wire))
-  ; Avoid duplicate events.
-  (unless (member event events)
-    (set-wire-events! wire (cons event events))))
+(define (wire-add-action! wire action)
+  (define actions (wire-actions wire))
+  ; Avoid duplicate actions.
+  (unless (member action actions)
+    (set-wire-actions! wire (cons action actions))))
 
 (define-syntax (define-wires stx)
   (syntax-case stx ()
@@ -123,9 +122,9 @@
         ((not (eq? p 'string)) (newline port))
         ((eq? p 'string) (get-output-string port))))))
 
-(define (wire-nr-of-events wire)
-  (unless (wire? wire) (raise-argument-error 'wire-nr-of-events "wire?" wire))
-  (length (wire-events wire)))
+(define (wire-nr-of-actions wire)
+  (unless (wire? wire) (raise-argument-error 'wire-nr-of-actions "wire?" wire))
+  (length (wire-actions wire)))
 
 ;=====================================================================================================
 ; The end

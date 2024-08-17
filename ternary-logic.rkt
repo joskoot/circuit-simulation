@@ -15,22 +15,20 @@
 (struct bit trit ())
 
 (define (make-trit-writer trit-symbol)
-  (λ (o p m) (write trit-symbol p)))
+  (define (trit-writer trit port mode) (write trit-symbol port))
+  trit-writer)
 
 (struct F bit ()
-  #:omit-define-syntaxes
   #:property prop:custom-write (make-trit-writer 'F)
   #:name trit-F
   #:constructor-name make-trit-F)
 
 (struct T bit ()
-  #:omit-define-syntaxes
   #:property prop:custom-write (make-trit-writer 'T)
   #:name trit-T
   #:constructor-name make-trit-T)
 
 (struct ? trit ()
-  #:omit-define-syntaxes
   #:property prop:custom-write (make-trit-writer '?)
   #:name trit-?
   #:constructor-name make-trit-?)

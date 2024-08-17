@@ -32,7 +32,7 @@
   #:property prop:object-name 0
   #:property prop:procedure 1
   #:property prop:custom-write
-  (λ (o p m) (fprintf p "#<circuit-constr:~s>" (circuit-constr-name o)))
+  (λ (circuit port mode) (fprintf port "#<circuit-constr:~s>" (circuit-constr-name circuit)))
   #:guard
   (λ (name proc ignore)
     (unless (procedure? proc) (raise-argument-error 'circuit-constr "procedure?" proc))
@@ -175,19 +175,19 @@
      #'(let ((proc logical-function) (neem name))
          (circuit-constr neem
            (λ (input-wire ... output-wire)
-             (define (event)
+             (define (action)
                (define signal (proc (wire-signal input-wire) ...))
                (unless (eq? signal (wire-signal output-wire))
                  (agenda-schedule! output-wire signal delay)))
-             (wire-add-event! input-wire event) ...
-             ; Always use the same (eq?) event for the same instance of a gate.
+             (wire-add-action! input-wire action) ...
+             ; Always use the same (eq?) action for the same instance of a gate.
              ; This allows procedure agenda-execute! to avoid
              ; triggering a gate more than once at the same time
              ; in case more than one input wire changes signal at the same time.
-             ; The event must be called during installation of the gate in order to schedule
-             ; an event for its output when the latter will change signal during power up.
+             ; The action must be called during installation of the gate in order to schedule
+             ; an action for its output when the latter will change signal during power up.
              ; Otherwise the agenda would remain empty.
-             (event)))))))
+             (action)))))))
 
 (define (make-gate*-constr name function)
   (λ (delay)
@@ -198,13 +198,13 @@
         (define ws (reverse wires))
         (define input-wires (cdr ws))
         (define output-wire (car ws))
-        (define (event)
+        (define (action)
           (define output-signal (apply function (map wire-signal input-wires)))
           (unless (eq? (wire-signal output-wire) output-signal)
             (agenda-schedule! output-wire output-signal delay)))
-        (for ((input-wire (in-list input-wires))) (wire-add-event! input-wire event))
+        (for ((input-wire (in-list input-wires))) (wire-add-action! input-wire action))
         ; See comment in syntax function->gate-constr.
-        (event)))))
+        (action)))))
 
 ;=====================================================================================================
 
