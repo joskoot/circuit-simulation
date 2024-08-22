@@ -157,7 +157,7 @@ A simulation can be done in various ways, @nb{for example} as follows:
 @itemlist[#:style 'ordered
 
  @item{@tt{(@nbr[define]
-   my-circuit-constr (@nbr[make-circuit-constr] @italic{description} ...))}@(lb)
+   @italic{my-circuit-constr} (@nbr[make-circuit-constr] @italic{description} ...))}@(lb)
   Defines a circuit constructor.
   The @italic{@tt{description}} includes a name, external input and output contacts and
   a straightforward list of the elements of a diagram of the circuit.}
@@ -170,7 +170,7 @@ A simulation can be done in various ways, @nb{for example} as follows:
   Usually, but not necessarily, @tt{@italic{output-wire}s} are initialized with indeterminate signal
   @nbr[?].}
 
- @item{@tt{(my-circuit-constr @italic{input-wire} ... @italic{output-wire} ...)}@(lb)
+ @item{@tt{(@italic{my-circuit-constr} @italic{input-wire} ... @italic{output-wire} ...)}@(lb)
   Installs an instance of the circuit and connects it to its external input and output wires.@(lb)
   The constructor returns @(Void), but does make a circuit behind the screen
   and schedules events in the @seclink["agenda"]{agenda}.
