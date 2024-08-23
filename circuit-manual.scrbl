@@ -76,7 +76,8 @@ My tools differ in many aspects, though, the agenda too.
 
 This document intentionally contains some repetitions of the same or similar phrases in order to
 avoid hyperlinks where text is relevant on the spot.
-Both level and edge triggered bistable multivibrators will be called ‘flip-flop’s.
+Both level and edge triggered bistable multivibrators will be called ‘flip-flop’s,
+whereas in other documents level triggered bistable multivibrators are called ‘latches’.
 True/high/on and false/low/off are called ‘inverses’ of each other,
 elsewhere also called ‘complements’ of each other.
 
