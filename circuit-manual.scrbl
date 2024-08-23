@@ -670,8 +670,8 @@ An agenda schedules events, which are instructions to put a new signal on a give
 at a given time in future.
 More than one event can be scheduled for the same time.
 For times @nbrl[natural?]{natural numbers} are used without specifying a unit of time.
-This unit is implied and always the same, @nb{may be not} more than a small fraction of a nanosecond.
-Every agenda has a clock called ‘@nbr[agenda-time]’.
+This unit is implied and always the same, @nb{may be not} more than a fraction of a nanosecond.
+Every agenda has @nb{a clock} called ‘@nbr[agenda-time]’.
 @nb{An agenda} never schedules events preceding the current @nbr[agenda-time].
 Events are @nbrl[agenda-execute!]{executed} in order of progressing time.
 During a simulation the circuit may schedule more events.
