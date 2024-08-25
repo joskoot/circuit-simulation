@@ -694,7 +694,7 @@ no event is scheduled for this output.
  triggering other circuits.
  It is necessary, though, to use separate agendas
  when running simulations simultaneously in threads, places or futures.
- This is possible provided the circuits are distinct and do not share output wires.}
+ This is possible provided the circuits are distinct and do not share external wires.}
 
 @defproc[(agenda-make (name symbol? 'no-name)) agenda?]{
                                                
