@@ -47,7 +47,7 @@
          (map (λ (x) (if (identifier? x) (list x) x)) (syntax->list #'(sub-out ...)))))
        (cond
          ((andmap identifier? (syntax->list #'(sub-in ... ...)))
-          #'(basic-make-circuit-constr name (in ...) (out ...)
+          #'(make-parsed-circuit-constr name (in ...) (out ...)
               ((sub-out ...) (sub-circuit-constr sub-in ...)) ...))
          (else
            #`(make-circuit-constr name (in ...) (out ...)
@@ -55,7 +55,7 @@
                     (map parse-subcircuit
                       (syntax->list #'(((sub-out ...) (sub-circuit-constr sub-in ...)) ...)))))))))))
 
-(define-syntax (basic-make-circuit-constr stx)
+(define-syntax (make-parsed-circuit-constr stx)
   (syntax-case stx (define)
     ((_ name (in ...) (out ...) ((sub-out ...) (sub-circuit-constr sub-in ...)) ...)
      (check-circuit-constr-args stx
@@ -86,16 +86,15 @@
                  (define dup-out (check-duplicates (list out ...)))
                  (when dup-out (error neem "duplicate external output: ~s" dup-out))
                  (parameterize ((being-constructed #t))
-                   (let ((being-constructed (make-parameter #f)))
-                     (unless (circuit-constr? sub-circuit-constr)
+                   (let ((being-constructed (make-parameter #f)) (sub-c sub-circuit-constr) ...)
+                     (unless (circuit-constr? sub-c)
                        (error 'make-circuit-constr
-                         "circuit-constr expected, given ~s" sub-circuit-constr)) ...
-                     (let ((sub-c sub-circuit-constr) ...)
-                       (define internal-wire (make-hidden-wire 'internal-wire)) ...
-                       (when (being-constructed) (error 'neem "infinitely nested circuit"))
-                       (parameterize ((being-constructed #t))
-                         (sub-c sub-in ... sub-out ...) ...
-                         (void)))))))))))))
+                         "circuit-constr expected, given ~s" sub-c)) ...
+                     (define internal-wire (make-hidden-wire 'internal-wire)) ...
+                     (when (being-constructed) (error 'neem "infinitely nested circuit"))
+                     (parameterize ((being-constructed #t))
+                       (sub-c sub-in ... sub-out ...) ...
+                       (void))))))))))))
 
 (define-for-syntax (parse-subcircuit stx)
   (define (extract x) (define k (car (syntax->datum x))) (add-dot (if (symbol? k) k (car k))))
