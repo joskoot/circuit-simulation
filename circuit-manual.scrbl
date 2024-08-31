@@ -99,7 +99,7 @@ They are built with @nbr[Not], @nbr[Nand] and @nbr[Nand3] gates.
 The names of gates, @nb{or rather} their constructors,
 start with a capital letter in order not to shadow procedure @nbr[not]
 and syntaxes like @nbr[and], @nbr[nand], @nbr[or], @nbr[if] and @nbr[delay]
-as provided by @(Rckt).
+as provided by @hyperlink["https://docs.racket-lang.org/reference/index.html"]{Racket}.
 
 @seclink["Ternary logic"]{Ternary logic} is used,
 @nb{@nbr[F] and @nbr[T]} for a determinate signal
