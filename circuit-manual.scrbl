@@ -25,7 +25,7 @@
      racket/function
      racket/block))
 
-@(define-for-syntax local #f)
+@(define-for-syntax local #t)
 
 @(define-syntax-rule (cmt x ...) (black (smaller x ...)))
 @(define-syntax-rule (itt x ...) (tt (italic x ...)))
@@ -686,7 +686,7 @@ As long as none of the input wires of a gate change signal, @nb{the gate} is not
 When a gate is triggered with input signals that do not change the output,
 no event is scheduled for this output.
 
-@defparam[current-agenda agenda agenda? #:value (agenda-make 'the-agenda)]{
+@defparam[current-agenda agenda agenda? #:value (agenda-make 'no-name)]{
 
  All procedures that need an agenda use the @nbr[current-agenda].
  You probably never need to mutate this parameter.
