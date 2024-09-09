@@ -859,7 +859,7 @@ no event is scheduled for this output.
  Event @nbr[(b (F 90))] is not executed, because it does not alter the signal.@(lb)
  Nevertheless, time kept running until encountering this event.}
 
-@defparam*[agenda-report on/off any/c boolean?]{
+@defparam*[agenda-report on/off any/c boolean? #:value #f]{
                                                 
  Default for argument @tt{@italic{report}} of procedure @nbr[agenda-execute!].}
 

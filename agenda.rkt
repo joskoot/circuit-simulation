@@ -37,8 +37,8 @@
 (define (agenda-events)
   (define (put-time elem)
     (define time (car elem))
-    (for/list ((wire/signal (in-list (cdr elem))))
-      (list (wire-name (car wire/signal)) (cadr wire/signal) time)))
+    (for/list ((event (in-list (cdr elem))))
+      (list (wire-name (car event)) (cdr event) time)))
   (define lst (hash->list (agenda-hash (current-agenda))))
   (sort (apply append (map put-time lst)) event<?))
 
@@ -62,7 +62,7 @@
   (define time (+ (agenda-time) delay))
   (define hash (agenda-hash agenda))
   (define events (hash-ref hash time '()))
-  (define event (list wire signal))
+  (define event (cons wire signal))
   ; Do not schedule an event more than once for the same wire and time.
   ; The last one cancels all previous ones.
   (hash-set! hash time (cons event (remove event events event-wire-eq?))))
@@ -95,12 +95,11 @@
         (remove-duplicates
           (for/fold ((events '())) ((event (in-list wevents)))
             (define wire (car event))
-            (define signal (cadr event))
+            (define signal (cdr event))
             (cond
               ((eq? (wire-signal wire) signal) events)
               (else (append (wire-signal-set! wire signal report) events))))
           eq?))
-      (hash-remove! hash time)
       (for-each call events)
       (define new-time (add1 time))
       (set-agenda-timer! agenda new-time)
