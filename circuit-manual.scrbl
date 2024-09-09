@@ -25,7 +25,7 @@
      racket/function
      racket/block))
 
-@(define-for-syntax local #f)
+@(define-for-syntax local #t)
 
 @(define-syntax-rule (cmt x ...) (black (smaller x ...)))
 @(define-syntax-rule (itt x ...) (tt (italic x ...)))
@@ -611,7 +611,7 @@ More examples in section @seclink["More examples"]{More examples}.
  @nb{A @tt{@italic{body}}} may be empty, @nb{in which} case its value is @(Void).}
 
 @defproc[(trit-combinations (n natural?)
-           (sort? any/c #f)
+           (#:sort sort? any/c #f)
            (#:vector vector? any/c #f))
          (or/c (listof (listof trit?)) (vectorof (listof trit?)))]{
  Procedure @nbr[trit-combinations] returns a list or vector of all combinations of @nbr[n] trits.@(lb)
@@ -619,14 +619,14 @@ More examples in section @seclink["More examples"]{More examples}.
  combinations with determinate trits (bits) only precede all other ones.
 
  @Interaction[
- (trit-combinations 2 #f)
- (trit-combinations 2 #t)]
+ (trit-combinations 2 #:sort #f)
+ (trit-combinations 2 #:sort #t)]
 
  The combinations can be used to check a circuit for all feasible inputs@(lb)
  or for making a truth table:
 
  @Interaction[
- (for ((combination (in-list (trit-combinations 2 #t))))
+ (for ((combination (in-list (trit-combinations 2 #:sort #t))))
    (define a (car combination))
    (define b (cadr combination))
    (define wa  (wire-make 'a a))
