@@ -1,6 +1,6 @@
 #lang racket/base
 
-(require (only-in racket natural? count))
+(require (only-in racket natural? count) (for-syntax racket/base))
 
 (provide
   F T ? F? T? ??
@@ -29,20 +29,29 @@
 (define in-trits (in-list trits))
 (define in-bits (in-list bits))
 
-(define-syntax-rule (trit-case trit (F-body ...) (T-body ...) (?-body ...))
-  (let ((t trit))
-    (cond
-      ((F? t) F-body ...)
-      ((T? t) T-body ...)
-      ((?? t) ?-body ...)
-      (else (raise-argument-error 'trit-case "trit?" t)))))
+(define-syntax (trit-case stx)
+  (syntax-case stx ()
+    ((_ trit (F-body ...) (T-body ...) (?-body ...))
+     #`(let ((t trit))
+         (cond
+           ((F? t) #,@(accept-empty-body (syntax->list #'(F-body ...))))
+           ((T? t) #,@(accept-empty-body (syntax->list #'(T-body ...))))
+           ((?? t) #,@(accept-empty-body (syntax->list #'(?-body ...))))
+           (else (raise-argument-error 'trit-case "trit?" t)))))))
 
-(define-syntax-rule (bit-case trit (F-body ...) (T-body ...))
-  (let ((t trit))
-    (cond
-      ((F? t) F-body ...)
-      ((T? t) T-body ...)
-      (else (raise-argument-error 'bit-case "bit?" t)))))
+(define-syntax (bit-case stx)
+  (syntax-case stx ()
+    ((_ trit (F-body ...) (T-body ...))
+     #`(let ((t trit))
+         (cond
+           ((F? t) #,@(accept-empty-body (syntax->list #'(F-body ...))))
+           ((T? t) #,@(accept-empty-body (syntax->list #'(T-body ...))))
+           (else (raise-argument-error 'bit-case "bit?" t)))))))
+
+(define-for-syntax (accept-empty-body stxs)
+  (cond
+    ((null? stxs) (list #'(void)))
+    (else stxs)))
 
 (define (trit-combinations n #:sort (sort? #f) #:vector (vector? #f))
   (unless (natural? n) (raise-argument-error 'trit-combinations "natural?" n))
