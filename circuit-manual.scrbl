@@ -387,7 +387,9 @@ Even with a longer clock pulse the signal on @tt{state-inverse-wire} may flip to
  (agenda-schedule! clock-wire F 5)
  (parameterize ((report-wire-width 13)) (agenda-execute! #t))]
 
-This can be avoided by replacing
+At time 41 @tt{state-inverse} flipped to @nbr[T]
+and at time 42 it immediately was corrected back to @nbr[F].
+This flip can be avoided by replacing
 
 @inset{
  @nbr[(set (Nand clock reset))] by
