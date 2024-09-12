@@ -77,7 +77,7 @@ My tools differ in many aspects, though, the agenda too.
 This document intentionally contains some repetitions of the same or similar phrases in order to
 avoid hyperlinks where text is relevant on the spot.
 Both level and edge triggered bistable multivibrators will be called ‘flip-flop’s,
-whereas in other documents the former may be called ‘latches’.
+whereas in other documents the former are called ‘latches’.
 True/high/on and false/low/off are called ‘inverses’ of each other,
 elsewhere also called ‘complements’ of each other.
 
@@ -608,7 +608,7 @@ More examples in section @seclink["More examples"]{More examples}.
  depending on the value of the @nbr[trit-expr].
  @nb{The selected} @italic{@tt{body}} is evaluated in tail position. The other ons are ignored.
  @nb{A @tt{@italic{body}}} can include definitions, but the last element must be an expression.
- @nb{A @tt{@italic{body}}} may be empty, @nb{in which} case its value is @(Void).}
+ @nb{A @tt{@italic{body}}} can be empty, @nb{in which} case its value is @(Void).}
 
 @defproc[(trit-combinations (n natural?)
            (#:sort sort? any/c #f)
@@ -655,7 +655,7 @@ Always @nbr[(implies (bit? x) (trit? x))] → @nbr[#t].
  depending on the value of the @nbr[bit-expr].
  The selected @italic{@tt{body}} is evaluated in tail position. The other one is ignored.
  @nb{A @tt{@italic{body}}} can include definitions, but the last element must be an expression.
- @nb{A @tt{@italic{body}}} may be empty, @nb{in which} case its value is @(Void).}
+ @nb{A @tt{@italic{body}}} can be empty, @nb{in which} case its value is @(Void).}
 
 @defproc[(bit-combinations (n natural?) (#:vector vector? any/c #f))
          (or/c (listof (listof bit?)) (vectorof (listof bit?)))]{
@@ -883,7 +883,7 @@ no event is scheduled for this output.
  @nb{A wire} made by syntax @nbr[make-circuit-constr] for the output of
  @nb{a @tt{@italic{subcircuit-arg}}} that itself is 
  @nb{a @tt{@italic{subcircuit}}} has such a name.
- A wire made by procedure @nbr[wire-make] may have such name too.
+ A wire made by procedure @nbr[wire-make] can have such name too.
  Such a wire will be treated as a hidden one too.
 
  @Interaction[
@@ -1808,7 +1808,7 @@ The state transition table for a twin-flip-flop after a @nbr[T] pulse on the
 
 Twin-flip-flops can be made in several ways.
 Here the diagram below is used.@(lb) The two rectangular components are SR-flip-flops.
-Don't be confused by the fact that an input or output wire of a subcircuit may be identified by
+Don't be confused by the fact that an input or output wire of a subcircuit can be identified by
 another identifier than within the circuit the subcircuit is part of.
 @nb{In such} case there is one wire only and its name is determined by the outer circuit.
 
