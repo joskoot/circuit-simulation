@@ -322,9 +322,9 @@ are used for alignment in the report.
    (wire-println state-wire state-inverse-wire)
    (display "Simulation:\n")
    (parameterize
-     ((agenda-report #t)
-      (report-time-width 2)
-      (report-wire-width 13))
+       ((agenda-report #t)
+        (report-time-width 2)
+        (report-wire-width 13))
      (agenda-execute!))
    (display "Final state: ")
    (wire-println state-wire state-inverse-wire))]
@@ -369,8 +369,8 @@ causing the D-flip-flop to oscillate:
  (agenda-schedule! clock-wire T)
  (code:line (agenda-schedule! clock-wire F 1) (code:comment "Clock pulse too short."))
  (parameterize
-   ((agenda-time-limit (+ (agenda-time) 5))
-    (agenda-report #t))
+     ((agenda-time-limit (+ (agenda-time) 5))
+      (agenda-report #t))
    (D-flip-flop-simulator))]
 
 Even with a longer clock pulse the signal on @tt{state-inverse-wire} may flip to @nbr[T]
@@ -470,9 +470,9 @@ Let's test the D-flip-flop for all binary combinations of @tt{in}, @tt{clock} an
        (code:comment "Check that the flip-flop has assumed the desired state.")
        (code:comment " ")
        (unless
-         (and
-           (eq? (wire-signal state-wire) old-state)
-           (eq? (wire-signal state-inverse-wire) (Not-function old-state)))
+           (and
+             (eq? (wire-signal state-wire) old-state)
+             (eq? (wire-signal state-inverse-wire) (Not-function old-state)))
          (error 'flip-flop "test fails"))
        (code:comment " ")
        (code:comment "Send in-signal and clock-signal to the flip-flop.")
@@ -899,9 +899,9 @@ no event is scheduled for this output.
     (wire-make 'b T)
     (wire-make 'out))
    (parameterize
-     ((agenda-report #t)
-      (report-hidden show-hidden?)
-      (report-wire-width 6))
+       ((agenda-report #t)
+        (report-hidden show-hidden?)
+        (report-wire-width 6))
      (agenda-execute!)))
  (code:line (install-and-run-circuit #f) (code:comment "Hidden wires not shown."))
  (code:line (install-and-run-circuit #t) (code:comment "Hidden wires are shown."))]}
@@ -953,9 +953,9 @@ A gate does not schedule an event for its output if this output will not change.
  @Interaction[
  (define (oscillator init-signal)
    (parameterize
-     ((wire-init-signal init-signal)
-      (agenda-time-limit 7)
-      (agenda-report #t))
+       ((wire-init-signal init-signal)
+        (agenda-time-limit 7)
+        (agenda-report #t))
      ((make-circuit-constr 'Oscillator () () (a (Not a))))
      (agenda-execute!)
      (agenda-reset!)))
@@ -1321,9 +1321,9 @@ and a @nbrl[circuit-constr?]{circuit-constr} wants wires for its arguments but r
  ((Delay 10) in out)
  (agenda-sequence! (in (T 2) (F 4) (T 6) (F 8)))
  (parameterize
-   ((report-wire-width 3)
-    (report-time-width 2)
-    (agenda-report #t))
+     ((report-wire-width 3)
+      (report-time-width 2)
+      (agenda-report #t))
    (agenda-execute!))]}
 
 @section{Logical functions}
@@ -1633,12 +1633,12 @@ Let's test the full-adder:
    (agenda-reset!)
    (define result (list (wire-signal sum) (wire-signal carry-out)))
    (unless
-     (case (count T? (list a b c))
-       ((0) (equal? result (list F F)))
-       ((1) (equal? result (list T F)))
-       ((2) (equal? result (list F T)))
-       ((3) (equal? result (list T T)))
-       (else #f))
+       (case (count T? (list a b c))
+         ((0) (equal? result (list F F)))
+         ((1) (equal? result (list T F)))
+         ((2) (equal? result (list F T)))
+         ((3) (equal? result (list T T)))
+         (else #f))
      (error 'full-adder "~s" (list a b c result))))]
 
 Full adders can be put in a row such as to make an adder for numbers
@@ -1696,8 +1696,8 @@ For this purpose we need conversion between numbers and lists of bits:
 @Interaction*[
  (define (bit-list->number b)
    (for/fold
-     ((n 0) (k 1) #:result (if (> n 31) (- n 64) n))
-     ((bit (in-list (reverse b))))
+    ((n 0) (k 1) #:result (if (> n 31) (- n 64) n))
+    ((bit (in-list (reverse b))))
      (values
        (if (F? bit) n (+ n k))
        (arithmetic-shift k 1))))]
@@ -1737,9 +1737,10 @@ Now we can do the test on the 6-bit adder:
    (define n+m (+ n m))
    (cond
      ((<= -32 n+m 31)
-      (=
-        (bit-list->number (map wire-signal (list s5 s4 s3 s2 s1 s0)))
-        n+m))
+      (and (F? (wire-signal overflow))
+        (=
+          (bit-list->number (map wire-signal (list s5 s4 s3 s2 s1 s0)))
+          n+m)))
      ((T? (wire-signal overflow)))
      (else (error '6-bit-adder "test fails"))))]
 
@@ -1858,9 +1859,9 @@ First three helper procedures for testing and clocking and for description of th
  (define (check signal)
    (code:comment "Checks that wires Q and P have the expected signals.")
    (unless
-     (and
-       (equal? (wire-signal Q) signal)
-       (equal? (wire-signal P) (Not-function signal)))
+       (and
+         (equal? (wire-signal Q) signal)
+         (equal? (wire-signal P) (Not-function signal)))
      (error 'twin-flip-flop "test failed")))]
 
 The clock pulse must last long enough to allow@(lb)
