@@ -121,7 +121,7 @@ the ternary truth tables of the predefined gates.
 
 A @seclink["gate"]{gate} output can be connected via a @seclink["wires"]{wire}
 to the inputs of one or more other gates or even to an input of the same gate itself.
-@nb{A wire} with bifurcations to several gate inputs is regarded as one single wire.
+@nb{A wire} with bifurcations to several gate inputs is regarded and implemented as one single wire.
 A circuit usually has one or more external input and output contacts.
 They connect to external input and output wires.
 A wire cannot be connected to more than one gate output and
