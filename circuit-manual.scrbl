@@ -110,7 +110,7 @@ When @nb{a signal} changes from @nbr[F] to @nbr[T], it is said to raise.
 When it changes from @nbr[T] to @nbr[F], it is said to drop.
 If all inputs of a @seclink["gate"]{gate} are determinate, its output is determinate too.
 Its output is indeterminate if one or more of the inputs are indeterminate
-and various determinate outputs can be expected when replacing the indeterminate inputs
+and two distinct determinate outputs can be expected when replacing the indeterminate inputs
 by determinate ones.
 For example, an @nbr[And] gate gives indeterminate output if one input is @nbr[T]
 and the other one is indeterminate, for in this case the output depends on which
