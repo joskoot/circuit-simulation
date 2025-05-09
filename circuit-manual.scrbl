@@ -1201,7 +1201,8 @@ Every gate constructor is a procedure accepting a fixed number of one, two or th
 followed by one output wire. 
 The formulas can be used as @itt{subcircuit-arg}s in a @itt{subcircuit-clause},
 but elsewhere the formulas do not work because output wires have been omitted
-and a @nbrl[circuit-constr?]{circuit-constr} wants wires for its arguments but returns @(Void).
+and a @nbrl[circuit-constr?]{circuit-constr} wants wires for its arguments but
+in the formulas they would receive one argument @(Void) only.
 
 @deftogether[
  (@defproc[#:kind "gate constructor" (Not   (in wire?) (out wire?)) void?]
