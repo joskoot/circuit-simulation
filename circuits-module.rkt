@@ -195,7 +195,7 @@
     (circuit-constr name
       (λ wires
         (define ws (reverse wires))
-        (define input-wires (cdr ws))
+        (define input-wires (reverse (cdr ws)))
         (define output-wire (car ws))
         (define (action)
           (define output-signal (apply function (map wire-signal input-wires)))
