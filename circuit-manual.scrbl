@@ -1506,9 +1506,9 @@ For the moment ignore the triangle in wire @tt{a}.
  (define Another-D-flip-flop-constr
    (make-circuit-constr 'Another-D-flip-flop
      (in clock) (state)
-     (a     (Nand in clock))
-     (b     (Nand state (Not clock)))
-     (state (Nand a b))))
+     (a             (Nand in clock))
+     (state-inverse (Nand state (Not clock)))
+     (state         (Nand a state-inverse))))
  (code:comment "Set the flip-flop.")
  (define-wires
    (wire-in    'in    T)
@@ -1516,7 +1516,7 @@ For the moment ignore the triangle in wire @tt{a}.
    (wire-state 'state))
  (Another-D-flip-flop-constr wire-in wire-clock wire-state)
  (agenda-report #t)
- (report-wire-width 5)
+ (report-wire-width 13)
  (agenda-execute!)]
 
 This seems to work,
@@ -1530,9 +1530,10 @@ but look what happens after dropping the @tt{clock} to @nbr[F]:
 
 @(reset-Interaction*)
 
-There is a mutual dependency between signals @tt{b} and @tt{state}. They oscillate.
-This is caused by the fact that signal @tt{b} switches one time step later than signal @tt{a}.
-@tt{b} and @tt{state} switch at the same time.
+There is a mutual dependency between signals @tt{state-inverse} and @tt{state}. They oscillate.
+This is caused by the fact that signal @tt{state-inverse}
+switches one time step later than signal @tt{a}.
+@tt{state-inverse} and @tt{state} switch at the same time.
 We can repair this by delaying the signal of @tt{a},
 in the diagram shown as a triangle (without inversion circle at its output at the right).
 
@@ -1540,9 +1541,9 @@ in the diagram shown as a triangle (without inversion circle at its output at th
  (define Another-D-flip-flop-constr
    (make-circuit-constr 'Another-D-flip-flop
      (in clock) (state)
-     (delayed-a ((Delay 1) (Nand in clock)))
-     (b         (Nand state (Not clock)))
-     (state     (Nand delayed-a b))))
+     (delayed-a     ((Delay 1) (Nand in clock)))
+     (state-inverse (Nand state (Not clock)))
+     (state         (Nand delayed-a state-inverse))))
  (define-wires
    (wire-in 'in T)
    (wire-clock 'clock T)
@@ -1551,15 +1552,16 @@ in the diagram shown as a triangle (without inversion circle at its output at th
  (agenda-execute!)
  (wire-println wire-state)
  (agenda-schedule! wire-clock F)
- (report-wire-width 9)
+ (report-wire-width 13)
  (agenda-report #t)
  (agenda-execute!)
  (wire-println wire-state)]
 
 And now it works.
 Notice that the @nbr[Delay] gate is triggered. Its result doesn't matter
-because at the same time 6 signal @tt{b} drops to @nbr[F].
-Notice also that the signal on wire @tt{b} not necessarily is the inverse of that on wire @tt{state}.
+because at the same time 6 signal @tt{state-inverse} drops to @nbr[F].
+Notice also that the signal on wire @tt{state-inverse}
+not always is the inverse of that on wire @tt{state}.
 
 @subsection{Clock}
 
